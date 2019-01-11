@@ -33,3 +33,9 @@ tasks.withType<DokkaTask> {
     outputFormat = "html"
     outputDirectory = "$buildDir/dokka"
 }
+
+tasks.withType<Jar> {
+    manifest {
+        attributes["Main-Class"] = "io.github.cottonmc.jsonfactory.MainKt"
+    }
+}
