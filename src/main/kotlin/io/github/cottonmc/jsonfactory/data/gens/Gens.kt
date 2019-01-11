@@ -6,6 +6,8 @@ object Gens {
         BasicItemModel,
         BasicBlockItemModel,
         BasicBlockState,
-        BasicLootTable
+        BasicLootTable,
+        PlaceholderTexture("Block", "block"),
+        PlaceholderTexture("Item", "item")
     )
 }

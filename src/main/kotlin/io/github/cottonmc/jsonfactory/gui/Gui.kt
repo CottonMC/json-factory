@@ -1,26 +1,31 @@
 package io.github.cottonmc.jsonfactory.gui
 
-import io.github.cottonmc.jsonfactory.data.ContentGenerator
 import io.github.cottonmc.jsonfactory.data.Identifier
 import io.github.cottonmc.jsonfactory.data.gens.Gens
-import io.github.cottonmc.jsonfactory.data.Serializer
 import net.miginfocom.swing.MigLayout
-import java.awt.Dimension
+import java.awt.GridLayout
 import java.io.File
+import java.nio.file.Files
 import javax.swing.*
-import javax.swing.filechooser.FileFilter
 
 class Gui private constructor() {
     private val frame = JFrame()
     private val fileChooser = JFileChooser().apply {
-        fileFilter = object : FileFilter() {
-            override fun accept(f: File) = f.isDirectory || f.extension.equals("json", ignoreCase = true)
-            override fun getDescription() = "JSON files (.json)"
-        }
-        fileSelectionMode = JFileChooser.FILES_ONLY
+        fileSelectionMode = JFileChooser.DIRECTORIES_ONLY
     }
     private val idField = JTextField("minecraft:prismarine_bricks")
-    private val comboBox = JComboBox<ContentGenerator<*>>(Gens.allGens)
+    private val selectedGens = Gens.allGens.map { it to false }.toMap().toMutableMap()
+    private val generators = JScrollPane(JPanel(MigLayout()).apply {
+        for ((gen, _) in selectedGens) {
+            add(JCheckBox(gen.displayName, false).apply {
+                addActionListener {
+                    selectedGens[gen] = isSelected
+                }
+            }, "wrap")
+        }
+    }).apply {
+        border = BorderFactory.createTitledBorder("Generators")
+    }
     private val saveButton = JButton("Save").apply {
         addActionListener {
             save()
@@ -28,11 +33,13 @@ class Gui private constructor() {
     }
 
     init {
-        val panel = JPanel(MigLayout()).apply {
-            add(JLabel("ID"))
-            add(idField, "span 2, wrap")
-            add(comboBox, "span 2")
-            add(saveButton)
+        val panel = JPanel(GridLayout(1, 0)).apply {
+            add(generators)
+            add(JPanel(MigLayout()).apply {
+                add(JLabel("ID"))
+                add(idField, "span 2, wrap")
+                add(saveButton)
+            })
         }
 
         frame.apply {
@@ -55,26 +62,22 @@ class Gui private constructor() {
             return
         }
 
-        if (fileChooser.currentDirectory == null) {
-            fileChooser.currentDirectory = File(".")
-        }
-
-        fileChooser.selectedFile = File(fileChooser.currentDirectory, "${id.path}.json")
         val answer = fileChooser.showSaveDialog(frame)
 
         if (answer == JFileChooser.APPROVE_OPTION) {
-            if (fileChooser.selectedFile.exists()) {
-                val confirm = JOptionPane.showConfirmDialog(frame, "Do you want to overwrite an existing file?")
+            for (gen in selectedGens.filter { (_, value) -> value }.keys) {
+                val file = File(fileChooser.selectedFile, "${gen.path}${File.separatorChar}${id.path}.${gen.extension}")
 
-                if (confirm != JOptionPane.YES_OPTION)
-                    return
+                if (file.exists()) {
+                    val confirm = JOptionPane.showConfirmDialog(frame, "Do you want to overwrite the existing file $file?")
+
+                    if (confirm != JOptionPane.YES_OPTION)
+                        return
+                }
+
+                Files.createDirectories(file.parentFile?.toPath())
+                gen.generate(id).writeToFile(file)
             }
-
-            fileChooser.selectedFile.writeText(
-                Serializer.toJson((comboBox.selectedItem as ContentGenerator<*>).generate(
-                    id
-                ))
-            )
         }
     }
 
