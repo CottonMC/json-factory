@@ -7,8 +7,8 @@ import java.awt.Color
 import java.awt.image.BufferedImage
 import java.util.concurrent.ThreadLocalRandom
 
-class PlaceholderTexture(displayType: String, pathType: String) : ContentGenerator<PNG>(
-    "Placeholder $displayType Texture", "textures/$pathType", "png"
+class PlaceholderTexture(category: Category) : ContentGenerator<PNG>(
+    "Placeholder ${category.displayName} Texture", "textures/${category.path}", category, "png"
 ) {
     override fun generate(id: Identifier): PNG {
         val color1 = randomColor()

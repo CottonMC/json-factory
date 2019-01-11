@@ -1,5 +1,7 @@
 package io.github.cottonmc.jsonfactory.data.gens
 
+import io.github.cottonmc.jsonfactory.data.ContentGenerator
+
 object Gens {
     val allGens = arrayOf(
         BasicBlockModel,
@@ -7,7 +9,7 @@ object Gens {
         BasicBlockItemModel,
         BasicBlockState,
         BasicLootTable,
-        PlaceholderTexture("Block", "block"),
-        PlaceholderTexture("Item", "item")
+        PlaceholderTexture(ContentGenerator.Category.Block),
+        PlaceholderTexture(ContentGenerator.Category.Item)
     )
 }

@@ -1,5 +1,6 @@
 package io.github.cottonmc.jsonfactory.gui
 
+import io.github.cottonmc.jsonfactory.data.ContentGenerator
 import io.github.cottonmc.jsonfactory.data.Identifier
 import io.github.cottonmc.jsonfactory.data.gens.Gens
 import net.miginfocom.swing.MigLayout
@@ -15,17 +16,7 @@ class Gui private constructor() {
     }
     private val idField = JTextField("minecraft:prismarine_bricks")
     private val selectedGens = Gens.allGens.map { it to false }.toMap().toMutableMap()
-    private val generators = JScrollPane(JPanel(MigLayout()).apply {
-        for ((gen, _) in selectedGens) {
-            add(JCheckBox(gen.displayName, false).apply {
-                addActionListener {
-                    selectedGens[gen] = isSelected
-                }
-            }, "wrap")
-        }
-    }).apply {
-        border = BorderFactory.createTitledBorder("Generators")
-    }
+    private val generators = createGeneratorPanel()
     private val saveButton = JButton("Save").apply {
         addActionListener {
             save()
@@ -79,6 +70,26 @@ class Gui private constructor() {
                 gen.generate(id).writeToFile(file)
             }
         }
+    }
+
+    private fun createGeneratorPanel(): JTabbedPane {
+        val pane = JTabbedPane(SwingConstants.TOP)
+        val gens = selectedGens.keys
+
+        for (category in ContentGenerator.Category.values()) {
+            pane.addTab(category.displayName, JScrollPane(JPanel(MigLayout()).apply {
+                for (gen in gens.filter { it.category == category }) {
+                    add(JCheckBox(gen.displayName, false).apply {
+                        addActionListener {
+                            selectedGens[gen] = isSelected
+                        }
+                    }, "wrap")
+                }
+            }))
+        }
+
+        pane.border = BorderFactory.createTitledBorder("Generators")
+        return pane
     }
 
     companion object {
