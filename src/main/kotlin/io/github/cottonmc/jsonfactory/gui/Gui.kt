@@ -9,7 +9,7 @@ import java.io.File
 import java.nio.file.Files
 import javax.swing.*
 
-class Gui private constructor() {
+internal class Gui private constructor() {
     private val frame = JFrame()
     private val fileChooser = JFileChooser().apply {
         fileSelectionMode = JFileChooser.DIRECTORIES_ONLY
@@ -58,11 +58,16 @@ class Gui private constructor() {
 
         if (answer == JFileChooser.APPROVE_OPTION) {
             for (gen in selectedGens.filter { (_, value) -> value }.keys) {
+                val root = gen.resourceRoot.path
                 val sep = File.separatorChar
+                val namespace = id.namespace
+                val directory = gen.path
+                val fileName = id.path
+                val extension = gen.extension
 
                 val file = File(
                     fileChooser.selectedFile,
-                    "${gen.resourceRoot.path}$sep${id.namespace}$sep${gen.path}$sep${id.path}.${gen.extension}"
+                    "$root$sep$namespace$sep$directory$sep$fileName.$extension"
                 )
 
                 if (file.exists()) {
