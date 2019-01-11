@@ -3,9 +3,9 @@ package io.github.cottonmc.jsonfactory.data.types
 import com.beust.klaxon.JsonArray
 import com.beust.klaxon.JsonObject
 import io.github.cottonmc.jsonfactory.data.Identifier
-import io.github.cottonmc.jsonfactory.data.ToJson
+import io.github.cottonmc.jsonfactory.data.Json
 
-data class LootTable(private val id: Identifier) : ToJson {
+data class LootTable(private val id: Identifier) : Json {
     override fun toJson() = JsonObject(mapOf(
         "type" to "minecraft:block",
         "pools" to JsonArray(listOf(

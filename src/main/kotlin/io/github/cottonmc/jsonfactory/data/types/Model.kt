@@ -2,13 +2,13 @@ package io.github.cottonmc.jsonfactory.data.types
 
 import com.beust.klaxon.JsonArray
 import com.beust.klaxon.JsonObject
-import io.github.cottonmc.jsonfactory.data.ToJson
+import io.github.cottonmc.jsonfactory.data.Json
 
 data class Model(
     val parent: String? = null,
     val textures: Map<String, String> = emptyMap(),
     val elements: List<Element> = emptyList()
-) : ToJson {
+) : Json {
     // TODO
     data class Element(val from: List<Int>, val to: List<Int>) {}
 

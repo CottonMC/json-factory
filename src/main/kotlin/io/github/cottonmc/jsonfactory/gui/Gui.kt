@@ -29,7 +29,7 @@ class Gui private constructor() {
             add(JPanel(MigLayout()).apply {
                 add(JLabel("ID"))
                 add(idField, "span 2, wrap")
-                add(saveButton)
+                add(saveButton, "skip, span 2")
             })
         }
 
