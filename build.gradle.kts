@@ -14,7 +14,7 @@ repositories {
 }
 
 dependencies {
-    implementation(kotlin("stdlib-jdk8"))
+    api(kotlin("stdlib-jdk8"))
     implementation("com.beust:klaxon:5.0.1")
     implementation("com.miglayout:miglayout-swing:5.2")
 }

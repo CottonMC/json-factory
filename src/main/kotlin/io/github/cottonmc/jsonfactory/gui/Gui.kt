@@ -29,7 +29,8 @@ class Gui private constructor() {
             add(JPanel(MigLayout()).apply {
                 add(JLabel("ID"))
                 add(idField, "span 2, wrap")
-                add(saveButton, "skip, span 2")
+                add(saveButton, "skip, span, wrap")
+                add(JLabel("<html><i>Note: save in src/main/resources or pack root </i>"), "span")
             })
         }
 
@@ -57,7 +58,12 @@ class Gui private constructor() {
 
         if (answer == JFileChooser.APPROVE_OPTION) {
             for (gen in selectedGens.filter { (_, value) -> value }.keys) {
-                val file = File(fileChooser.selectedFile, "${gen.path}${File.separatorChar}${id.path}.${gen.extension}")
+                val sep = File.separatorChar
+
+                val file = File(
+                    fileChooser.selectedFile,
+                    "${gen.resourceRoot.path}$sep${id.namespace}$sep${gen.path}$sep${id.path}.${gen.extension}"
+                )
 
                 if (file.exists()) {
                     val confirm = JOptionPane.showConfirmDialog(frame, "Do you want to overwrite the existing file $file?")
