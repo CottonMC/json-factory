@@ -19,7 +19,7 @@ repositories {
 }
 
 application {
-    mainClassName = "io.github.cottonmc.jsonfactory.MainKt"
+    mainClassName = "io.github.cottonmc.jsonfactory.main.MainKt"
 }
 
 dependencies {
@@ -40,11 +40,12 @@ tasks.withType<KotlinCompile> {
 tasks.withType<DokkaTask> {
     outputFormat = "html"
     outputDirectory = "$buildDir/dokka"
+    includes = listOf("src/docs/docs.md")
 }
 
 tasks.withType<Jar> {
     manifest {
-        attributes["Main-Class"] = "io.github.cottonmc.jsonfactory.MainKt"
+        attributes["Main-Class"] = "io.github.cottonmc.jsonfactory.main.MainKt"
     }
 }
 

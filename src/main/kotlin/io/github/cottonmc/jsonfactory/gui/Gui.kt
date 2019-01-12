@@ -1,8 +1,8 @@
 package io.github.cottonmc.jsonfactory.gui
 
-import io.github.cottonmc.jsonfactory.data.gens.ContentGenerator
-import io.github.cottonmc.jsonfactory.data.types.Identifier
-import io.github.cottonmc.jsonfactory.data.gens.Gens
+import io.github.cottonmc.jsonfactory.gens.ContentGenerator
+import io.github.cottonmc.jsonfactory.data.Identifier
+import io.github.cottonmc.jsonfactory.gens.Gens
 import net.miginfocom.swing.MigLayout
 import java.awt.Dimension
 import java.awt.GridLayout
