@@ -12,7 +12,7 @@ class PlaceholderTexture(category: Category) : ContentGenerator<PNG>(
 ) {
     override fun generate(id: Identifier) = listOf(run {
         val color1 = randomColor()
-        val color2 = randomColor()
+        val color2 = color1.withDifferentHue()
         val image = BufferedImage(16, 16, BufferedImage.TYPE_INT_ARGB)
         val graphics = image.createGraphics()
 
@@ -43,5 +43,10 @@ class PlaceholderTexture(category: Category) : ContentGenerator<PNG>(
         val saturation = (random.nextInt(800) + 7200) / 10000f
         val luminance = (random.nextInt(200) + 8300) / 10000f
         return Color.getHSBColor(hue, saturation, luminance)
+    }
+
+    private fun Color.withDifferentHue(): Color {
+        val hsb = Color.RGBtoHSB(red, green, blue, null)
+        return Color.getHSBColor((hsb[0] + ThreadLocalRandom.current().nextDouble(0.2, 0.8).toFloat()) % 1f, hsb[1], hsb[2])
     }
 }
