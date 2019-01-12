@@ -66,8 +66,8 @@ data class Property<out T>(val name: String, val value: T, val mode: Mode = Mode
         private fun isEmpty(value: Any?) =
             (value as? Collection<*>)?.isEmpty() == true || (value as? String)?.isEmpty() == true ||
                 (value as? Map<*, *>)?.isEmpty() == true
-
-        fun createList(block: Builder.() -> Unit) =
-            Builder().apply(block).build()
     }
 }
+
+fun <T : Any> T.createProperties(block: Property.Builder.(T) -> Unit) =
+    Property.Builder().apply { block(this@createProperties) }.build()

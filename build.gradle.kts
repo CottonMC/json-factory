@@ -1,4 +1,3 @@
-import groovy.util.ConfigSlurper
 import org.jetbrains.dokka.gradle.DokkaTask
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
@@ -12,7 +11,7 @@ plugins {
 }
 
 group = "io.github.cottonmc"
-version = "0.2.0"
+version = "0.3.0-dev"
 
 repositories {
     jcenter()
@@ -56,14 +55,7 @@ tasks.create<Zip>("sourcesJar") {
     from("src/main/resources")
 }
 
-val localConfig = File("gradle.local.properties")
-
-if (localConfig.exists()) {
-    val config = ConfigSlurper().parse(localConfig.readText())
-    config.forEach { key, value ->
-        ext[key.toString()] = value
-    }
-}
+apply(from = "https://raw.githubusercontent.com/Juuxel/gradle-local-properties/master/loader.gradle.kts")
 
 //the artifactory block is written in the groovy dsl
 apply(from = "artifactory.gradle")

@@ -8,8 +8,7 @@ data class Model(
     val textures: Map<String, Any> = emptyMap(),
     val elements: List<Element> = emptyList()
 ) : Json.ByProperties {
-    override val properties = Property.createList {
-        val self = this@Model
+    override val properties = createProperties { self ->
         +self::parent
         +self::textures.removeIfEmpty()
         +self::elements.removeIfEmpty()
@@ -17,8 +16,7 @@ data class Model(
 
     data class Element(val from: Point, val to: Point, val faces: Map<String, Face>)
     data class Face(val texture: String, val cullface: String = "") : Json.ByProperties {
-        override val properties = Property.createList {
-            val self = this@Face
+        override val properties = createProperties { self ->
             +self::texture
             +self::cullface.removeIfEmpty()
         }
