@@ -1,6 +1,5 @@
 package io.github.cottonmc.jsonfactory.data.gens
 
-import io.github.cottonmc.jsonfactory.data.ContentGenerator
 import io.github.cottonmc.jsonfactory.data.types.Identifier
 import io.github.cottonmc.jsonfactory.data.output.ModelBlockState
 

@@ -1,4 +1,4 @@
-package io.github.cottonmc.jsonfactory.data
+package io.github.cottonmc.jsonfactory.data.gens
 
 import io.github.cottonmc.jsonfactory.data.output.Output
 import io.github.cottonmc.jsonfactory.data.types.Identifier
