@@ -34,5 +34,10 @@ data class Identifier(val namespace: String, val path: String) {
 
         override fun serialize(src: Identifier, typeOfSrc: Type?, context: JsonSerializationContext?) =
             JsonPrimitive(src.toString())
+
+        /**
+         * Creates an Identifier from the `minecraft` namespace and the [path].
+         */
+        fun mc(path: String) = Identifier("minecraft", path)
     }
 }
