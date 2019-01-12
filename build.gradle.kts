@@ -1,3 +1,4 @@
+import groovy.util.ConfigSlurper
 import org.jetbrains.dokka.gradle.DokkaTask
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
@@ -18,11 +19,10 @@ repositories {
 }
 
 application {
-    mainClassName = "io.github.cottonmc.jsonfactory.Mainkt"
+    mainClassName = "io.github.cottonmc.jsonfactory.MainKt"
 }
 
 dependencies {
-    compile("com.beust:klaxon:5.0.1")
     api(kotlin("stdlib-jdk8"))
     api("com.google.code.gson:gson:2.8.5")
     implementation("com.miglayout:miglayout-swing:5.2")
@@ -48,17 +48,24 @@ tasks.withType<Jar> {
     }
 }
 
-
 tasks.create<Zip>("sourcesJar") {
     extension = "jar"
     classifier = "sources"
     from("src/main/kotlin")
     from("src/main/resources")
-
 }
-//the artifactory block is written in the groovy dsl
-apply(from="artifactory.gradle")
 
+val localConfig = File("gradle.local.properties")
+
+if (localConfig.exists()) {
+    val config = ConfigSlurper().parse(localConfig.readText())
+    config.forEach { key, value ->
+        ext[key.toString()] = value
+    }
+}
+
+//the artifactory block is written in the groovy dsl
+apply(from = "artifactory.gradle")
 
 publishing {
     publications {
