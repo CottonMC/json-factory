@@ -1,12 +1,18 @@
 package io.github.cottonmc.jsonfactory.data
 
+import com.google.gson.JsonElement
+import com.google.gson.JsonPrimitive
+import com.google.gson.JsonSerializationContext
+import com.google.gson.JsonSerializer
+import java.lang.reflect.Type
+
 /**
  * An identifier with a [namespace] and a [path].
  */
 data class Identifier(val namespace: String, val path: String) {
     override fun toString() = "$namespace:$path"
 
-    companion object {
+    companion object : JsonSerializer<Identifier> {
         /**
          * Creates an Identifier from a [combined] string in the `namespace:path` format.
          *
@@ -25,5 +31,8 @@ data class Identifier(val namespace: String, val path: String) {
                 val split = combined.split(':')
                 Identifier(split[0], split[1])
             }
+
+        override fun serialize(src: Identifier, typeOfSrc: Type?, context: JsonSerializationContext?) =
+            JsonPrimitive(src.toString())
     }
 }
