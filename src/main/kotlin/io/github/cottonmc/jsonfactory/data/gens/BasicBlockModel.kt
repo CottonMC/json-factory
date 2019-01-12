@@ -5,10 +5,10 @@ import io.github.cottonmc.jsonfactory.data.Identifier
 import io.github.cottonmc.jsonfactory.data.types.Model
 
 object BasicBlockModel : ContentGenerator<Model>("Basic Block Model", "models/block", Category.Block) {
-    override fun generate(id: Identifier) = Model(
+    override fun generate(id: Identifier) = container(Model(
         parent = "block/cube_all",
         textures = mapOf(
             "all" to "${id.namespace}:block/${id.path}"
         )
-    )
+    ))
 }

@@ -64,21 +64,27 @@ internal class Gui private constructor() {
                 val directory = gen.path
                 val fileName = id.path
                 val extension = gen.extension
+                val generated = gen.generate(id)
 
-                val file = File(
-                    fileChooser.selectedFile,
-                    "$root$sep$namespace$sep$directory$sep$fileName.$extension"
-                )
+                for ((value, suffix) in generated) {
+                    val s = if (suffix.isEmpty()) "" else "_$suffix"
 
-                if (file.exists()) {
-                    val confirm = JOptionPane.showConfirmDialog(frame, "Do you want to overwrite the existing file $file?")
+                    val file = File(
+                        fileChooser.selectedFile,
+                        "$root$sep$namespace$sep$directory$sep$fileName$s.$extension"
+                    )
 
-                    if (confirm != JOptionPane.YES_OPTION)
-                        return
+                    if (file.exists()) {
+                        val confirm =
+                            JOptionPane.showConfirmDialog(frame, "Do you want to overwrite the existing file $file?")
+
+                        if (confirm != JOptionPane.YES_OPTION)
+                            return
+                    }
+
+                    Files.createDirectories(file.parentFile?.toPath())
+                    value.writeToFile(file)
                 }
-
-                Files.createDirectories(file.parentFile?.toPath())
-                gen.generate(id).writeToFile(file)
             }
         }
     }

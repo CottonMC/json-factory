@@ -10,6 +10,9 @@ object Gens {
         BasicBlockState,
         BasicLootTable,
         PlaceholderTexture(ContentGenerator.Category.Block),
-        PlaceholderTexture(ContentGenerator.Category.Item)
+        PlaceholderTexture(ContentGenerator.Category.Item),
+        SlabBlockModel,
+        SlabBlockState,
+        SlabLootTable
     )
 }

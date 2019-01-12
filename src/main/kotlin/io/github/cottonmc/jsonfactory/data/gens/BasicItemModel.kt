@@ -5,10 +5,10 @@ import io.github.cottonmc.jsonfactory.data.Identifier
 import io.github.cottonmc.jsonfactory.data.types.Model
 
 object BasicItemModel : ContentGenerator<Model>("Basic Item Model", "models/item", Category.Item) {
-    override fun generate(id: Identifier) = Model(
+    override fun generate(id: Identifier) = container(Model(
         parent = "item/generated",
         textures = mapOf(
             "layer0" to "${id.namespace}:item/${id.path}"
         )
-    )
+    ))
 }
