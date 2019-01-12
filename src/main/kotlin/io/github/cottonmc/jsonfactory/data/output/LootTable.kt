@@ -1,7 +1,6 @@
-package io.github.cottonmc.jsonfactory.data.types
+package io.github.cottonmc.jsonfactory.data.output
 
 import io.github.cottonmc.jsonfactory.data.Identifier
-import io.github.cottonmc.jsonfactory.data.Json
 
 // TODO Replace with actual data classes
 data class LootTable(private val id: Identifier) : Json.ByMap {

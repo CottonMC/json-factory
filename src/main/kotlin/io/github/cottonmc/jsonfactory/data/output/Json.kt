@@ -1,5 +1,6 @@
-package io.github.cottonmc.jsonfactory.data
+package io.github.cottonmc.jsonfactory.data.output
 
+import io.github.cottonmc.jsonfactory.data.Serializer
 import java.io.File
 
 /**
@@ -13,6 +14,10 @@ interface Json : Output {
          * Converts this object to a map.
          */
         fun toMap(): Map<String, Any?>
-        override fun writeToFile(file: File) = file.writeText(Serializer.toJson(toMap()))
+        override fun writeToFile(file: File) = file.writeText(
+            Serializer.toJson(
+                toMap()
+            )
+        )
     }
 }

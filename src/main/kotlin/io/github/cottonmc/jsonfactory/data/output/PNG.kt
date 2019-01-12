@@ -1,4 +1,4 @@
-package io.github.cottonmc.jsonfactory.data
+package io.github.cottonmc.jsonfactory.data.output
 
 import java.awt.image.BufferedImage
 import java.io.File

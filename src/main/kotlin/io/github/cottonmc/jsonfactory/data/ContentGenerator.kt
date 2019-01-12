@@ -1,5 +1,7 @@
 package io.github.cottonmc.jsonfactory.data
 
+import io.github.cottonmc.jsonfactory.data.output.Output
+
 /**
  * Generates content from [Identifier]s.
  *
@@ -19,12 +21,8 @@ abstract class ContentGenerator<out T : Output>(
     /**
      * Generates [T]s from an [id].
      */
-    abstract fun generate(id: Identifier): List<Output.Container<T>>
+    abstract fun generate(id: Identifier): List<Output>
     override fun toString() = displayName
-
-    protected fun container(value: @UnsafeVariance T, suffix: String = "") = listOf(
-        Output.Container(value, suffix)
-    )
 
     enum class Category(val displayName: String, val path: String) {
         Block("Block", "block"), Item("Item", "item")

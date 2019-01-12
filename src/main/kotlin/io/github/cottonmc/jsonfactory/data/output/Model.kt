@@ -1,6 +1,4 @@
-package io.github.cottonmc.jsonfactory.data.types
-
-import io.github.cottonmc.jsonfactory.data.Json
+package io.github.cottonmc.jsonfactory.data.output
 
 data class Model(
     val parent: String? = null,

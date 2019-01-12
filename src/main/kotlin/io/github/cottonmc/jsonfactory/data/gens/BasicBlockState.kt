@@ -2,10 +2,10 @@ package io.github.cottonmc.jsonfactory.data.gens
 
 import io.github.cottonmc.jsonfactory.data.ContentGenerator
 import io.github.cottonmc.jsonfactory.data.Identifier
-import io.github.cottonmc.jsonfactory.data.types.ModelBlockState
+import io.github.cottonmc.jsonfactory.data.output.ModelBlockState
 
 object BasicBlockState : ContentGenerator<ModelBlockState>("Basic Block State", "blockstates", Category.Block) {
-    override fun generate(id: Identifier) = container(ModelBlockState(
+    override fun generate(id: Identifier) = listOf(ModelBlockState(
         mapOf(
             "" to ModelBlockState.Variant(Identifier(id.namespace, "block/${id.path}"))
         )

@@ -66,8 +66,8 @@ internal class Gui private constructor() {
                 val extension = gen.extension
                 val generated = gen.generate(id)
 
-                for ((value, suffix) in generated) {
-                    val s = if (suffix.isEmpty()) "" else "_$suffix"
+                for (value in generated) {
+                    val s = if (value.suffix.isEmpty()) "" else "_${value.suffix}"
 
                     val file = File(
                         fileChooser.selectedFile,

@@ -2,7 +2,7 @@ package io.github.cottonmc.jsonfactory.data.gens
 
 import io.github.cottonmc.jsonfactory.data.ContentGenerator
 import io.github.cottonmc.jsonfactory.data.Identifier
-import io.github.cottonmc.jsonfactory.data.PNG
+import io.github.cottonmc.jsonfactory.data.output.PNG
 import java.awt.Color
 import java.awt.image.BufferedImage
 import java.util.concurrent.ThreadLocalRandom
@@ -10,7 +10,7 @@ import java.util.concurrent.ThreadLocalRandom
 class PlaceholderTexture(category: Category) : ContentGenerator<PNG>(
     "Placeholder ${category.displayName} Texture", "textures/${category.path}", category, "png"
 ) {
-    override fun generate(id: Identifier) = container(run {
+    override fun generate(id: Identifier) = listOf(run {
         val color1 = randomColor()
         val color2 = randomColor()
         val image = BufferedImage(16, 16, BufferedImage.TYPE_INT_ARGB)
