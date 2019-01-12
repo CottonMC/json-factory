@@ -3,7 +3,7 @@ package io.github.cottonmc.jsonfactory.gens
 import io.github.cottonmc.jsonfactory.data.Identifier
 import io.github.cottonmc.jsonfactory.output.ModelBlockState
 
-object PillarBlockState : ContentGenerator<ModelBlockState>("Pillar Block State", "blockstates", Categories.Block) {
+object PillarBlockState : ContentGenerator("Pillar Block State", "blockstates", Categories.Block) {
     override fun generate(id: Identifier) = listOf(
         ModelBlockState(
             mapOf(

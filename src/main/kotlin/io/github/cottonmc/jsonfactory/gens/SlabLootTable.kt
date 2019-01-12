@@ -5,7 +5,7 @@ import io.github.cottonmc.jsonfactory.output.Suffixed
 import io.github.cottonmc.jsonfactory.output.loot.*
 import io.github.cottonmc.jsonfactory.output.loot.Function
 
-object SlabLootTable : ContentGenerator<LootTable>("Slab Loot Table", "loot_tables/blocks", Categories.BlockVariants, resourceRoot = ResourceRoot.Data) {
+object SlabLootTable : ContentGenerator("Slab Loot Table", "loot_tables/blocks", Categories.BlockVariants, resourceRoot = ResourceRoot.Data) {
     override fun generate(id: Identifier) = listOf(
         Suffixed(
             LootTable(

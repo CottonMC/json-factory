@@ -6,7 +6,7 @@ import io.github.cottonmc.jsonfactory.output.loot.Entry
 import io.github.cottonmc.jsonfactory.output.loot.LootTable
 import io.github.cottonmc.jsonfactory.output.loot.Pool
 
-object BasicLootTable : ContentGenerator<LootTable>("Basic Loot Table", "loot_tables/blocks", Categories.Block, resourceRoot = ResourceRoot.Data) {
+object BasicLootTable : ContentGenerator("Basic Loot Table", "loot_tables/blocks", Categories.Block, resourceRoot = ResourceRoot.Data) {
     override fun generate(id: Identifier) = listOf(
         LootTable(
             pools = listOf(

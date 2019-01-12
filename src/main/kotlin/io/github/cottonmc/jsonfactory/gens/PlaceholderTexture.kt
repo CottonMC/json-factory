@@ -6,7 +6,7 @@ import java.awt.Color
 import java.awt.image.BufferedImage
 import java.util.concurrent.ThreadLocalRandom
 
-class PlaceholderTexture(category: Categories) : ContentGenerator<PNG>(
+class PlaceholderTexture(category: Category) : ContentGenerator(
     "Placeholder ${category.displayName} Texture", "textures/${category.path}", category, "png"
 ) {
     override fun generate(id: Identifier) = listOf(run {

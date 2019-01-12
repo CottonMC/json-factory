@@ -4,7 +4,7 @@ import io.github.cottonmc.jsonfactory.data.Identifier
 import io.github.cottonmc.jsonfactory.output.ModelBlockState
 import io.github.cottonmc.jsonfactory.output.Suffixed
 
-object StairBlockState : ContentGenerator<ModelBlockState>("Stair Block State", "blockstates", Categories.BlockVariants) {
+object StairBlockState : ContentGenerator("Stair Block State", "blockstates", Categories.BlockVariants) {
     override fun generate(id: Identifier) = listOf(Suffixed(ModelBlockState(
         HashMap<String, ModelBlockState.Variant>().apply {
             for (half in halves) {

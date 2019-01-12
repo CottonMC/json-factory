@@ -12,7 +12,7 @@ import io.github.cottonmc.jsonfactory.data.Identifier
  * @property extension the file extension (without the dot)
  * @property resourceRoot the resource root
  */
-abstract class ContentGenerator<out T : Output>(
+abstract class ContentGenerator(
     val displayName: String,
     val path: String,
     val category: Category,
@@ -20,7 +20,7 @@ abstract class ContentGenerator<out T : Output>(
     val resourceRoot: ResourceRoot = ResourceRoot.Assets
 ) {
     /**
-     * Generates [T]s from an [id].
+     * Generates Outputs from an [id].
      */
     abstract fun generate(id: Identifier): List<Output>
     override fun toString() = displayName

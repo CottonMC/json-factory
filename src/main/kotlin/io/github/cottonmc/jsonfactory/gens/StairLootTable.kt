@@ -7,7 +7,7 @@ import io.github.cottonmc.jsonfactory.output.loot.Entry
 import io.github.cottonmc.jsonfactory.output.loot.LootTable
 import io.github.cottonmc.jsonfactory.output.loot.Pool
 
-object StairLootTable : ContentGenerator<LootTable>("Stair Loot Table", "loot_tables/blocks", Categories.BlockVariants, resourceRoot = ResourceRoot.Data) {
+object StairLootTable : ContentGenerator("Stair Loot Table", "loot_tables/blocks", Categories.BlockVariants, resourceRoot = ResourceRoot.Data) {
     override fun generate(id: Identifier) = listOf(
         Suffixed(LootTable(
             pools = listOf(

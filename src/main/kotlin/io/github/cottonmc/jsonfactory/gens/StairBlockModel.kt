@@ -4,7 +4,7 @@ import io.github.cottonmc.jsonfactory.data.Identifier
 import io.github.cottonmc.jsonfactory.output.Model
 import io.github.cottonmc.jsonfactory.output.Suffixed
 
-object StairBlockModel : ContentGenerator<Model>("Stair Block Model", "models/block", Categories.BlockVariants) {
+object StairBlockModel : ContentGenerator("Stair Block Model", "models/block", Categories.BlockVariants) {
     override fun generate(id: Identifier) = listOf(
         Suffixed(Model(
             parent = Identifier.mc("block/stairs"),

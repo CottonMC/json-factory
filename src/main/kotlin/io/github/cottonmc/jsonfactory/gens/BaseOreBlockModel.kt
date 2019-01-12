@@ -4,7 +4,7 @@ import io.github.cottonmc.jsonfactory.data.Identifier
 import io.github.cottonmc.jsonfactory.output.Model
 import io.github.cottonmc.jsonfactory.data.Point
 
-object BaseOreBlockModel : ContentGenerator<Model>("Base Ore Block Model (use the ID namespace:ore_template)", "models/block", Categories.Ore) {
+object BaseOreBlockModel : ContentGenerator("Base Ore Block Model (use the ID namespace:ore_template)", "models/block", Categories.Ore) {
     override fun generate(id: Identifier) = listOf(
         Model(
             parent = Identifier.mc("block/block"),
