@@ -1,0 +1,20 @@
+artifactory {
+
+    contextUrl ="http://server.bbkr.space:8081/artifactory/"
+    publish{
+
+        repository{
+            if(project.version.toString().contains("SNAPSHOT")) {
+                repoKey =  "libs-snapshot-local"
+            } else{
+                repoKey = "libs-release-local"
+            }
+            
+            username=cottonArtifactoryUser == null?System.getProperty("artifactoryUser"): cottonArtifactoryUser
+            password=cottonArtifactoryPassword == null?System.getProperty("artifactoryPassword"): cottonArtifactoryPassword
+        }
+        defaults{
+            publications("maven")
+        }
+    }
+}
