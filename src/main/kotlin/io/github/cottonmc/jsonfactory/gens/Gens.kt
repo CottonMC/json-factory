@@ -16,6 +16,11 @@ object Gens {
         SlabLootTable,
         BaseOreBlockModel,
         OreBlockModel("Stone", Identifier.mc("block/stone")),
-        OreBlockModel("Netherrack", Identifier.mc("block/netherrack"))
+        OreBlockModel("Netherrack", Identifier.mc("block/netherrack")),
+        PillarBlockModel,
+        PillarBlockState,
+        StairBlockModel,
+        StairBlockState,
+        StairLootTable
     )
 }

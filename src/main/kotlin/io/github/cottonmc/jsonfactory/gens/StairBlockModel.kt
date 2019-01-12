@@ -4,23 +4,31 @@ import io.github.cottonmc.jsonfactory.data.Identifier
 import io.github.cottonmc.jsonfactory.output.Model
 import io.github.cottonmc.jsonfactory.output.Suffixed
 
-object SlabBlockModel : ContentGenerator<Model>("Slab Block Model", "models/block", Categories.BlockVariants) {
+object StairBlockModel : ContentGenerator<Model>("Stair Block Model", "models/block", Categories.BlockVariants) {
     override fun generate(id: Identifier) = listOf(
         Suffixed(Model(
-            parent = Identifier.mc("block/slab"),
+            parent = Identifier.mc("block/stairs"),
             textures = mapOf(
                 "bottom" to id.copy(path = "block/" + id.path),
                 "top" to id.copy(path = "block/" + id.path),
                 "side" to id.copy(path = "block/" + id.path)
             )
-        ), "slab"),
+        ), "stairs"),
         Suffixed(Model(
-            parent = Identifier.mc("block/slab_top"),
+            parent = Identifier.mc("block/inner_stairs"),
             textures = mapOf(
                 "bottom" to id.copy(path = "block/" + id.path),
                 "top" to id.copy(path = "block/" + id.path),
                 "side" to id.copy(path = "block/" + id.path)
             )
-        ), "slab_top")
+        ), "stairs_inner"),
+        Suffixed(Model(
+            parent = Identifier.mc("block/outer_stairs"),
+            textures = mapOf(
+                "bottom" to id.copy(path = "block/" + id.path),
+                "top" to id.copy(path = "block/" + id.path),
+                "side" to id.copy(path = "block/" + id.path)
+            )
+        ), "stairs_outer")
     )
 }

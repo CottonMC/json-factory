@@ -50,6 +50,9 @@ internal class Gui private constructor() {
     }
 
     private fun saveAll() {
+        if (selectedGens.none { (_, value) -> value })
+            return
+
         val answer = fileChooser.showSaveDialog(frame)
 
         if (answer == JFileChooser.APPROVE_OPTION) {
@@ -110,6 +113,10 @@ internal class Gui private constructor() {
 
         for (category in ContentGenerator.Categories.categories) {
             pane.addTab(category.displayName, JScrollPane(JPanel(MigLayout()).apply {
+                category.description?.let {
+                    add(JLabel(it), "wrap")
+                }
+
                 for (gen in gens.filter { it.category == category }) {
                     add(JCheckBox(gen.displayName, false).apply {
                         addActionListener {

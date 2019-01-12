@@ -28,10 +28,13 @@ abstract class ContentGenerator<out T : Output>(
     interface Category {
         val displayName: String
         val path: String
+        val description: String?
     }
 
-    enum class Categories(override val displayName: String, override val path: String) : Category {
-        Block("Block", "block"), Item("Item", "item"), Ore("Ore", "block");
+    enum class Categories(override val displayName: String, override val path: String,
+                          override val description: String? = null) : Category {
+        Block("Block", "block"), Item("Item", "item"), Ore("Ore", "block"),
+        BlockVariants("Block Variants", "block", "Suffixes will be added to the output files' names.");
 
         companion object {
             private val _categories = LinkedHashSet<Category>()

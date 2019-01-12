@@ -4,7 +4,7 @@ import io.github.cottonmc.jsonfactory.data.Identifier
 import io.github.cottonmc.jsonfactory.output.ModelBlockState
 import io.github.cottonmc.jsonfactory.output.Suffixed
 
-object SlabBlockState : ContentGenerator<ModelBlockState>("Slab Block State", "blockstates", Categories.Block) {
+object SlabBlockState : ContentGenerator<ModelBlockState>("Slab Block State", "blockstates", Categories.BlockVariants) {
     override fun generate(id: Identifier) = listOf(Suffixed(ModelBlockState(
         mapOf(
             "type=bottom" to ModelBlockState.Variant(
