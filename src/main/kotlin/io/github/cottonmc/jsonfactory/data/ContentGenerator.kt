@@ -17,10 +17,14 @@ abstract class ContentGenerator<out T : Output>(
     val resourceRoot: ResourceRoot = ResourceRoot.Assets
 ) {
     /**
-     * Generates a [T] from an [id].
+     * Generates [T]s from an [id].
      */
-    abstract fun generate(id: Identifier): T
+    abstract fun generate(id: Identifier): List<Output.Container<T>>
     override fun toString() = displayName
+
+    protected fun container(value: @UnsafeVariance T, suffix: String = "") = listOf(
+        Output.Container(value, suffix)
+    )
 
     enum class Category(val displayName: String, val path: String) {
         Block("Block", "block"), Item("Item", "item")

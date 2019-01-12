@@ -10,7 +10,7 @@ import java.util.concurrent.ThreadLocalRandom
 class PlaceholderTexture(category: Category) : ContentGenerator<PNG>(
     "Placeholder ${category.displayName} Texture", "textures/${category.path}", category, "png"
 ) {
-    override fun generate(id: Identifier): PNG {
+    override fun generate(id: Identifier) = container(run {
         val color1 = randomColor()
         val color2 = randomColor()
         val image = BufferedImage(16, 16, BufferedImage.TYPE_INT_ARGB)
@@ -25,8 +25,8 @@ class PlaceholderTexture(category: Category) : ContentGenerator<PNG>(
         graphics.fillRect(0, 8, 8, 8)
         graphics.dispose()
 
-        return PNG(image)
-    }
+        PNG(image)
+    })
 
     private fun randomColor(): Color {
         val random = ThreadLocalRandom.current()
