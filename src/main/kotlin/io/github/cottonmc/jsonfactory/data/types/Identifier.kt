@@ -1,13 +1,15 @@
-package io.github.cottonmc.jsonfactory.data
+package io.github.cottonmc.jsonfactory.data.types
 
 import com.google.gson.JsonPrimitive
 import com.google.gson.JsonSerializationContext
 import com.google.gson.JsonSerializer
+import com.google.gson.annotations.JsonAdapter
 import java.lang.reflect.Type
 
 /**
  * An identifier with a [namespace] and a [path].
  */
+@JsonAdapter(Identifier.Companion::class)
 data class Identifier(val namespace: String, val path: String) {
     override fun toString() = "$namespace:$path"
 

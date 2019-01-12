@@ -1,6 +1,7 @@
 package io.github.cottonmc.jsonfactory.data
 
 import io.github.cottonmc.jsonfactory.data.output.Output
+import io.github.cottonmc.jsonfactory.data.types.Identifier
 
 /**
  * Generates content from [Identifier]s.
@@ -24,8 +25,26 @@ abstract class ContentGenerator<out T : Output>(
     abstract fun generate(id: Identifier): List<Output>
     override fun toString() = displayName
 
-    enum class Category(val displayName: String, val path: String) {
-        Block("Block", "block"), Item("Item", "item")
+    interface Category {
+        val displayName: String
+        val path: String
+    }
+
+    enum class Categories(override val displayName: String, override val path: String) : Category {
+        Block("Block", "block"), Item("Item", "item"), Ore("Ore", "block");
+
+        companion object {
+            private val _categories = LinkedHashSet<Category>()
+            val categories: Set<Category> get() = _categories
+
+            init {
+                values().forEach(::addCategory)
+            }
+
+            fun addCategory(category: Category) {
+                _categories += category
+            }
+        }
     }
 
     enum class ResourceRoot(val path: String) {

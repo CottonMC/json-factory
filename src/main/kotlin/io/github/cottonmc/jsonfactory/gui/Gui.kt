@@ -1,9 +1,10 @@
 package io.github.cottonmc.jsonfactory.gui
 
 import io.github.cottonmc.jsonfactory.data.ContentGenerator
-import io.github.cottonmc.jsonfactory.data.Identifier
+import io.github.cottonmc.jsonfactory.data.types.Identifier
 import io.github.cottonmc.jsonfactory.data.gens.Gens
 import net.miginfocom.swing.MigLayout
+import java.awt.Dimension
 import java.awt.GridLayout
 import java.io.File
 import java.nio.file.Files
@@ -44,7 +45,7 @@ internal class Gui private constructor() {
     fun show() {
         SwingUtilities.invokeLater {
             frame.isVisible = true
-            frame.pack()
+            frame.size = Dimension(640, 440)
         }
     }
 
@@ -107,7 +108,7 @@ internal class Gui private constructor() {
         val pane = JTabbedPane(SwingConstants.TOP)
         val gens = selectedGens.keys
 
-        for (category in ContentGenerator.Category.values()) {
+        for (category in ContentGenerator.Categories.categories) {
             pane.addTab(category.displayName, JScrollPane(JPanel(MigLayout()).apply {
                 for (gen in gens.filter { it.category == category }) {
                     add(JCheckBox(gen.displayName, false).apply {

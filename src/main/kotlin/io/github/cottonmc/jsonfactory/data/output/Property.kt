@@ -22,7 +22,22 @@ data class Property<out T>(val name: String, val value: T, val mode: Mode = Mode
             list += this
         }
 
-        fun <T> KProperty<T>.removeIfEmpty() = Property(
+        @JvmName("stringRemoveIfEmpty")
+        fun KProperty<String>.removeIfEmpty() = Property(
+            name,
+            getter.call(),
+            Mode.RemoveIfEmpty
+        )
+
+        @JvmName("collectionRemoveIfEmpty")
+        fun <T> KProperty<Collection<T>>.removeIfEmpty() = Property(
+            name,
+            getter.call(),
+            Mode.RemoveIfEmpty
+        )
+
+        @JvmName("mapRemoveIfEmpty")
+        fun <K, V> KProperty<Map<K, V>>.removeIfEmpty() = Property(
             name,
             getter.call(),
             Mode.RemoveIfEmpty
@@ -40,13 +55,17 @@ data class Property<out T>(val name: String, val value: T, val mode: Mode = Mode
             for ((name, value, mode) in src.properties) {
                 when (mode) {
                     Mode.RemoveIfEmpty ->
-                        if ((value as? Collection<*>)?.isNotEmpty() == true)
+                        if (!isEmpty(value))
                             add(name, context.serialize(value))
 
                     else -> add(name, context.serialize(value))
                 }
             }
         }
+
+        private fun isEmpty(value: Any?) =
+            (value as? Collection<*>)?.isEmpty() == true || (value as? String)?.isEmpty() == true ||
+                (value as? Map<*, *>)?.isEmpty() == true
 
         fun createList(block: Builder.() -> Unit) =
             Builder().apply(block).build()

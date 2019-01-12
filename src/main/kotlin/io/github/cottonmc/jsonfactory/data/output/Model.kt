@@ -1,23 +1,26 @@
 package io.github.cottonmc.jsonfactory.data.output
 
-data class Model(
-    val parent: String? = null,
-    val textures: Map<String, String> = emptyMap(),
-    val elements: List<Element> = emptyList()
-) : Json.ByMap {
-    // TODO
-    data class Element(val from: List<Int>, val to: List<Int>)
+import io.github.cottonmc.jsonfactory.data.types.Identifier
+import io.github.cottonmc.jsonfactory.data.types.Point
 
-    override fun toMap() = mutableMapOf(
-        "parent" to parent,
-        "textures" to textures
-    ).also {
-        if (elements.isNotEmpty())
-            it["elements"] = elements.map {
-                mapOf(
-                    "from" to it.from,
-                    "to" to it.to
-                )
-            }
+data class Model(
+    val parent: Identifier? = null,
+    val textures: Map<String, Any> = emptyMap(),
+    val elements: List<Element> = emptyList()
+) : Json.ByProperties {
+    override val properties = Property.createList {
+        val self = this@Model
+        +self::parent
+        +self::textures.removeIfEmpty()
+        +self::elements.removeIfEmpty()
+    }
+
+    data class Element(val from: Point, val to: Point, val faces: Map<String, Face>)
+    data class Face(val texture: String, val cullface: String = "") : Json.ByProperties {
+        override val properties = Property.createList {
+            val self = this@Face
+            +self::texture
+            +self::cullface.removeIfEmpty()
+        }
     }
 }

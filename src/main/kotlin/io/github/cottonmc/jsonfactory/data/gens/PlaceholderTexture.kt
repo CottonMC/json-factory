@@ -1,13 +1,13 @@
 package io.github.cottonmc.jsonfactory.data.gens
 
 import io.github.cottonmc.jsonfactory.data.ContentGenerator
-import io.github.cottonmc.jsonfactory.data.Identifier
+import io.github.cottonmc.jsonfactory.data.types.Identifier
 import io.github.cottonmc.jsonfactory.data.output.PNG
 import java.awt.Color
 import java.awt.image.BufferedImage
 import java.util.concurrent.ThreadLocalRandom
 
-class PlaceholderTexture(category: Category) : ContentGenerator<PNG>(
+class PlaceholderTexture(category: Categories) : ContentGenerator<PNG>(
     "Placeholder ${category.displayName} Texture", "textures/${category.path}", category, "png"
 ) {
     override fun generate(id: Identifier) = listOf(run {

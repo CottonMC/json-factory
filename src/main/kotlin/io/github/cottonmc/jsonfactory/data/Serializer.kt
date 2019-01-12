@@ -9,7 +9,6 @@ import io.github.cottonmc.jsonfactory.data.output.Property
  */
 object Serializer {
     private val gson = GsonBuilder()
-        .registerTypeAdapter(Identifier::class.java, Identifier)
         .registerTypeHierarchyAdapter(Json.ByProperties::class.java, Property)
         .disableHtmlEscaping()
         .setPrettyPrinting()
