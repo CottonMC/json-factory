@@ -1,0 +1,6 @@
+package io.github.cottonmc.jsonfactory.data.output.loot
+
+import io.github.cottonmc.jsonfactory.data.Identifier
+import io.github.cottonmc.jsonfactory.data.output.Json
+
+data class LootTable(val pools: List<Pool>, val type: Identifier = Identifier.mc("block")) : Json

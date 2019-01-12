@@ -1,14 +1,19 @@
 package io.github.cottonmc.jsonfactory.data
 
 import com.google.gson.GsonBuilder
+import io.github.cottonmc.jsonfactory.data.output.Json
+import io.github.cottonmc.jsonfactory.data.output.Property
 
 /**
- * Converts a [Json] object to a JSON string.
+ * Converts an object to a JSON string.
  */
 object Serializer {
-    private val gson = GsonBuilder().apply {
-        registerTypeAdapter(Identifier::class.java, Identifier)
-    }.setPrettyPrinting().create()
+    private val gson = GsonBuilder()
+        .registerTypeAdapter(Identifier::class.java, Identifier)
+        .registerTypeHierarchyAdapter(Json.ByProperties::class.java, Property)
+        .disableHtmlEscaping()
+        .setPrettyPrinting()
+        .create()
 
     fun toJson(obj: Any): String =
         gson.toJson(obj)

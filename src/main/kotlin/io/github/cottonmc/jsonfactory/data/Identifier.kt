@@ -1,6 +1,5 @@
 package io.github.cottonmc.jsonfactory.data
 
-import com.google.gson.JsonElement
 import com.google.gson.JsonPrimitive
 import com.google.gson.JsonSerializationContext
 import com.google.gson.JsonSerializer

@@ -19,6 +19,7 @@ dependencies {
     api(kotlin("stdlib-jdk8"))
     api("com.google.code.gson:gson:2.8.5")
     implementation("com.miglayout:miglayout-swing:5.2")
+    implementation(kotlin("reflect"))
 }
 
 configure<JavaPluginConvention> {

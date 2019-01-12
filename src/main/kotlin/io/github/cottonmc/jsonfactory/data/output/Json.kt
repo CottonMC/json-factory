@@ -20,4 +20,8 @@ interface Json : Output {
             )
         )
     }
+
+    interface ByProperties : Json {
+        val properties: List<Property<*>>
+    }
 }
