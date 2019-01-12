@@ -1,33 +1,18 @@
 package io.github.cottonmc.jsonfactory.gens
 
 import io.github.cottonmc.jsonfactory.data.Identifier
+import io.github.cottonmc.jsonfactory.data.ListProperty
 import io.github.cottonmc.jsonfactory.output.ModelBlockState
 
 object PillarBlockState : ContentGenerator("Pillar Block State", "blockstates", Categories.Block) {
     override fun generate(id: Identifier) = listOf(
-        ModelBlockState(
-            mapOf(
-                "axis=y" to ModelBlockState.Variant(
-                    Identifier(
-                        id.namespace,
-                        "block/${id.path}"
-                    )
-                ),
-                "axis=z" to ModelBlockState.Variant(
-                    Identifier(
-                        id.namespace,
-                        "block/${id.path}"
-                    ),
-                    x = 90
-                ),
-                "axis=x" to ModelBlockState.Variant(
-                    Identifier(
-                        id.namespace,
-                        "block/${id.path}"
-                    ),
-                    x = 90, y = 90
-                )
+        ModelBlockState.create(id, listOf(ListProperty.axis)) { values, variant ->
+            val axis = values["axis"]!!
+
+            variant.copy(
+                x = if (axis != "y") 90 else 0,
+                y = if (axis == "x") 90 else 0
             )
-        )
+        }
     )
 }

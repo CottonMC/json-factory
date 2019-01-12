@@ -5,7 +5,7 @@ import io.github.cottonmc.jsonfactory.data.ListProperty
 
 data class ModelBlockState(val variants: Map<String, Variant>) : Json {
     data class Variant(val model: Identifier, val x: Int = 0, val y: Int = 0, val uvlock: Boolean = false) : Json.ByProperties {
-        override val properties = this.createProperties { self ->
+        override val properties = createProperties { self ->
             +self::model
 
             if (x != 0) +self::x
@@ -24,9 +24,9 @@ data class ModelBlockState(val variants: Map<String, Variant>) : Json {
             transform: (values: Map<String, String>, variant: Variant) -> Variant = { _, variant -> variant }
         ): ModelBlockState {
             val output: List<List<Pair<String, String>>> = properties.fold(listOf(emptyList())) { acc, prop ->
-                acc.flatMap { prevs ->
+                acc.flatMap { existing ->
                     prop.values.map { value ->
-                        listOf(prop.name to value) + prevs
+                        listOf(prop.name to value) + existing
                     }
                 }
             }
