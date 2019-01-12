@@ -72,6 +72,8 @@ internal class Gui private constructor() {
 
                 save(id, fileChooser.selectedFile)
             }
+
+            JOptionPane.showMessageDialog(frame, "Finished generating.")
         }
     }
 
