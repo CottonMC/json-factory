@@ -2,7 +2,7 @@ package io.github.cottonmc.jsonfactory.output.loot
 
 import io.github.cottonmc.jsonfactory.data.Identifier
 import io.github.cottonmc.jsonfactory.output.Json
-import io.github.cottonmc.jsonfactory.output.Property
+import io.github.cottonmc.jsonfactory.output.createProperties
 
 data class Entry(
     val name: Identifier,
@@ -12,8 +12,7 @@ data class Entry(
     val conditions: List<Condition> = emptyList(),
     val functions: List<Function> = emptyList()
 ) : Json.ByProperties {
-    override val properties = Property.createList {
-        val self = this@Entry
+    override val properties = createProperties { self ->
         +self::type
         +self::name
         +self::conditions.removeIfEmpty()

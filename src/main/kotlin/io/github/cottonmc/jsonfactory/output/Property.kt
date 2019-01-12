@@ -71,3 +71,6 @@ data class Property<out T>(val name: String, val value: T, val mode: Mode = Mode
 
 fun <T : Any> T.createProperties(block: Property.Builder.(T) -> Unit) =
     Property.Builder().apply { block(this@createProperties) }.build()
+
+fun createProperties(block: Property.Builder.() -> Unit) =
+    Property.Builder().apply(block).build()

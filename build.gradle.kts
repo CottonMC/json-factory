@@ -26,6 +26,9 @@ dependencies {
     api("com.google.code.gson:gson:2.8.5")
     implementation("com.miglayout:miglayout-swing:5.2")
     implementation(kotlin("reflect"))
+    testImplementation("org.junit.jupiter:junit-jupiter-api:5.2.0")
+    testImplementation("io.strikt:strikt-core:0.17.1")
+    testRuntime("org.junit.jupiter:junit-jupiter-engine:5.2.0")
 }
 
 configure<JavaPluginConvention> {
@@ -53,6 +56,10 @@ tasks.create<Zip>("sourcesJar") {
     classifier = "sources"
     from("src/main/kotlin")
     from("src/main/resources")
+}
+
+tasks.withType<Test> {
+    useJUnitPlatform()
 }
 
 apply(from = "https://raw.githubusercontent.com/Juuxel/gradle-local-properties/master/loader.gradle.kts")
