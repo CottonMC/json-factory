@@ -6,9 +6,27 @@ import com.google.gson.JsonSerializer
 import java.lang.reflect.Type
 import kotlin.reflect.KProperty
 
+/**
+ * An output property.
+ *
+ * @property name the name
+ * @property value the value
+ * @property mode the serialization mode
+ */
 data class Property<out T>(val name: String, val value: T, val mode: Mode = Mode.Default) {
+    /**
+     * The serialization modes.
+     */
     enum class Mode {
-        Default, RemoveIfEmpty
+        /**
+         * The default.
+         */
+        Default,
+
+        /**
+         * The property is removed if its [value] is empty.
+         */
+        RemoveIfEmpty
     }
 
     class Builder internal constructor() {

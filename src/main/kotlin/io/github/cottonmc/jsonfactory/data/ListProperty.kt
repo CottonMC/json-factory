@@ -7,5 +7,7 @@ data class ListProperty(val name: String, val values: List<String>) {
         val half = ListProperty("half", listOf("bottom", "top"))
         val slabType = ListProperty("type", listOf("bottom", "top", "double"))
         val stairShape = ListProperty("shape", listOf("straight", "outer_right", "outer_left", "inner_right", "inner_left"))
+        val buttonFace = ListProperty("face", listOf("floor", "wall", "ceiling"))
+        val powered = ListProperty("powered", listOf("true", "false"))
     }
 }

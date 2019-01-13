@@ -8,7 +8,7 @@ object PressurePlateBlockState : ContentGenerator("Pressure Plate Block State", 
     override fun generate(id: Identifier) = listOf(
         Suffixed(ModelBlockState(mapOf(
             "powered=false" to ModelBlockState.Variant(id.copy(path = "block/${id.path}_pressure_plate")),
-            "powered=false" to ModelBlockState.Variant(id.copy(path = "block/${id.path}_pressure_plate_down"))
+            "powered=true" to ModelBlockState.Variant(id.copy(path = "block/${id.path}_pressure_plate_down"))
         )), "pressure_plate")
     )
 }

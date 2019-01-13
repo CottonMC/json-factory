@@ -53,6 +53,7 @@ object Gens {
         PlaceholderTexture(ContentGenerator.Categories.Item),
         SlabBlockModel,
         SlabBlockState,
+        SuffixedBlockItemModel("Slab", "slab"),
         SlabLootTable,
         BaseOreBlockModel,
         OreBlockModel("Stone", Identifier.mc("block/stone")),
@@ -61,9 +62,15 @@ object Gens {
         PillarBlockState,
         StairBlockModel,
         StairBlockState,
+        SuffixedBlockItemModel("Stair", "stairs"),
         SuffixedLootTable("Stair", "stairs"),
         PressurePlateBlockModel,
         PressurePlateBlockState,
-        SuffixedLootTable("Pressure Plate", "pressure_plate")
+        SuffixedBlockItemModel("Pressure Plate", "pressure_plate"),
+        SuffixedLootTable("Pressure Plate", "pressure_plate"),
+        ButtonBlockModel,
+        ButtonBlockState,
+        SuffixedBlockItemModel("Button", "button", "button_inventory"),
+        SuffixedLootTable("Button", "button")
     )
 }
