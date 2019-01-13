@@ -52,35 +52,44 @@ object Gens {
         basicLootTable,
         PlaceholderTexture(ContentGenerator.Categories.Block),
         PlaceholderTexture(ContentGenerator.Categories.Item),
+        // Slabs
         SlabBlockModel,
         SlabBlockState,
         SuffixedBlockItemModel("Slab", "slab"),
         SlabLootTable,
+        // Ores
         BaseOreBlockModel,
         OreBlockModel("Stone", Identifier.mc("block/stone")),
         OreBlockModel("Netherrack", Identifier.mc("block/netherrack")),
+        // Pillars
         PillarBlockModel,
         PillarBlockState,
+        // Stairs
         StairBlockModel,
         StairBlockState,
         SuffixedBlockItemModel("Stair", "stairs"),
         SuffixedLootTable("Stair", "stairs"),
+        // Pressure plates
         PressurePlateBlockModel,
         PressurePlateBlockState,
         SuffixedBlockItemModel("Pressure Plate", "pressure_plate"),
         SuffixedLootTable("Pressure Plate", "pressure_plate"),
+        // Buttons
         ButtonBlockModel,
         ButtonBlockState,
         SuffixedBlockItemModel("Button", "button", "button_inventory"),
         SuffixedLootTable("Button", "button"),
+        // Fences
         FenceBlockModel,
         FenceBlockState,
         SuffixedBlockItemModel("Fence", "fence", "fence_inventory"),
         SuffixedLootTable("Fence", "fence"),
+        // Walls
         WallBlockModel,
         WallBlockState,
         SuffixedBlockItemModel("Wall", "wall", "wall_inventory"),
         SuffixedLootTable("Wall", "wall"),
+        // Signs
         SignBlockModel,
         SignBlockState,
         SuffixedItemModel(Identifier.mc("item/generated"), "Sign", "sign"),
