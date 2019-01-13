@@ -4,18 +4,21 @@ import io.github.cottonmc.jsonfactory.gens.ContentGenerator
 import io.github.cottonmc.jsonfactory.data.Identifier
 import io.github.cottonmc.jsonfactory.gens.Gens
 import net.miginfocom.swing.MigLayout
-import java.awt.Dimension
-import java.awt.GridLayout
+import java.awt.*
 import java.io.File
 import java.nio.file.Files
 import javax.swing.*
+import javax.swing.text.AttributeSet
+import javax.swing.text.DefaultCaret
+import javax.swing.text.SimpleAttributeSet
+import javax.swing.text.StyleConstants
 
 internal class Gui private constructor() {
     private val frame = JFrame()
     private val fileChooser = JFileChooser().apply {
         fileSelectionMode = JFileChooser.DIRECTORIES_ONLY
     }
-    private val idField = JTextField("minecraft:prismarine_bricks")
+    private val idField = JTextField("enter an id here", 25)
     private val selectedGens = Gens.allGens.map { it to false }.toMap().toMutableMap()
     private val generators = createGeneratorPanel()
     private val saveButton = JButton("Generate").apply {
@@ -23,17 +26,23 @@ internal class Gui private constructor() {
             saveAll()
         }
     }
+    private val outputTextArea = JTextPane().apply {
+        font = Font.getFont(Font.MONOSPACED)
+        (caret as? DefaultCaret)?.updatePolicy = DefaultCaret.ALWAYS_UPDATE
+        isEditable = false
+    }
 
     init {
-        val panel = JPanel(GridLayout(1, 0)).apply {
-            add(generators)
-            add(JPanel(MigLayout()).apply {
-                add(JLabel("ID"))
-                add(idField, "span 2, wrap")
-                add(saveButton, "skip, span, wrap")
-                add(JLabel("<html><i>Note: save in src/main/resources or pack root </i>"), "span, wrap")
-            })
-        }
+        val rightPanel = JSplitPane(JSplitPane.VERTICAL_SPLIT, JPanel(MigLayout()).apply {
+            add(JLabel("ID"))
+            add(idField, "span 2, wrap")
+            add(saveButton, "skip, span, wrap")
+            add(JLabel("<html><i>Note: save in src/main/resources or pack root </i>"), "span, wrap")
+        }, JScrollPane(JPanel(GridLayout()).apply {
+            add(outputTextArea)
+        }))
+
+        val panel = JSplitPane(JSplitPane.HORIZONTAL_SPLIT, generators, rightPanel)
 
         frame.apply {
             title = "JSON Factory"
@@ -46,34 +55,35 @@ internal class Gui private constructor() {
         SwingUtilities.invokeLater {
             frame.isVisible = true
             frame.size = Dimension(640, 440)
+            printMessage("Welcome", "to JSON Factory!")
         }
     }
 
     private fun saveAll() {
-        if (selectedGens.none { (_, value) -> value })
+        if (selectedGens.none { (_, value) -> value }) {
+            printMessage("Note:", "No generators selected.", noteAttributes)
             return
+        }
 
         val answer = fileChooser.showSaveDialog(frame)
 
         if (answer == JFileChooser.APPROVE_OPTION) {
+            printMessage("", "-".repeat(25))
+            printMessage("Started", "generating.", boldAttributes)
+
             val split = idField.text.split(',')
             for (idText in split) {
                 val id = Identifier.orNull(idText)
 
                 if (id == null) {
-                    JOptionPane.showMessageDialog(
-                        frame,
-                        "ID $idText is invalid.",
-                        "Invalid ID",
-                        JOptionPane.ERROR_MESSAGE
-                    )
+                    printMessage("Invalid ID:", idText, errorAttributes)
                     continue
                 }
 
                 save(id, fileChooser.selectedFile)
             }
 
-            JOptionPane.showMessageDialog(frame, "Finished generating.")
+            printMessage("Finished", "generating.", boldAttributes)
         }
     }
 
@@ -105,6 +115,8 @@ internal class Gui private constructor() {
 
                 Files.createDirectories(file.parentFile?.toPath())
                 value.writeToFile(file)
+
+                printMessage("Generated", file.toRelativeString(resourceDir))
             }
         }
     }
@@ -133,7 +145,36 @@ internal class Gui private constructor() {
         return pane
     }
 
+    private fun printMessage(prefix: String, msg: String, prefixAttributes: AttributeSet = defaultAttributes) {
+        val doc = outputTextArea.styledDocument
+
+        if (prefix.isNotEmpty()) {
+            doc.insertString(doc.length, prefix, prefixAttributes)
+            doc.insertString(doc.length, " ", null)
+        }
+        doc.insertString(doc.length, "$msg\n", null)
+    }
+
     companion object {
+        private val defaultAttributes = SimpleAttributeSet().apply {
+            StyleConstants.setForeground(this, Color(0x1680f9))
+        }
+
+        private val boldAttributes = SimpleAttributeSet().apply {
+            StyleConstants.setForeground(this, Color(0x1680f9))
+            StyleConstants.setBold(this, true)
+        }
+
+        private val errorAttributes = SimpleAttributeSet().apply {
+            StyleConstants.setForeground(this, Color.RED)
+            StyleConstants.setBold(this, true)
+        }
+
+        private val noteAttributes = SimpleAttributeSet().apply {
+            StyleConstants.setBackground(this, Color.ORANGE)
+            StyleConstants.setBold(this, true)
+        }
+
         fun show() {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName())
             Gui().show()
