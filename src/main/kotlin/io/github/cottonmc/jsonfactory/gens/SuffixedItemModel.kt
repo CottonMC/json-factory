@@ -4,8 +4,8 @@ import io.github.cottonmc.jsonfactory.data.Identifier
 import io.github.cottonmc.jsonfactory.output.Model
 import io.github.cottonmc.jsonfactory.output.Suffixed
 
-class SuffixedItemModel(val parent: Identifier, display: String, private val suffix: String) :
-    ContentGenerator("$display Item Model", "models/item", Categories.Item) {
+class SuffixedItemModel(val parent: Identifier, display: String, private val suffix: String, category: Category = Categories.Item) :
+    ContentGenerator("$display Item Model", "models/item", category) {
     override fun generate(id: Identifier) = listOf(
         Suffixed(
             Model(

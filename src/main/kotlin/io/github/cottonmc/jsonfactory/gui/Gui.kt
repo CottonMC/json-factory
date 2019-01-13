@@ -153,6 +153,7 @@ internal class Gui private constructor() {
             doc.insertString(doc.length, " ", null)
         }
         doc.insertString(doc.length, "$msg\n", null)
+        outputTextArea.repaint()
     }
 
     companion object {
