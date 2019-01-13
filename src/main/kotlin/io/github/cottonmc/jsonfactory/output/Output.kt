@@ -7,7 +7,7 @@ import java.io.File
  */
 interface Output {
     /**
-     * The file name suffix (placed before the extension).
+     * The file name suffix (placed before the extension if not empty).
      */
     val suffix: String get() = ""
 

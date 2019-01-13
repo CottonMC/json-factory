@@ -26,7 +26,12 @@ data class Property<out T>(val name: String, val value: T, val mode: Mode = Mode
         /**
          * The property is removed if its [value] is empty.
          */
-        RemoveIfEmpty
+        RemoveIfEmpty,
+
+        /**
+         * The property is removed if its [value] is null.
+         */
+        RemoveIfNull
     }
 
     class Builder internal constructor() {
@@ -61,6 +66,12 @@ data class Property<out T>(val name: String, val value: T, val mode: Mode = Mode
             Mode.RemoveIfEmpty
         )
 
+        fun <T : Any> KProperty<T?>.removeIfNull() = Property(
+            name,
+            getter.call(),
+            Mode.RemoveIfNull
+        )
+
         fun build(): List<Property<*>> = list
     }
 
@@ -74,6 +85,10 @@ data class Property<out T>(val name: String, val value: T, val mode: Mode = Mode
                 when (mode) {
                     Mode.RemoveIfEmpty ->
                         if (!isEmpty(value))
+                            add(name, context.serialize(value))
+
+                    Mode.RemoveIfNull ->
+                        if (value != null)
                             add(name, context.serialize(value))
 
                     else -> add(name, context.serialize(value))

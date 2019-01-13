@@ -1,11 +1,14 @@
-package io.github.cottonmc.jsonfactory.gens
+package io.github.cottonmc.jsonfactory.gens.variants
 
 import io.github.cottonmc.jsonfactory.data.Identifier
 import io.github.cottonmc.jsonfactory.data.ListProperty
+import io.github.cottonmc.jsonfactory.gens.ContentGenerator
 import io.github.cottonmc.jsonfactory.output.ModelBlockState
 import io.github.cottonmc.jsonfactory.output.Suffixed
 
-object SlabBlockState : ContentGenerator("Slab Block State", "blockstates", Categories.BlockVariants) {
+object SlabBlockState : ContentGenerator("Slab Block State", "blockstates",
+    Categories.BlockVariants
+) {
     private val typeSuffixes = mapOf(
         "bottom" to "_slab",
         "top" to "_slab_top",

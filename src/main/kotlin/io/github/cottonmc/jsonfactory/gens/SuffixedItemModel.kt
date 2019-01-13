@@ -1,0 +1,19 @@
+package io.github.cottonmc.jsonfactory.gens
+
+import io.github.cottonmc.jsonfactory.data.Identifier
+import io.github.cottonmc.jsonfactory.output.Model
+import io.github.cottonmc.jsonfactory.output.Suffixed
+
+class SuffixedItemModel(val parent: Identifier, display: String, private val suffix: String) :
+    ContentGenerator("$display Item Model", "models/item", Categories.Item) {
+    override fun generate(id: Identifier) = listOf(
+        Suffixed(
+            Model(
+                parent = parent,
+                textures = mapOf(
+                    "layer0" to id.copy(path = "item/${id.path}_$suffix")
+                )
+            ),
+            suffix)
+    )
+}

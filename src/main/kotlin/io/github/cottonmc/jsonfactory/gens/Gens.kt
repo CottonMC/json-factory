@@ -1,6 +1,7 @@
 package io.github.cottonmc.jsonfactory.gens
 
 import io.github.cottonmc.jsonfactory.data.Identifier
+import io.github.cottonmc.jsonfactory.gens.variants.*
 
 /**
  * Lists [ContentGenerator]s.
@@ -22,7 +23,7 @@ object Gens {
     /**
      * The `item/handheld` item model generator.
      */
-    val basicHandheldItemModel = BasicItemModel(Identifier.mc("item/handheld"))
+    val basicHandheldItemModel = BasicItemModel(Identifier.mc("item/handheld"), " (Handheld)")
 
     /**
      * The block item model generator.
@@ -71,6 +72,18 @@ object Gens {
         ButtonBlockModel,
         ButtonBlockState,
         SuffixedBlockItemModel("Button", "button", "button_inventory"),
-        SuffixedLootTable("Button", "button")
+        SuffixedLootTable("Button", "button"),
+        FenceBlockModel,
+        FenceBlockState,
+        SuffixedBlockItemModel("Fence", "fence", "fence_inventory"),
+        SuffixedLootTable("Fence", "fence"),
+        WallBlockModel,
+        WallBlockState,
+        SuffixedBlockItemModel("Wall", "wall", "wall_inventory"),
+        SuffixedLootTable("Wall", "wall"),
+        SignBlockModel,
+        SignBlockState,
+        SuffixedItemModel(Identifier.mc("item/generated"), "Sign", "sign"),
+        SuffixedLootTable("Sign", "sign")
     )
 }
