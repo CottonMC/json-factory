@@ -13,13 +13,13 @@ object SlabLootTable : ContentGenerator("Slab Loot Table", "loot_tables/blocks",
                     Pool(
                         entries = listOf(
                             Entry(
-                                name = id.copy(path = id.path + "_slab"),
+                                name = id.suffixPath("_slab"),
                                 functions = listOf(
                                     Function(Identifier.mc("explosion_decay")),
                                     Function.SetCount(
                                         conditions = listOf(
                                             Condition.BlockStateProperty(
-                                                id.copy(path = id.path + "_slab"),
+                                                id.suffixPath("_slab"),
                                                 properties = mapOf(
                                                     "type" to "double"
                                                 )

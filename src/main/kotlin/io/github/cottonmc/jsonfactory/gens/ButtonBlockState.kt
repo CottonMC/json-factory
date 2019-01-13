@@ -24,7 +24,7 @@ object ButtonBlockState : ContentGenerator("Button Block State", "blockstates", 
             val suffix = if (values["powered"] == "true") "_pressed" else ""
 
             variant.copy(
-                model = variant.model.copy(path = variant.model.path + "_button$suffix"),
+                model = variant.model.suffixPath("_button$suffix"),
                 x = getXRotation(values["face"]!!),
                 y = getYRotation(values["facing"]!!).let {
                     if (values["face"] == "ceiling") (it + 180) % 360

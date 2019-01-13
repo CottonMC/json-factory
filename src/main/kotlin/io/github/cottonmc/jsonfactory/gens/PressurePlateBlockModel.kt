@@ -9,13 +9,13 @@ object PressurePlateBlockModel : ContentGenerator("Pressure Plate Block Model", 
         Suffixed(Model(
             parent = Identifier.mc("block/pressure_plate_up"),
             textures = mapOf(
-                "texture" to id.copy(path = "block/" + id.path)
+                "texture" to id.prefixPath("block/")
             )
         ), "pressure_plate"),
         Suffixed(Model(
             parent = Identifier.mc("block/pressure_plate_down"),
             textures = mapOf(
-                "texture" to id.copy(path = "block/" + id.path)
+                "texture" to id.prefixPath("block/")
             )
         ), "pressure_plate_down")
     )

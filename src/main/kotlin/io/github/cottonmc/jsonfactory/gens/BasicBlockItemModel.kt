@@ -5,6 +5,6 @@ import io.github.cottonmc.jsonfactory.output.Model
 
 object BasicBlockItemModel : ContentGenerator("Basic Block Item Model", "models/item", Categories.Block) {
     override fun generate(id: Identifier) = listOf(Model(
-        parent = id.copy(path = "block/" + id.path)
+        parent = id.prefixPath("block/")
     ))
 }

@@ -7,7 +7,7 @@ object BasicBlockModel : ContentGenerator("Basic Block Model", "models/block", C
     override fun generate(id: Identifier) = listOf(Model(
         parent = Identifier.mc("block/cube_all"),
         textures = mapOf(
-            "all" to id.copy(path = "block/" + id.path)
+            "all" to id.prefixPath("block/")
         )
     ))
 }

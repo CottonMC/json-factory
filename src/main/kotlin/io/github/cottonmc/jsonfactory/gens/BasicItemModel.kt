@@ -7,7 +7,7 @@ class BasicItemModel(val parent: Identifier, suffix: String = "") : ContentGener
     override fun generate(id: Identifier) = listOf(Model(
         parent = parent,
         textures = mapOf(
-            "layer0" to id.copy(path = "item/" + id.path)
+            "layer0" to id.prefixPath("item/")
         )
     ))
 }

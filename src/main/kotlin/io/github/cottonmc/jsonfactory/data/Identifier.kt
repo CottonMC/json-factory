@@ -13,6 +13,9 @@ import java.lang.reflect.Type
 data class Identifier(val namespace: String, val path: String) {
     override fun toString() = "$namespace:$path"
 
+    fun prefixPath(prefix: String): Identifier = copy(path = prefix + path)
+    fun suffixPath(suffix: String): Identifier = copy(path = path + suffix)
+
     companion object : JsonSerializer<Identifier> {
         /**
          * Creates an Identifier from a [combined] string in the `namespace:path` format.

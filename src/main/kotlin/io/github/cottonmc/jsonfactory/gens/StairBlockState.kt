@@ -27,8 +27,8 @@ object StairBlockState : ContentGenerator("Stair Block State", "blockstates", Ca
             }
 
             variant.copy(
-                model = variant.model.copy(
-                    path = "${variant.model.path}_stairs$suffix"
+                model = variant.model.suffixPath(
+                    "_stairs$suffix"
                 ),
                 x = x,
                 y = y,

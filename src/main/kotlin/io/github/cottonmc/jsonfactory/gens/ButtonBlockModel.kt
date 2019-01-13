@@ -9,19 +9,19 @@ object ButtonBlockModel : ContentGenerator("Button Block Model", "models/block",
         Suffixed(Model(
             parent = Identifier.mc("block/button"),
             textures = mapOf(
-                "texture" to id.copy(path = "block/" + id.path)
+                "texture" to id.prefixPath("block/")
             )
         ), "button"),
         Suffixed(Model(
             parent = Identifier.mc("block/button_pressed"),
             textures = mapOf(
-                "texture" to id.copy(path = "block/" + id.path)
+                "texture" to id.prefixPath("block/")
             )
         ), "button_pressed"),
         Suffixed(Model(
             parent = Identifier.mc("block/button_inventory"),
             textures = mapOf(
-                "texture" to id.copy(path = "block/" + id.path)
+                "texture" to id.prefixPath("block/")
             )
         ), "button_inventory")
     )

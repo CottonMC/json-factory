@@ -14,7 +14,7 @@ class SuffixedLootTable(display: String, private val suffix: String) : ContentGe
                 Pool(
                     entries = listOf(
                         Entry(
-                            id.copy(path = id.path + "_$suffix")
+                            id.suffixPath("_$suffix")
                         )
                     ),
                     conditions = listOf(

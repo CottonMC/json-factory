@@ -9,25 +9,25 @@ object StairBlockModel : ContentGenerator("Stair Block Model", "models/block", C
         Suffixed(Model(
             parent = Identifier.mc("block/stairs"),
             textures = mapOf(
-                "bottom" to id.copy(path = "block/" + id.path),
-                "top" to id.copy(path = "block/" + id.path),
-                "side" to id.copy(path = "block/" + id.path)
+                "bottom" to id.prefixPath("block/"),
+                "top" to id.prefixPath("block/"),
+                "side" to id.prefixPath("block/")
             )
         ), "stairs"),
         Suffixed(Model(
             parent = Identifier.mc("block/inner_stairs"),
             textures = mapOf(
-                "bottom" to id.copy(path = "block/" + id.path),
-                "top" to id.copy(path = "block/" + id.path),
-                "side" to id.copy(path = "block/" + id.path)
+                "bottom" to id.prefixPath("block/"),
+                "top" to id.prefixPath("block/"),
+                "side" to id.prefixPath("block/")
             )
         ), "stairs_inner"),
         Suffixed(Model(
             parent = Identifier.mc("block/outer_stairs"),
             textures = mapOf(
-                "bottom" to id.copy(path = "block/" + id.path),
-                "top" to id.copy(path = "block/" + id.path),
-                "side" to id.copy(path = "block/" + id.path)
+                "bottom" to id.prefixPath("block/"),
+                "top" to id.prefixPath("block/"),
+                "side" to id.prefixPath("block/")
             )
         ), "stairs_outer")
     )

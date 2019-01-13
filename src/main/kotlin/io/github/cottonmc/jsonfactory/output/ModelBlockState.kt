@@ -46,7 +46,7 @@ data class ModelBlockState(val variants: Map<String, Variant>) : Json {
 
             for (o in output) {
                 val key = o.joinToString(separator = ",") { (name, value) -> "$name=$value" }
-                val variant = Variant(id.copy(path = "block/" + id.path))
+                val variant = Variant(id.prefixPath("block/"))
 
                 variants[key] = transform(o.toMap(), variant)
             }

@@ -18,8 +18,8 @@ object SlabBlockState : ContentGenerator("Slab Block State", "blockstates", Cate
                 id, listOf(ListProperty.slabType)
             ) { values, variant ->
                 variant.copy(
-                    model = variant.model.copy(
-                        path = variant.model.path + typeSuffixes[values["type"]]
+                    model = variant.model.suffixPath(
+                        typeSuffixes[values["type"]] ?: ""
                     )
                 )
             }, "slab"
