@@ -62,7 +62,10 @@ tasks.withType<Test> {
     useJUnitPlatform()
 }
 
-apply(from = "https://raw.githubusercontent.com/Juuxel/gradle-local-properties/master/loader.gradle.kts")
+// Also private.properties?
+if (rootProject.file("private.gradle").exists()) {
+    apply(from = "private.gradle")
+}
 
 //the artifactory block is written in the groovy dsl
 apply(from = "artifactory.gradle")

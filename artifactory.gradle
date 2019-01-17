@@ -8,8 +8,8 @@ artifactory {
                 repoKey = "libs-release-local"
             }
 
-            username = cottonArtifactoryUser == null ? System.getProperty("artifactoryUser") : cottonArtifactoryUser
-            password = cottonArtifactoryPassword == null ? System.getProperty("artifactoryPassword") : cottonArtifactoryPassword
+            username = (!project.hasProperty("cottonArtifactoryUser")) ? System.getProperty("artifactoryUser") : cottonArtifactoryUser
+            password = (!project.hasProperty("cottonArtifactoryPassword")) ? System.getProperty("artifactoryPassword") : cottonArtifactoryPassword
         }
         defaults {
             publications("maven")

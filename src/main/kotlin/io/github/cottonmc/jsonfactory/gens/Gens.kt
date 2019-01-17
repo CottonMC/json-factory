@@ -100,6 +100,11 @@ object Gens {
          */
         val slabLootTable = SlabLootTable
 
+        /**
+         * A list of all slab generators.
+         */
+        val allSlabs = listOf(slabBlockModel, slabBlockState, slabItemModel, slabLootTable)
+
         // STAIRS
 
         /**
@@ -121,6 +126,11 @@ object Gens {
          * The stair loot table generator.
          */
         val stairLootTable = SuffixedLootTable("Stair", "stairs")
+
+        /**
+         * A list of all stair generators.
+         */
+        val allStairs = listOf(stairBlockModel, stairBlockState, stairItemModel, stairLootTable)
 
         // PRESSURE PLATES
 
@@ -144,6 +154,11 @@ object Gens {
          */
         val pressurePlateLootTable = SuffixedLootTable("Pressure Plate", "pressure_plate")
 
+        /**
+         * A list of all pressure plate generators.
+         */
+        val allPressurePlates = listOf(pressurePlateBlockModel, pressurePlateBlockState, pressurePlateItemModel, pressurePlateLootTable)
+
         // BUTTONS
 
         /**
@@ -165,6 +180,11 @@ object Gens {
          * The button loot table generator.
          */
         val buttonLootTable = SuffixedLootTable("Button", "button")
+
+        /**
+         * A list of all button generators.
+         */
+        val allButtons = listOf(buttonBlockModel, buttonBlockState, buttonItemModel, buttonLootTable)
 
         // FENCES
 
@@ -188,6 +208,11 @@ object Gens {
          */
         val fenceLootTable = SuffixedLootTable("Fence", "fence")
 
+        /**
+         * A list of all fence generators.
+         */
+        val allFences = listOf(fenceBlockModel, fenceBlockState, fenceItemModel, fenceLootTable)
+
         // WALLS
 
         /**
@@ -210,6 +235,11 @@ object Gens {
          */
         val wallLootTable = SuffixedLootTable("Wall", "wall")
 
+        /**
+         * A list of all wall generators.
+         */
+        val allWalls = listOf(wallBlockModel, wallBlockState, wallItemModel, wallLootTable)
+
         // SIGNS
 
         /**
@@ -231,6 +261,38 @@ object Gens {
          * The sign loot table generator.
          */
         val signLootTable = SuffixedLootTable("Sign", "sign")
+
+        /**
+         * A list of all sign generators.
+         */
+        val allSigns = listOf(signBlockModel, signBlockState, signItemModel, signLootTable)
+
+        // FENCE GATES
+
+        /**
+         * The fence gate model generator.
+         */
+        val fenceGateBlockModel = FenceGateBlockModel
+
+        /**
+         * The fence gate block state generator.
+         */
+        val fenceGateBlockState = FenceGateBlockState
+
+        /**
+         * The fence gate item model generator.
+         */
+        val fenceGateItemModel = SuffixedBlockItemModel("Fence Gate", "fence_gate")
+
+        /**
+         * The fence gate loot table generator.
+         */
+        val fenceGateLootTable = SuffixedLootTable("Fence Gate", "fence_gate")
+
+        /**
+         * A list of all fence gate generators.
+         */
+        val allFenceGates = listOf(fenceGateBlockModel, fenceGateBlockState, fenceGateItemModel, fenceGateLootTable)
     }
 
     /**
@@ -286,6 +348,11 @@ object Gens {
         Variants.signBlockModel,
         Variants.signBlockState,
         Variants.signItemModel,
-        Variants.signLootTable
+        Variants.signLootTable,
+        // Fence gates
+        Variants.fenceGateBlockModel,
+        Variants.fenceGateBlockState,
+        Variants.fenceGateItemModel,
+        Variants.fenceGateLootTable
     )
 }

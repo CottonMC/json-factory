@@ -103,4 +103,5 @@ hs_err_pid*
 classes/
 .idea/
 private.properties
+private.gradle
 !**/gradle-wrapper.jar

@@ -8,6 +8,10 @@ data class ListProperty(val name: String, val values: List<String>) {
         val slabType = ListProperty("type", listOf("bottom", "top", "double"))
         val stairShape = ListProperty("shape", listOf("straight", "outer_right", "outer_left", "inner_right", "inner_left"))
         val buttonFace = ListProperty("face", listOf("floor", "wall", "ceiling"))
-        val powered = ListProperty("powered", listOf("true", "false"))
+        val powered = boolean("powered")
+        val gateInWall = boolean("in_wall")
+        val gateOpen = boolean("open")
+
+        fun boolean(name: String) = ListProperty(name, listOf("true", "false"))
     }
 }
