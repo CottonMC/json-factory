@@ -70,6 +70,7 @@ internal class Gui private constructor() {
         if (answer == JFileChooser.APPROVE_OPTION) {
             printMessage("", "-".repeat(25))
             printMessage("Started", "generating.", boldAttributes)
+            printMessage("In", fileChooser.selectedFile.path)
 
             val split = idField.text.split(',')
             for (idText in split) {
@@ -84,6 +85,7 @@ internal class Gui private constructor() {
             }
 
             printMessage("Finished", "generating.", boldAttributes)
+            Sounds.finished.start()
         }
     }
 
@@ -106,6 +108,7 @@ internal class Gui private constructor() {
                 )
 
                 if (file.exists()) {
+                    Sounds.confirm.start()
                     val confirm =
                         JOptionPane.showConfirmDialog(frame, "Do you want to overwrite the existing file $file?")
 
