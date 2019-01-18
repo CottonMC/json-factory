@@ -11,7 +11,7 @@ plugins {
 }
 
 group = "io.github.cottonmc"
-version = "0.3.1-SNAPSHOT"
+version = "0.3.1"
 
 repositories {
     jcenter()
@@ -24,9 +24,8 @@ application {
 dependencies {
     api(kotlin("stdlib-jdk8"))
     api("com.google.code.gson:gson:2.8.5")
+    api(kotlin("reflect"))
     implementation("com.miglayout:miglayout-swing:5.2")
-    // TODO: Make kotlin-reflect actually implementation-only or mark as API
-    implementation(kotlin("reflect"))
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.2.0")
     testImplementation("io.strikt:strikt-core:0.17.1")
     testRuntime("org.junit.jupiter:junit-jupiter-engine:5.2.0")
