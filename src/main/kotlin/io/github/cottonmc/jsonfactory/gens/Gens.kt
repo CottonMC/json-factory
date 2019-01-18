@@ -6,7 +6,7 @@ import io.github.cottonmc.jsonfactory.gens.variants.*
 /**
  * Lists [ContentGenerator]s.
  *
- * The generator properties (apart from [allGens]) are mostly version-independent and
+ * The generator properties (apart from the contents of [allGens]) are mostly version-independent and
  * won't change as often as their classes.
  */
 object Gens {
@@ -320,6 +320,33 @@ object Gens {
          * A list of all trapdoor generators.
          */
         val allTrapdoors = listOf(trapdoorBlockModel, trapdoorBlockState, trapdoorItemModel, trapdoorLootTable)
+
+        // DOORS
+
+        /**
+         * The door model generator.
+         */
+        val doorBlockModel = DoorBlockModel
+
+        /**
+         * The door block state generator.
+         */
+        val doorBlockState = DoorBlockState
+
+        /**
+         * The door item model generator.
+         */
+        val doorItemModel = SuffixedItemModel(Identifier.mc("item/generated"), "Door", "door", ContentGenerator.Categories.BlockVariants)
+
+        /**
+         * The door loot table generator.
+         */
+        val doorLootTable = SuffixedLootTable("Door", "door")
+
+        /**
+         * A list of all door generators.
+         */
+        val allDoors = listOf(doorBlockModel, doorBlockState, doorItemModel, doorLootTable)
     }
 
     /**
@@ -380,6 +407,16 @@ object Gens {
         Variants.fenceGateBlockModel,
         Variants.fenceGateBlockState,
         Variants.fenceGateItemModel,
-        Variants.fenceGateLootTable
+        Variants.fenceGateLootTable,
+        // Trapdoors
+        Variants.trapdoorBlockModel,
+        Variants.trapdoorBlockState,
+        Variants.trapdoorItemModel,
+        Variants.trapdoorLootTable,
+        // Doors
+        Variants.doorBlockModel,
+        Variants.doorBlockState,
+        Variants.doorItemModel,
+        Variants.doorLootTable
     )
 }

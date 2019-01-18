@@ -18,6 +18,8 @@ object TrapdoorBlockState : ContentGenerator("Trapdoor Block State", "blockstate
 
                 variant.copy(
                     model = variant.model.suffixPath("_trapdoor_$suffix"),
+                    x = if (values["open"] == "true" && values["half"] == "top") 180
+                        else 0,
                     y = getYRotation(values["facing"] ?: "").let {
                         if (values["open"] == "true" && values["half"] == "top")
                             (it + 180) % 360

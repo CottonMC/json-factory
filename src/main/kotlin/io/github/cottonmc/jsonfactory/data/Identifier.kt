@@ -15,6 +15,7 @@ data class Identifier(val namespace: String, val path: String) {
 
     fun prefixPath(prefix: String): Identifier = copy(path = prefix + path)
     fun suffixPath(suffix: String): Identifier = copy(path = path + suffix)
+    fun wrapPath(prefix: String, suffix: String): Identifier = copy(path = "$prefix$path$suffix")
 
     companion object : JsonSerializer<Identifier> {
         /**

@@ -25,6 +25,7 @@ dependencies {
     api(kotlin("stdlib-jdk8"))
     api("com.google.code.gson:gson:2.8.5")
     implementation("com.miglayout:miglayout-swing:5.2")
+    // TODO: Make kotlin-reflect actually implementation-only or mark as API
     implementation(kotlin("reflect"))
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.2.0")
     testImplementation("io.strikt:strikt-core:0.17.1")
