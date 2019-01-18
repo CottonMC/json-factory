@@ -293,6 +293,33 @@ object Gens {
          * A list of all fence gate generators.
          */
         val allFenceGates = listOf(fenceGateBlockModel, fenceGateBlockState, fenceGateItemModel, fenceGateLootTable)
+
+        // TRAPDOORS
+
+        /**
+         * The trapdoor model generator.
+         */
+        val trapdoorBlockModel = TrapdoorBlockModel
+
+        /**
+         * The trapdoor block state generator.
+         */
+        val trapdoorBlockState = TrapdoorBlockState
+
+        /**
+         * The trapdoor item model generator.
+         */
+        val trapdoorItemModel = SuffixedBlockItemModel("Trapdoor", "trapdoor", "trapdoor_bottom")
+
+        /**
+         * The trapdoor loot table generator.
+         */
+        val trapdoorLootTable = SuffixedLootTable("Trapdoor", "trapdoor")
+
+        /**
+         * A list of all trapdoor generators.
+         */
+        val allTrapdoors = listOf(trapdoorBlockModel, trapdoorBlockState, trapdoorItemModel, trapdoorLootTable)
     }
 
     /**
