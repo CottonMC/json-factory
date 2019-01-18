@@ -32,7 +32,7 @@ object DoorBlockState : ContentGenerator("Door Block State", "blockstates", Cate
                         else it
                     }
                 )
-            }, "trapdoor"
+            }, "door"
         )
     )
 
