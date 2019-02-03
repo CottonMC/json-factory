@@ -34,10 +34,13 @@ data class ModelBlockState(val variants: Map<String, Variant>) : Json {
             properties: List<ListProperty>,
             transform: (values: Map<String, String>, variant: Variant) -> Variant = { _, variant -> variant }
         ): ModelBlockState {
-            val output: List<List<Pair<String, String>>> = properties.fold(listOf(emptyList())) { acc, prop ->
+            val output: Sequence<Sequence<Pair<String, String>>> = properties.fold(sequenceOf(emptySequence())) { acc, prop ->
                 acc.flatMap { existing ->
-                    prop.values.map { value ->
-                        listOf(prop.name to value) + existing
+                    prop.values.asSequence().map { value ->
+                        sequence {
+                            yield(prop.name to value)
+                            yieldAll(existing)
+                        }
                     }
                 }
             }
