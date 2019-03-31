@@ -3,7 +3,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     java
-    kotlin("jvm") version "1.3.11"
+    kotlin("jvm") version "1.3.21"
     application
     id("com.jfrog.artifactory") version "4.9.0"
     `maven-publish`
@@ -11,7 +11,7 @@ plugins {
 }
 
 group = "io.github.cottonmc"
-version = "0.3.2"
+version = "0.3.3"
 
 repositories {
     jcenter()

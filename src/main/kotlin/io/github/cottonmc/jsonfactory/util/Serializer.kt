@@ -7,6 +7,8 @@ import io.github.cottonmc.jsonfactory.output.Property
 /**
  * Serializes objects.
  */
+// TODO: Remove
+@Deprecated("Will be made internal or removed in a future release")
 object Serializer {
     private val gson = GsonBuilder()
         .registerTypeHierarchyAdapter(Json.ByProperties::class.java, Property)
