@@ -13,30 +13,43 @@ plugins {
 group = "io.github.cottonmc"
 version = "0.3.3"
 
-repositories {
-    jcenter()
-}
+allprojects {
+    repositories {
+        jcenter()
+    }
 
-application {
-    mainClassName = "io.github.cottonmc.jsonfactory.main.MainKt"
+    tasks.withType<KotlinCompile> {
+        kotlinOptions.jvmTarget = "1.8"
+    }
+
+    //the artifactory block is written in the groovy dsl
+    apply(from = rootProject.file("artifactory.gradle"))
+
+    tasks.create<Zip>("sourcesJar") {
+        extension = "jar"
+        classifier = "sources"
+        from("src/main/kotlin")
+        from("src/main/resources")
+    }
+
+    publishing {
+        publications {
+            create<MavenPublication>("maven") {
+                from(components["java"])
+                artifact(tasks["distZip"])
+                artifact(tasks["sourcesJar"])
+            }
+        }
+    }
 }
 
 dependencies {
     api(kotlin("stdlib-jdk8"))
     api("com.google.code.gson:gson:2.8.5")
     api(kotlin("reflect"))
-    implementation("com.miglayout:miglayout-swing:5.2")
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.2.0")
     testImplementation("io.strikt:strikt-core:0.17.1")
     testRuntime("org.junit.jupiter:junit-jupiter-engine:5.2.0")
-}
-
-configure<JavaPluginConvention> {
-    sourceCompatibility = JavaVersion.VERSION_1_8
-}
-
-tasks.withType<KotlinCompile> {
-    kotlinOptions.jvmTarget = "1.8"
 }
 
 tasks.withType<DokkaTask> {
@@ -51,13 +64,6 @@ tasks.withType<Jar> {
     }
 }
 
-tasks.create<Zip>("sourcesJar") {
-    extension = "jar"
-    classifier = "sources"
-    from("src/main/kotlin")
-    from("src/main/resources")
-}
-
 tasks.withType<Test> {
     useJUnitPlatform()
 }
@@ -65,17 +71,4 @@ tasks.withType<Test> {
 // Also private.properties?
 if (rootProject.file("private.gradle").exists()) {
     apply(from = "private.gradle")
-}
-
-//the artifactory block is written in the groovy dsl
-apply(from = "artifactory.gradle")
-
-publishing {
-    publications {
-        create<MavenPublication>("maven") {
-            from(components["java"])
-            artifact(tasks["distZip"])
-            artifact(tasks["sourcesJar"])
-        }
-    }
 }
