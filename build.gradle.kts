@@ -10,10 +10,10 @@ plugins {
     id("org.jetbrains.dokka") version "0.9.17"
 }
 
-group = "io.github.cottonmc"
-version = "0.3.3"
-
 allprojects {
+    group = "io.github.cottonmc"
+    version = "0.4.0"
+
     repositories {
         jcenter()
     }
@@ -31,14 +31,14 @@ allprojects {
         from("src/main/kotlin")
         from("src/main/resources")
     }
+}
 
-    publishing {
-        publications {
-            create<MavenPublication>("maven") {
-                from(components["java"])
-                artifact(tasks["distZip"])
-                artifact(tasks["sourcesJar"])
-            }
+publishing {
+    publications {
+        create<MavenPublication>("maven") {
+            from(components["java"])
+            artifact(tasks["distZip"])
+            artifact(tasks["sourcesJar"])
         }
     }
 }
