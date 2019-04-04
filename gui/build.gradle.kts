@@ -10,8 +10,18 @@ base {
     archivesBaseName = "json-factory-gui"
 }
 
+val local = true
+
+repositories {
+    maven(url = "http://server.bbkr.space:8081/artifactory/libs-release")
+}
+
 dependencies {
-    implementation(project(":"))
+    if (local) {
+        implementation(project(":"))
+    } else {
+        implementation("io.github.cottonmc:json-factory:$version")
+    }
     implementation("com.miglayout:miglayout-swing:5.2")
 }
 
