@@ -34,7 +34,7 @@ internal class Gui private constructor() {
     private val menuBar = JMenuBar().apply {
         add(JMenu("Settings").apply {
             add(JCheckBoxMenuItem("Play Finished Sound").apply {
-                isSelected = true
+                isSelected = Settings.playFinishedSound
                 addActionListener {
                     Settings.playFinishedSound = isSelected
                 }

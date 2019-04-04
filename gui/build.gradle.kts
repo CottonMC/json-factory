@@ -14,6 +14,7 @@ val local = true
 
 repositories {
     maven(url = "http://server.bbkr.space:8081/artifactory/libs-release")
+    maven(url = "http://server.bbkr.space:8081/artifactory/libs-snapshot")
 }
 
 dependencies {

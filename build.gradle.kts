@@ -11,7 +11,7 @@ plugins {
 
 allprojects {
     group = "io.github.cottonmc"
-    version = "0.4.0"
+    version = "0.4.0-SNAPSHOT"
 
     repositories {
         jcenter()

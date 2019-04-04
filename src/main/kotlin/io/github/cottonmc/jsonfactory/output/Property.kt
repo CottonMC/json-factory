@@ -31,7 +31,13 @@ data class Property<out T>(val name: String, val value: T, val mode: Mode = Mode
         /**
          * The property is removed if its [value] is null.
          */
-        RemoveIfNull
+        RemoveIfNull,
+
+        /**
+         * The property is removed if its [value] is true.
+         * @since 0.4.0
+         */
+        RemoveIfTrue
     }
 
     class Builder internal constructor() {
@@ -72,6 +78,12 @@ data class Property<out T>(val name: String, val value: T, val mode: Mode = Mode
             Mode.RemoveIfNull
         )
 
+        fun KProperty<Boolean?>.removeIfTrue() = Property(
+            name,
+            getter.call(),
+            Mode.RemoveIfTrue
+        )
+
         fun build(): List<Property<*>> = list
     }
 
@@ -89,6 +101,10 @@ data class Property<out T>(val name: String, val value: T, val mode: Mode = Mode
 
                     Mode.RemoveIfNull ->
                         if (value != null)
+                            add(name, context.serialize(value))
+
+                    Mode.RemoveIfTrue ->
+                        if (value != true)
                             add(name, context.serialize(value))
 
                     else -> add(name, context.serialize(value))

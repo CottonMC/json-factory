@@ -8,9 +8,9 @@ import java.io.OutputStream
  * A JSON output.
  */
 interface Json : Output {
-    override fun writeToFile(file: File) = file.writeText(toJson(this))
+    override fun writeToFile(file: File) = file.writeText(toJsonString())
     override fun writeToStream(stream: OutputStream) =
-        stream.bufferedWriter().write(toJson(this))
+        stream.bufferedWriter().write(toJsonString())
 
     /**
      * Converts this output to a JSON string.
@@ -34,6 +34,7 @@ interface Json : Output {
 
         /**
          * Converts an [obj] to a JSON string.
+         * @since 0.4.0
          */
         fun toJson(obj: Any): String =
             gson.toJson(obj)

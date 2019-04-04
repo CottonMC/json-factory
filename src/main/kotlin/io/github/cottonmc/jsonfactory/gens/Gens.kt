@@ -370,6 +370,38 @@ object Gens {
          * A list of all door generators.
          */
         val allDoors = listOf(doorBlockModel, doorBlockState, doorItemModel, doorLootTable)
+
+        // LADDERS
+
+        /**
+         * The ladder model generator.
+         */
+        val ladderBlockModel: ContentGenerator = LadderBlockModel
+
+        /**
+         * The ladder block state generator.
+         */
+        val ladderBlockState: ContentGenerator = LadderBlockState
+
+        /**
+         * The ladder item model generator.
+         */
+        val ladderItemModel = SuffixedItemModel(
+            Identifier.mc("item/generated"),
+            "Ladder",
+            "ladder",
+            ContentGenerator.Categories.BlockVariants
+        )
+
+        /**
+         * The ladder loot table generator.
+         */
+        val ladderLootTable = SuffixedLootTable("Ladder", "ladder")
+
+        /**
+         * A list of all ladder generators.
+         */
+        val allLadders = listOf(ladderBlockModel, ladderBlockState, ladderItemModel, ladderLootTable)
     }
 
     /**
@@ -440,6 +472,11 @@ object Gens {
         Variants.doorBlockModel,
         Variants.doorBlockState,
         Variants.doorItemModel,
-        Variants.doorLootTable
+        Variants.doorLootTable,
+        // Ladders
+        Variants.ladderBlockModel,
+        Variants.ladderBlockState,
+        Variants.ladderItemModel,
+        Variants.ladderLootTable
     )
 }
