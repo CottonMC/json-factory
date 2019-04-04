@@ -6,7 +6,7 @@ import io.github.cottonmc.jsonfactory.gens.ContentGenerator
 import io.github.cottonmc.jsonfactory.output.ModelBlockState
 import io.github.cottonmc.jsonfactory.output.Suffixed
 
-object StairBlockState : ContentGenerator("Stair Block State", "blockstates",
+internal object StairBlockState : ContentGenerator("Stair Block State", "blockstates",
     Categories.BlockVariants
 ) {
     override fun generate(id: Identifier) = listOf(Suffixed(

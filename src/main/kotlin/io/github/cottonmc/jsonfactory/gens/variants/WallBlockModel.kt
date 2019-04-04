@@ -5,7 +5,7 @@ import io.github.cottonmc.jsonfactory.gens.ContentGenerator
 import io.github.cottonmc.jsonfactory.output.Model
 import io.github.cottonmc.jsonfactory.output.Suffixed
 
-object WallBlockModel : ContentGenerator("Wall Block Model", "models/block",
+internal object WallBlockModel : ContentGenerator("Wall Block Model", "models/block",
     Categories.BlockVariants
 ) {
     override fun generate(id: Identifier) = listOf(

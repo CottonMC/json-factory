@@ -6,7 +6,7 @@ import io.github.cottonmc.jsonfactory.gens.ContentGenerator
 import io.github.cottonmc.jsonfactory.output.ModelBlockState
 import io.github.cottonmc.jsonfactory.output.Suffixed
 
-object SlabBlockState : ContentGenerator("Slab Block State", "blockstates",
+internal object SlabBlockState : ContentGenerator("Slab Block State", "blockstates",
     Categories.BlockVariants
 ) {
     private val typeSuffixes = mapOf(

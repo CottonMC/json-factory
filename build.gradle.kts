@@ -4,7 +4,6 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 plugins {
     java
     kotlin("jvm") version "1.3.21"
-    application
     id("com.jfrog.artifactory") version "4.9.0"
     `maven-publish`
     id("org.jetbrains.dokka") version "0.9.17"
@@ -37,7 +36,6 @@ publishing {
     publications {
         create<MavenPublication>("maven") {
             from(components["java"])
-            artifact(tasks["distZip"])
             artifact(tasks["sourcesJar"])
         }
     }

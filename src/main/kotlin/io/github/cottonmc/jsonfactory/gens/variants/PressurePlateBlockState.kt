@@ -5,7 +5,7 @@ import io.github.cottonmc.jsonfactory.gens.ContentGenerator
 import io.github.cottonmc.jsonfactory.output.ModelBlockState
 import io.github.cottonmc.jsonfactory.output.Suffixed
 
-object PressurePlateBlockState : ContentGenerator("Pressure Plate Block State", "blockstates",
+internal object PressurePlateBlockState : ContentGenerator("Pressure Plate Block State", "blockstates",
     Categories.BlockVariants
 ) {
     override fun generate(id: Identifier) = listOf(

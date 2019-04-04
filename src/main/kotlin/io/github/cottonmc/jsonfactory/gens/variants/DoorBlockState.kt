@@ -6,7 +6,7 @@ import io.github.cottonmc.jsonfactory.gens.ContentGenerator
 import io.github.cottonmc.jsonfactory.output.ModelBlockState
 import io.github.cottonmc.jsonfactory.output.Suffixed
 
-object DoorBlockState : ContentGenerator("Door Block State", "blockstates", Categories.BlockVariants) {
+internal object DoorBlockState : ContentGenerator("Door Block State", "blockstates", Categories.BlockVariants) {
     private val properties = listOf(
         /* facing */ ListProperty.horizontalFacing,
         /* half   */ ListProperty.halfUL,

@@ -6,7 +6,7 @@ import io.github.cottonmc.jsonfactory.gens.ContentGenerator
 import io.github.cottonmc.jsonfactory.output.ModelBlockState
 import io.github.cottonmc.jsonfactory.output.Suffixed
 
-object FenceGateBlockState : ContentGenerator("Fence Gate Block State", "blockstates", Categories.BlockVariants) {
+internal object FenceGateBlockState : ContentGenerator("Fence Gate Block State", "blockstates", Categories.BlockVariants) {
     override fun generate(id: Identifier) = listOf(
         Suffixed(
             ModelBlockState.create(id, listOf(ListProperty.horizontalFacing, ListProperty.gateInWall, ListProperty.open)) {

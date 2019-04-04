@@ -1,6 +1,7 @@
 package io.github.cottonmc.jsonfactory.gens
 
 import io.github.cottonmc.jsonfactory.data.Identifier
+import io.github.cottonmc.jsonfactory.gens.basic.*
 import io.github.cottonmc.jsonfactory.gens.variants.*
 
 /**
@@ -13,7 +14,7 @@ object Gens {
     /**
      * The `block/cube_all` (default) block model generator.
      */
-    val basicBlockModel = BasicBlockModel
+    val basicBlockModel: ContentGenerator = BasicBlockModel
 
     /**
      * The `item/generated` (default) item model generator.
@@ -23,59 +24,64 @@ object Gens {
     /**
      * The `item/handheld` item model generator.
      */
-    val basicHandheldItemModel = BasicItemModel(Identifier.mc("item/handheld"), " (Handheld)")
+    val basicHandheldItemModel =
+        BasicItemModel(Identifier.mc("item/handheld"), " (Handheld)")
 
     /**
      * The block item model generator.
      */
-    val basicBlockItemModel = BasicBlockItemModel
+    val basicBlockItemModel: ContentGenerator = BasicBlockItemModel
 
     /**
      * The basic `blockstates` file generator.
      */
-    val basicBlockState = BasicBlockState
+    val basicBlockState: ContentGenerator = BasicBlockState
 
     /**
      * The basic loot table generator.
      */
-    val basicLootTable = BasicLootTable
+    val basicLootTable: ContentGenerator = BasicLootTable
 
     /**
      * The placeholder block texture generator.
      */
-    val placeholderTextureBlock = PlaceholderTexture(ContentGenerator.Categories.Block)
+    val placeholderTextureBlock =
+        PlaceholderTexture(ContentGenerator.Categories.Block)
 
     /**
      * The placeholder block texture generator.
      */
-    val placeholderTextureItem = PlaceholderTexture(ContentGenerator.Categories.Item)
+    val placeholderTextureItem =
+        PlaceholderTexture(ContentGenerator.Categories.Item)
 
     /**
      * The base ore block model generator.
      *
      * NOTE: The child ore models assume that this is named `modid:ore_template`.
      */
-    val oreTemplateModel = BaseOreBlockModel
+    val oreTemplateModel: ContentGenerator = BaseOreBlockModel
 
     /**
      * The stone ore block model generator.
      */
-    val stoneOreBlockModel = OreBlockModel("Stone", Identifier.mc("block/stone"))
+    val stoneOreBlockModel =
+        OreBlockModel("Stone", Identifier.mc("block/stone"))
 
     /**
      * The netherrack ore block model generator.
      */
-    val netherrackOreBlockModel = OreBlockModel("Netherrack", Identifier.mc("block/netherrack"))
+    val netherrackOreBlockModel =
+        OreBlockModel("Netherrack", Identifier.mc("block/netherrack"))
 
     /**
      * The pillar block model generator.
      */
-    val pillarBlockModel = PillarBlockModel
+    val pillarBlockModel: ContentGenerator = PillarBlockModel
 
     /**
      * The pillar block state generator.
      */
-    val pillarBlockState = PillarBlockState
+    val pillarBlockState: ContentGenerator = PillarBlockState
 
     object Variants {
         // SLABS
@@ -83,12 +89,12 @@ object Gens {
         /**
          * The slab block model generator.
          */
-        val slabBlockModel = SlabBlockModel
+        val slabBlockModel: ContentGenerator = SlabBlockModel
 
         /**
          * The slab blockstate generator.
          */
-        val slabBlockState = SlabBlockState
+        val slabBlockState: ContentGenerator = SlabBlockState
 
         /**
          * The slab item model generator.
@@ -98,7 +104,7 @@ object Gens {
         /**
          * The slab loot table generator.
          */
-        val slabLootTable = SlabLootTable
+        val slabLootTable: ContentGenerator = SlabLootTable
 
         /**
          * A list of all slab generators.
@@ -110,12 +116,12 @@ object Gens {
         /**
          * The stair block model generator.
          */
-        val stairBlockModel = StairBlockModel
+        val stairBlockModel: ContentGenerator = StairBlockModel
 
         /**
          * The stair blockstate generator.
          */
-        val stairBlockState = StairBlockState
+        val stairBlockState: ContentGenerator = StairBlockState
 
         /**
          * The stair item model generator.
@@ -137,22 +143,24 @@ object Gens {
         /**
          * The pressure plate block model generator.
          */
-        val pressurePlateBlockModel = PressurePlateBlockModel
+        val pressurePlateBlockModel: ContentGenerator = PressurePlateBlockModel
 
         /**
          * The pressure plate blockstate generator.
          */
-        val pressurePlateBlockState = PressurePlateBlockState
+        val pressurePlateBlockState: ContentGenerator = PressurePlateBlockState
 
         /**
          * The pressure plate item model generator.
          */
-        val pressurePlateItemModel = SuffixedBlockItemModel("Pressure Plate", "pressure_plate")
+        val pressurePlateItemModel =
+            SuffixedBlockItemModel("Pressure Plate", "pressure_plate")
 
         /**
          * The pressure plate loot table generator.
          */
-        val pressurePlateLootTable = SuffixedLootTable("Pressure Plate", "pressure_plate")
+        val pressurePlateLootTable =
+            SuffixedLootTable("Pressure Plate", "pressure_plate")
 
         /**
          * A list of all pressure plate generators.
@@ -164,17 +172,18 @@ object Gens {
         /**
          * The button block model generator.
          */
-        val buttonBlockModel = ButtonBlockModel
+        val buttonBlockModel: ContentGenerator = ButtonBlockModel
 
         /**
          * The button blockstate generator.
          */
-        val buttonBlockState = ButtonBlockState
+        val buttonBlockState: ContentGenerator = ButtonBlockState
 
         /**
          * The button item model generator.
          */
-        val buttonItemModel = SuffixedBlockItemModel("Button", "button", "button_inventory")
+        val buttonItemModel =
+            SuffixedBlockItemModel("Button", "button", "button_inventory")
 
         /**
          * The button loot table generator.
@@ -191,17 +200,18 @@ object Gens {
         /**
          * The fence block model generator.
          */
-        val fenceBlockModel = FenceBlockModel
+        val fenceBlockModel: ContentGenerator = FenceBlockModel
 
         /**
          * The fence blockstate generator.
          */
-        val fenceBlockState = FenceBlockState
+        val fenceBlockState: ContentGenerator = FenceBlockState
 
         /**
          * The fence item model generator.
          */
-        val fenceItemModel = SuffixedBlockItemModel("Fence", "fence", "fence_inventory")
+        val fenceItemModel =
+            SuffixedBlockItemModel("Fence", "fence", "fence_inventory")
 
         /**
          * The fence loot table generator.
@@ -218,17 +228,18 @@ object Gens {
         /**
          * The wall block model generator.
          */
-        val wallBlockModel = WallBlockModel
+        val wallBlockModel: ContentGenerator = WallBlockModel
 
         /**
          * The wall blockstate generator.
          */
-        val wallBlockState = WallBlockState
+        val wallBlockState: ContentGenerator = WallBlockState
 
         /**
          * The wall item model generator.
          */
-        val wallItemModel = SuffixedBlockItemModel("Wall", "wall", "wall_inventory")
+        val wallItemModel =
+            SuffixedBlockItemModel("Wall", "wall", "wall_inventory")
 
         /**
          * The wall loot table generator.
@@ -245,17 +256,22 @@ object Gens {
         /**
          * The sign block model generator.
          */
-        val signBlockModel = SignBlockModel
+        val signBlockModel: ContentGenerator = SignBlockModel
 
         /**
          * The sign blockstate generator.
          */
-        val signBlockState = SignBlockState
+        val signBlockState: ContentGenerator = SignBlockState
 
         /**
          * The sign item model generator.
          */
-        val signItemModel = SuffixedItemModel(Identifier.mc("item/generated"), "Sign", "sign", ContentGenerator.Categories.BlockVariants)
+        val signItemModel = SuffixedItemModel(
+            Identifier.mc("item/generated"),
+            "Sign",
+            "sign",
+            ContentGenerator.Categories.BlockVariants
+        )
 
         /**
          * The sign loot table generator.
@@ -272,17 +288,18 @@ object Gens {
         /**
          * The fence gate model generator.
          */
-        val fenceGateBlockModel = FenceGateBlockModel
+        val fenceGateBlockModel: ContentGenerator = FenceGateBlockModel
 
         /**
          * The fence gate block state generator.
          */
-        val fenceGateBlockState = FenceGateBlockState
+        val fenceGateBlockState: ContentGenerator = FenceGateBlockState
 
         /**
          * The fence gate item model generator.
          */
-        val fenceGateItemModel = SuffixedBlockItemModel("Fence Gate", "fence_gate")
+        val fenceGateItemModel =
+            SuffixedBlockItemModel("Fence Gate", "fence_gate")
 
         /**
          * The fence gate loot table generator.
@@ -299,17 +316,18 @@ object Gens {
         /**
          * The trapdoor model generator.
          */
-        val trapdoorBlockModel = TrapdoorBlockModel
+        val trapdoorBlockModel: ContentGenerator = TrapdoorBlockModel
 
         /**
          * The trapdoor block state generator.
          */
-        val trapdoorBlockState = TrapdoorBlockState
+        val trapdoorBlockState: ContentGenerator = TrapdoorBlockState
 
         /**
          * The trapdoor item model generator.
          */
-        val trapdoorItemModel = SuffixedBlockItemModel("Trapdoor", "trapdoor", "trapdoor_bottom")
+        val trapdoorItemModel =
+            SuffixedBlockItemModel("Trapdoor", "trapdoor", "trapdoor_bottom")
 
         /**
          * The trapdoor loot table generator.
@@ -326,17 +344,22 @@ object Gens {
         /**
          * The door model generator.
          */
-        val doorBlockModel = DoorBlockModel
+        val doorBlockModel: ContentGenerator = DoorBlockModel
 
         /**
          * The door block state generator.
          */
-        val doorBlockState = DoorBlockState
+        val doorBlockState: ContentGenerator = DoorBlockState
 
         /**
          * The door item model generator.
          */
-        val doorItemModel = SuffixedItemModel(Identifier.mc("item/generated"), "Door", "door", ContentGenerator.Categories.BlockVariants)
+        val doorItemModel = SuffixedItemModel(
+            Identifier.mc("item/generated"),
+            "Door",
+            "door",
+            ContentGenerator.Categories.BlockVariants
+        )
 
         /**
          * The door loot table generator.

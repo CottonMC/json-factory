@@ -1,6 +1,7 @@
-package io.github.cottonmc.jsonfactory.gens
+package io.github.cottonmc.jsonfactory.gens.basic
 
 import io.github.cottonmc.jsonfactory.data.Identifier
+import io.github.cottonmc.jsonfactory.gens.ContentGenerator
 import io.github.cottonmc.jsonfactory.output.PNG
 import java.awt.Color
 import java.awt.image.BufferedImage
