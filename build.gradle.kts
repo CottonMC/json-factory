@@ -21,6 +21,10 @@ allprojects {
         kotlinOptions.jvmTarget = "1.8"
     }
 
+    if (rootProject.file("private.gradle").exists()) {
+        apply(from = rootProject.file("private.gradle"))
+    }
+
     //the artifactory block is written in the groovy dsl
     apply(from = rootProject.file("artifactory.gradle"))
 
@@ -60,7 +64,3 @@ tasks.withType<Test> {
     useJUnitPlatform()
 }
 
-// Also private.properties?
-if (rootProject.file("private.gradle").exists()) {
-    apply(from = "private.gradle")
-}

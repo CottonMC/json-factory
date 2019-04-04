@@ -39,6 +39,7 @@ tasks.withType<Jar> {
 publishing {
     publications {
         create<MavenPublication>("maven") {
+            artifactId = "json-factory-gui"
             from(components["java"])
             artifact(tasks["distZip"])
             artifact(tasks["sourcesJar"])
