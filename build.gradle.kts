@@ -56,12 +56,6 @@ tasks.withType<DokkaTask> {
     includes = listOf("src/docs/docs.md")
 }
 
-tasks.withType<Jar> {
-    manifest {
-        attributes["Main-Class"] = "io.github.cottonmc.jsonfactory.main.MainKt"
-    }
-}
-
 tasks.withType<Test> {
     useJUnitPlatform()
 }

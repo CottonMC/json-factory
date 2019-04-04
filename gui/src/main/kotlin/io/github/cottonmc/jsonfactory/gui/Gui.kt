@@ -18,7 +18,7 @@ internal class Gui private constructor() {
     private val fileChooser = JFileChooser().apply {
         fileSelectionMode = JFileChooser.DIRECTORIES_ONLY
     }
-    private val idField = JTextField("enter an id here", 25)
+    private val idField = JTextField("enter an id or comma-separated list of ids", 25)
     private val selectedGens = Gens.allGens.map { it to false }.toMap().toMutableMap()
     private val generators = createGeneratorPanel()
     private val saveButton = JButton("Generate").apply {
@@ -30,6 +30,34 @@ internal class Gui private constructor() {
         font = Font.getFont(Font.MONOSPACED)
         (caret as? DefaultCaret)?.updatePolicy = DefaultCaret.ALWAYS_UPDATE
         isEditable = false
+    }
+    private val menuBar = JMenuBar().apply {
+        add(JMenu("Settings").apply {
+            add(JCheckBoxMenuItem("Play Finished Sound").apply {
+                isSelected = true
+                addActionListener {
+                    Settings.playFinishedSound = isSelected
+                }
+            })
+
+            addSeparator()
+            add(JLabel("<html><b>Theme</b>"))
+            val buttonGroup = ButtonGroup()
+
+            for (theme in Settings.Theme.values()) {
+                add(JRadioButtonMenuItem(theme.name).apply {
+                    addActionListener {
+                        Settings.theme = theme
+                    }
+
+                    if (theme == Settings.theme) {
+                        isSelected = true
+                    }
+
+                    buttonGroup.add(this)
+                })
+            }
+        })
     }
 
     init {
@@ -43,11 +71,13 @@ internal class Gui private constructor() {
         }))
 
         val panel = JSplitPane(JSplitPane.HORIZONTAL_SPLIT, generators, rightPanel)
+        panel.dividerLocation = 320
 
         frame.apply {
             title = "JSON Factory"
             defaultCloseOperation = WindowConstants.EXIT_ON_CLOSE
             contentPane = panel
+            jMenuBar = this@Gui.menuBar
         }
     }
 
@@ -85,7 +115,9 @@ internal class Gui private constructor() {
             }
 
             printMessage("Finished", "generating.", boldAttributes)
-            Sounds.finished.start()
+            if (Settings.playFinishedSound) {
+                Sounds.finished.start()
+            }
         }
     }
 
@@ -180,7 +212,6 @@ internal class Gui private constructor() {
         }
 
         fun show() {
-            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName())
             Gui().show()
         }
     }
