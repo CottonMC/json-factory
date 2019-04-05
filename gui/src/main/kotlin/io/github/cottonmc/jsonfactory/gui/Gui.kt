@@ -253,6 +253,8 @@ internal class Gui private constructor() {
     }).apply {
         pack()
         isVisible = true
+        val screenSize = Toolkit.getDefaultToolkit().screenSize
+        setLocation(screenSize.width / 2 - width / 2, screenSize.height / 2 - height / 2)
     }
 
     companion object {
