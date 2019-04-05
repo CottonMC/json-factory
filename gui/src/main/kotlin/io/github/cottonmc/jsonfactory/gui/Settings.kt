@@ -84,23 +84,35 @@ object Settings {
         }
 
     private fun refreshTheme(theme: Theme, oldTheme: Theme?, forceRefreshDecorations: Boolean = false) {
-        val themeWindowDecorations = theme.providesWindowDecorations && !forceSystemWindowDecorations
+        fun providesWindowDecorations(theme: Theme) =
+            !forceSystemWindowDecorations && theme.providesWindowDecorations
+        val themeWindowDecorations = providesWindowDecorations(theme)
         val shouldRefreshDecorations = forceRefreshDecorations ||
-            (oldTheme != null && theme.providesWindowDecorations != oldTheme.providesWindowDecorations)
+            (oldTheme != null && providesWindowDecorations(theme) != providesWindowDecorations(oldTheme))
 
         UIManager.setLookAndFeel(when (theme) {
             Theme.Native -> UIManager.getSystemLookAndFeelClassName()
+            Theme.Business -> SubstanceBusinessLookAndFeel::class.java.name
+            Theme.BusinessBlackSteel -> SubstanceBusinessBlackSteelLookAndFeel::class.java.name
+            Theme.BusinessBlueSteel -> SubstanceBusinessBlueSteelLookAndFeel::class.java.name
             Theme.Cerulean -> SubstanceCeruleanLookAndFeel::class.java.name
             Theme.ChallengerDeep -> SubstanceChallengerDeepLookAndFeel::class.java.name
             Theme.Creme -> SubstanceCremeLookAndFeel::class.java.name
             Theme.CremeCoffee -> SubstanceCremeCoffeeLookAndFeel::class.java.name
+            Theme.Dust -> SubstanceDustLookAndFeel::class.java.name
+            Theme.DustCoffee -> SubstanceDustCoffeeLookAndFeel::class.java.name
+            Theme.EmeraldDusk -> SubstanceEmeraldDuskLookAndFeel::class.java.name
             Theme.Gemini -> SubstanceGeminiLookAndFeel::class.java.name
             Theme.Graphite -> SubstanceGraphiteLookAndFeel::class.java.name
             Theme.Magellan -> SubstanceMagellanLookAndFeel::class.java.name
             Theme.Mariner -> SubstanceMarinerLookAndFeel::class.java.name
-            Theme.Mist -> SubstanceMistSilverLookAndFeel::class.java.name
+            Theme.MistAqua -> SubstanceMistAquaLookAndFeel::class.java.name
+            Theme.MistSilver -> SubstanceMistSilverLookAndFeel::class.java.name
             Theme.Nebula -> SubstanceNebulaLookAndFeel::class.java.name
             Theme.NebulaBrickWall -> SubstanceNebulaBrickWallLookAndFeel::class.java.name
+            Theme.OfficeBlack -> SubstanceOfficeBlack2007LookAndFeel::class.java.name
+            Theme.OfficeBlue -> SubstanceOfficeBlue2007LookAndFeel::class.java.name
+            Theme.OfficeSilver -> SubstanceOfficeSilver2007LookAndFeel::class.java.name
             Theme.Twilight -> SubstanceTwilightLookAndFeel::class.java.name
         })
         JFrame.setDefaultLookAndFeelDecorated(themeWindowDecorations)
@@ -127,17 +139,27 @@ object Settings {
 
     enum class Theme(val providesWindowDecorations: Boolean = true) {
         Native(providesWindowDecorations = false),
+        Business,
+        BusinessBlackSteel,
+        BusinessBlueSteel,
         Cerulean,
         ChallengerDeep,
         Creme,
         CremeCoffee,
+        Dust,
+        DustCoffee,
+        EmeraldDusk,
         Gemini,
         Graphite,
         Magellan,
         Mariner,
-        Mist,
+        MistAqua,
+        MistSilver,
         Nebula,
         NebulaBrickWall,
+        OfficeBlack,
+        OfficeBlue,
+        OfficeSilver,
         Twilight,
         ;
 

@@ -237,7 +237,9 @@ internal class Gui private constructor() {
                         }, "wrap")
                     }
                 }
-            }))
+            }).apply {
+                verticalScrollBar.unitIncrement = 16
+            })
         }
 
         return pane
