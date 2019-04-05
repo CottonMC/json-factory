@@ -4,6 +4,7 @@ import io.github.cottonmc.jsonfactory.gens.ContentGenerator
 import io.github.cottonmc.jsonfactory.data.Identifier
 import io.github.cottonmc.jsonfactory.gens.Gens
 import net.miginfocom.swing.MigLayout
+import org.jdesktop.swingx.JXTextField
 import org.jdesktop.swingx.JXTipOfTheDay
 import org.jdesktop.swingx.JXTitledPanel
 import org.jdesktop.swingx.tips.TipLoader
@@ -22,7 +23,9 @@ internal class Gui private constructor() {
     private val fileChooser = JFileChooser().apply {
         fileSelectionMode = JFileChooser.DIRECTORIES_ONLY
     }
-    private val idField = JTextField("enter an id or comma-separated list of ids", 25)
+    private val idField = JXTextField("enter an id or comma-separated list of ids").apply {
+        columns = 25
+    }
     private val selectedGens = Gens.allGens.map { it to false }.toMap().toMutableMap()
     private val generators = createGeneratorPanel()
     private val saveButton = JButton("Generate").apply {
@@ -222,6 +225,7 @@ internal class Gui private constructor() {
     }
 
     private fun showTips() {
+        tipOfTheDay.currentTip = (0 until tipOfTheDay.model.tipCount).random()
         tipOfTheDay.showDialog(frame)
     }
 
