@@ -137,21 +137,25 @@ object Settings {
         }
     }
 
-    enum class Theme(val providesWindowDecorations: Boolean = true) {
+    enum class ThemeGroup {
+        Light, Dark
+    }
+
+    enum class Theme(val group: ThemeGroup = ThemeGroup.Light, val providesWindowDecorations: Boolean = true) {
         Native(providesWindowDecorations = false),
         Business,
         BusinessBlackSteel,
         BusinessBlueSteel,
         Cerulean,
-        ChallengerDeep,
+        ChallengerDeep(ThemeGroup.Dark),
         Creme,
         CremeCoffee,
         Dust,
         DustCoffee,
-        EmeraldDusk,
+        EmeraldDusk(ThemeGroup.Dark),
         Gemini,
-        Graphite,
-        Magellan,
+        Graphite(ThemeGroup.Dark),
+        Magellan(ThemeGroup.Dark),
         Mariner,
         MistAqua,
         MistSilver,
@@ -160,7 +164,7 @@ object Settings {
         OfficeBlack,
         OfficeBlue,
         OfficeSilver,
-        Twilight,
+        Twilight(ThemeGroup.Dark),
         ;
 
         companion object {

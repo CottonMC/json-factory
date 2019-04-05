@@ -59,17 +59,21 @@ internal class Gui private constructor() {
                 horizontalAlignment = SwingConstants.CENTER
                 val buttonGroup = ButtonGroup()
 
-                for (theme in Settings.Theme.values()) {
-                    add(JRadioButtonMenuItem(theme.name).apply {
-                        addActionListener {
-                            Settings.theme = theme
-                        }
+                for ((group, themes) in Settings.Theme.values().groupBy(Settings.Theme::group)) {
+                    add(JMenu(group.name).apply {
+                        for (theme in themes) {
+                            add(JRadioButtonMenuItem(theme.name).apply {
+                                addActionListener {
+                                    Settings.theme = theme
+                                }
 
-                        if (theme == Settings.theme) {
-                            isSelected = true
-                        }
+                                if (theme == Settings.theme) {
+                                    isSelected = true
+                                }
 
-                        buttonGroup.add(this)
+                                buttonGroup.add(this)
+                            })
+                        }
                     })
                 }
 
