@@ -91,12 +91,17 @@ object Settings {
         UIManager.setLookAndFeel(when (theme) {
             Theme.Native -> UIManager.getSystemLookAndFeelClassName()
             Theme.Cerulean -> SubstanceCeruleanLookAndFeel::class.java.name
+            Theme.ChallengerDeep -> SubstanceChallengerDeepLookAndFeel::class.java.name
             Theme.Creme -> SubstanceCremeLookAndFeel::class.java.name
             Theme.CremeCoffee -> SubstanceCremeCoffeeLookAndFeel::class.java.name
+            Theme.Gemini -> SubstanceCremeCoffeeLookAndFeel::class.java.name
             Theme.Graphite -> SubstanceGraphiteLookAndFeel::class.java.name
+            Theme.Magellan -> SubstanceMagellanLookAndFeel::class.java.name
             Theme.Mariner -> SubstanceMarinerLookAndFeel::class.java.name
             Theme.Mist -> SubstanceMistSilverLookAndFeel::class.java.name
             Theme.Nebula -> SubstanceNebulaLookAndFeel::class.java.name
+            Theme.NebulaBrickWall -> SubstanceNebulaBrickWallLookAndFeel::class.java.name
+            Theme.Twilight -> SubstanceTwilightLookAndFeel::class.java.name
         })
         JFrame.setDefaultLookAndFeelDecorated(themeWindowDecorations)
 
@@ -123,12 +128,18 @@ object Settings {
     enum class Theme(val providesWindowDecorations: Boolean = true) {
         Native(providesWindowDecorations = false),
         Cerulean,
+        ChallengerDeep,
         Creme,
         CremeCoffee,
+        Gemini,
         Graphite,
+        Magellan,
         Mariner,
         Mist,
-        Nebula;
+        Nebula,
+        NebulaBrickWall,
+        Twilight,
+        ;
 
         companion object {
             val DEFAULT = Mariner
