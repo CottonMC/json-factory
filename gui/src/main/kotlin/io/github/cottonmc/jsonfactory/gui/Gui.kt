@@ -12,6 +12,7 @@ import java.awt.*
 import java.io.File
 import java.nio.file.Files
 import java.util.*
+import javax.imageio.ImageIO
 import javax.swing.*
 import javax.swing.text.AttributeSet
 import javax.swing.text.DefaultCaret
@@ -112,6 +113,15 @@ internal class Gui private constructor() {
             defaultCloseOperation = WindowConstants.EXIT_ON_CLOSE
             contentPane = panel
             jMenuBar = this@Gui.menuBar
+            try {
+                iconImages = listOf(
+                    ImageIO.read(Gui::class.java.getResourceAsStream("/json-factory/icon.png")),
+                    ImageIO.read(Gui::class.java.getResourceAsStream("/json-factory/icon32.png"))
+                )
+            } catch (e: Exception) {
+                System.err.println("Exception while loading icon")
+                e.printStackTrace()
+            }
         }
     }
 
