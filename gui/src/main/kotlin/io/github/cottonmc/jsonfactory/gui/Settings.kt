@@ -1,5 +1,6 @@
 package io.github.cottonmc.jsonfactory.gui
 
+import org.jdesktop.swingx.JXErrorPane
 import org.pushingpixels.substance.api.skin.*
 import java.awt.Window
 import java.io.IOException
@@ -60,7 +61,7 @@ object Settings {
             showTipsOnStartup = props["show-tips-on-startup"].toString().toBoolean()
             theme = Theme.values().find { props["theme"].toString().equals(it.name, ignoreCase = true) } ?: Theme.DEFAULT
         } catch (e: IOException) {
-            // TODO: Exception handling
+            JXErrorPane.showDialog(e)
         }
     }
 
@@ -70,7 +71,7 @@ object Settings {
         try {
             props.store(Files.newOutputStream(LOCATION), null)
         } catch (e: IOException) {
-            // TODO: Exception handling
+            JXErrorPane.showDialog(e)
         }
     }
 

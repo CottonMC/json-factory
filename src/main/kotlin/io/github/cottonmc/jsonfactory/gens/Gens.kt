@@ -405,9 +405,9 @@ object Gens {
     }
 
     /**
-     * An array of all generators.
+     * A list of all generators.
      */
-    val allGens = arrayOf(
+    val allGens = listOf(
         basicBlockModel,
         basicItemModel,
         basicHandheldItemModel,
