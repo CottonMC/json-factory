@@ -4,6 +4,7 @@ import io.github.cottonmc.jsonfactory.gens.ContentGenerator
 import io.github.cottonmc.jsonfactory.data.Identifier
 import io.github.cottonmc.jsonfactory.gens.Gens
 import net.miginfocom.swing.MigLayout
+import org.jdesktop.swingx.JXTitledPanel
 import java.awt.*
 import java.io.File
 import java.nio.file.Files
@@ -70,7 +71,7 @@ internal class Gui private constructor() {
             add(outputTextArea)
         }))
 
-        val panel = JSplitPane(JSplitPane.HORIZONTAL_SPLIT, generators, rightPanel)
+        val panel = JSplitPane(JSplitPane.HORIZONTAL_SPLIT, JXTitledPanel("Generators", generators), rightPanel)
         panel.dividerLocation = 320
 
         frame.apply {
@@ -176,7 +177,6 @@ internal class Gui private constructor() {
             }))
         }
 
-        pane.border = BorderFactory.createTitledBorder("Generators")
         return pane
     }
 
@@ -193,11 +193,11 @@ internal class Gui private constructor() {
 
     companion object {
         private val defaultAttributes = SimpleAttributeSet().apply {
-            StyleConstants.setForeground(this, Color(0x1680f9))
+            StyleConstants.setForeground(this, Color(0x2E9DFF))
         }
 
         private val boldAttributes = SimpleAttributeSet().apply {
-            StyleConstants.setForeground(this, Color(0x1680f9))
+            StyleConstants.setForeground(this, Color(0x2E9DFF))
             StyleConstants.setBold(this, true)
         }
 
@@ -208,10 +208,11 @@ internal class Gui private constructor() {
 
         private val noteAttributes = SimpleAttributeSet().apply {
             StyleConstants.setBackground(this, Color.ORANGE)
+            StyleConstants.setForeground(this, Color.BLACK)
             StyleConstants.setBold(this, true)
         }
 
-        fun show() {
+        fun show() = SwingUtilities.invokeAndWait {
             Gui().show()
         }
     }
