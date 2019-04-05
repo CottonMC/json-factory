@@ -55,15 +55,9 @@ internal class Gui private constructor() {
                 }
             })
 
-            add(JCheckBoxMenuItem("Force System Window Decorations").apply {
-                isSelected = Settings.forceSystemWindowDecorations
-                addActionListener {
-                    Settings.forceSystemWindowDecorations = isSelected
-                }
+            add(JXTitledSeparator("<html><b>Theme</b>").apply {
+                horizontalAlignment = SwingConstants.CENTER
             })
-
-            addSeparator()
-            add(JLabel("<html><b>Theme</b>"))
             val buttonGroup = ButtonGroup()
 
             for (theme in Settings.Theme.values()) {
@@ -79,6 +73,13 @@ internal class Gui private constructor() {
                     buttonGroup.add(this)
                 })
             }
+
+            add(JCheckBoxMenuItem("Force System Window Decorations").apply {
+                isSelected = Settings.forceSystemWindowDecorations
+                addActionListener {
+                    Settings.forceSystemWindowDecorations = isSelected
+                }
+            })
         })
 
         add(JMenu("Help").apply {
