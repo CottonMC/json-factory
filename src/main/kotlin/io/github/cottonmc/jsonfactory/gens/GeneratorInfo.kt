@@ -1,9 +1,30 @@
 package io.github.cottonmc.jsonfactory.gens
 
+/**
+ * Contains the [category] and [subcategory] of a [ContentGenerator].
+ *
+ * The [subcategory] is optional.
+ *
+ * @since 0.4.0
+ */
 data class GeneratorInfo(val category: Category, val subcategory: Subcategory? = null) {
+    /**
+     * A generator category.
+     */
     interface Category {
+        /**
+         * The display name.
+         */
         val displayName: String
+
+        /**
+         * The output path of the category. (Example: `models/block`)
+         */
         val path: String
+
+        /**
+         * An optional description.
+         */
         val description: String?
     }
 
@@ -27,8 +48,19 @@ data class GeneratorInfo(val category: Category, val subcategory: Subcategory? =
         }
     }
 
+    /**
+     * A subcategory within a [Category].
+     * @since 0.4.0
+     */
     interface Subcategory {
+        /**
+         * The display name.
+         */
         val displayName: String
+
+        /**
+         * An optional description.
+         */
         val description: String?
     }
 
