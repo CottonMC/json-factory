@@ -55,30 +55,30 @@ internal class Gui private constructor() {
                 }
             })
 
-            add(JXTitledSeparator("<html><b>Theme</b>").apply {
+            add(JMenu("Theme").apply {
                 horizontalAlignment = SwingConstants.CENTER
-            })
-            val buttonGroup = ButtonGroup()
+                val buttonGroup = ButtonGroup()
 
-            for (theme in Settings.Theme.values()) {
-                add(JRadioButtonMenuItem(theme.name).apply {
-                    addActionListener {
-                        Settings.theme = theme
-                    }
+                for (theme in Settings.Theme.values()) {
+                    add(JRadioButtonMenuItem(theme.name).apply {
+                        addActionListener {
+                            Settings.theme = theme
+                        }
 
-                    if (theme == Settings.theme) {
-                        isSelected = true
-                    }
+                        if (theme == Settings.theme) {
+                            isSelected = true
+                        }
 
-                    buttonGroup.add(this)
-                })
-            }
-
-            add(JCheckBoxMenuItem("Force System Window Decorations").apply {
-                isSelected = Settings.forceSystemWindowDecorations
-                addActionListener {
-                    Settings.forceSystemWindowDecorations = isSelected
+                        buttonGroup.add(this)
+                    })
                 }
+
+                add(JCheckBoxMenuItem("Force System Window Decorations").apply {
+                    isSelected = Settings.forceSystemWindowDecorations
+                    addActionListener {
+                        Settings.forceSystemWindowDecorations = isSelected
+                    }
+                })
             })
         })
 
