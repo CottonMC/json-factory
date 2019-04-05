@@ -26,6 +26,15 @@ object Settings {
             save()
         }
 
+    var forceSystemWindowDecorations: Boolean = false
+        set(value) {
+            field = value
+            if (theme.providesWindowDecorations) {
+                refreshTheme(theme, null, forceRefreshDecorations = true)
+            }
+            save()
+        }
+
     var theme: Theme = Theme.DEFAULT
         set(value) {
             val old = field
@@ -46,6 +55,7 @@ object Settings {
         try {
             val props = Properties()
             props.load(Files.newInputStream(LOCATION))
+            forceSystemWindowDecorations = props["force-system-window-decorations"].toString().toBoolean()
             playFinishedSound = props["play-finished-sound"].toString().toBoolean()
             showTipsOnStartup = props["show-tips-on-startup"].toString().toBoolean()
             theme = Theme.values().find { props["theme"].toString().equals(it.name, ignoreCase = true) } ?: Theme.DEFAULT
@@ -66,15 +76,16 @@ object Settings {
 
     private fun createProperties(): Properties =
         Properties().apply {
+            put("force-system-window-decorations", forceSystemWindowDecorations.toString())
             put("play-finished-sound", playFinishedSound.toString())
             put("show-tips-on-startup", showTipsOnStartup.toString())
             put("theme", theme.name)
         }
 
-    private fun refreshTheme(theme: Theme, oldTheme: Theme?) {
-        val themeWindowDecorations = theme.providesWindowDecorations
-        val shouldRefreshDecorations =
-            oldTheme != null && themeWindowDecorations != oldTheme.providesWindowDecorations
+    private fun refreshTheme(theme: Theme, oldTheme: Theme?, forceRefreshDecorations: Boolean = false) {
+        val themeWindowDecorations = theme.providesWindowDecorations && !forceSystemWindowDecorations
+        val shouldRefreshDecorations = forceRefreshDecorations ||
+            (oldTheme != null && theme.providesWindowDecorations != oldTheme.providesWindowDecorations)
 
         UIManager.setLookAndFeel(when (theme) {
             Theme.Native -> UIManager.getSystemLookAndFeelClassName()

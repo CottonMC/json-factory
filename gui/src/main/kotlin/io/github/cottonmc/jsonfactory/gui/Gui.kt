@@ -55,6 +55,13 @@ internal class Gui private constructor() {
                 }
             })
 
+            add(JCheckBoxMenuItem("Force System Window Decorations").apply {
+                isSelected = Settings.forceSystemWindowDecorations
+                addActionListener {
+                    Settings.forceSystemWindowDecorations = isSelected
+                }
+            })
+
             addSeparator()
             add(JLabel("<html><b>Theme</b>"))
             val buttonGroup = ButtonGroup()
