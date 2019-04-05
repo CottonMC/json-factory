@@ -2,11 +2,10 @@ package io.github.cottonmc.jsonfactory.gens.basic
 
 import io.github.cottonmc.jsonfactory.data.Identifier
 import io.github.cottonmc.jsonfactory.gens.ContentGenerator
+import io.github.cottonmc.jsonfactory.gens.GeneratorInfo
 import io.github.cottonmc.jsonfactory.output.Model
 
-internal object PillarBlockModel : ContentGenerator("Pillar Block Model", "models/block",
-    Categories.Block, Subcategories.Pillars
-) {
+internal object PillarBlockModel : ContentGenerator("Pillar Block Model", "models/block", GeneratorInfo.PILLARS) {
     override fun generate(id: Identifier) = listOf(Model(
         parent = Identifier.mc("block/cube_column"),
         textures = mapOf(

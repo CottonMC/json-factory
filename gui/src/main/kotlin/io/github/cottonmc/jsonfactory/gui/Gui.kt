@@ -1,7 +1,7 @@
 package io.github.cottonmc.jsonfactory.gui
 
-import io.github.cottonmc.jsonfactory.gens.ContentGenerator
 import io.github.cottonmc.jsonfactory.data.Identifier
+import io.github.cottonmc.jsonfactory.gens.GeneratorInfo
 import io.github.cottonmc.jsonfactory.gens.Gens
 import net.miginfocom.swing.MigLayout
 import org.jdesktop.swingx.*
@@ -209,15 +209,15 @@ internal class Gui private constructor() {
         val pane = JTabbedPane(SwingConstants.TOP)
         val gens = selectedGens.keys
 
-        for (category in ContentGenerator.Categories.categories) {
+        for (category in GeneratorInfo.Categories.categories) {
             pane.addTab(category.displayName, JScrollPane(JPanel(MigLayout()).apply {
                 category.description?.let {
                     add(JLabel(it), "wrap")
                 }
 
-                val categoryGens = gens.filter { it.category == category }
+                val categoryGens = gens.filter { it.info.category == category }
 
-                val subcategories = categoryGens.map { it.subcategory }.distinct().sortedBy {
+                val subcategories = categoryGens.map { it.info.subcategory }.distinct().sortedBy {
                     it?.displayName ?: "A"
                 }
 
@@ -229,7 +229,7 @@ internal class Gui private constructor() {
                         }
                     }
 
-                    for (gen in categoryGens.filter { it.subcategory == subcategory }) {
+                    for (gen in categoryGens.filter { it.info.subcategory == subcategory }) {
                         add(JCheckBox(gen.displayName, false).apply {
                             addActionListener {
                                 selectedGens[gen] = isSelected

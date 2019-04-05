@@ -2,11 +2,12 @@ package io.github.cottonmc.jsonfactory.gens.variants
 
 import io.github.cottonmc.jsonfactory.data.Identifier
 import io.github.cottonmc.jsonfactory.gens.ContentGenerator
+import io.github.cottonmc.jsonfactory.gens.GeneratorInfo
 import io.github.cottonmc.jsonfactory.output.Model
 import io.github.cottonmc.jsonfactory.output.Suffixed
 
 internal object PressurePlateBlockModel : ContentGenerator("Pressure Plate Block Model", "models/block",
-    Categories.BlockVariants, Subcategories.PressurePlates
+    GeneratorInfo.PRESSURE_PLATES
 ) {
     override fun generate(id: Identifier) = listOf(
         Suffixed(Model(

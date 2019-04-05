@@ -2,12 +2,13 @@ package io.github.cottonmc.jsonfactory.gens.variants
 
 import io.github.cottonmc.jsonfactory.data.Identifier
 import io.github.cottonmc.jsonfactory.gens.ContentGenerator
+import io.github.cottonmc.jsonfactory.gens.GeneratorInfo
 import io.github.cottonmc.jsonfactory.output.Suffixed
 import io.github.cottonmc.jsonfactory.output.loot.*
 import io.github.cottonmc.jsonfactory.output.loot.Function
 
 internal object SlabLootTable : ContentGenerator("Slab Loot Table", "loot_tables/blocks",
-    Categories.BlockVariants, Subcategories.Slabs, resourceRoot = ResourceRoot.Data
+    GeneratorInfo.SLABS, resourceRoot = ResourceRoot.Data
 ) {
     override fun generate(id: Identifier) = listOf(
         Suffixed(

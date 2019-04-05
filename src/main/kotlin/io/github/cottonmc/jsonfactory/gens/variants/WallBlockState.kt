@@ -2,11 +2,12 @@ package io.github.cottonmc.jsonfactory.gens.variants
 
 import io.github.cottonmc.jsonfactory.data.Identifier
 import io.github.cottonmc.jsonfactory.gens.ContentGenerator
+import io.github.cottonmc.jsonfactory.gens.GeneratorInfo
 import io.github.cottonmc.jsonfactory.output.ModelBlockState
 import io.github.cottonmc.jsonfactory.output.MultipartBlockState
 import io.github.cottonmc.jsonfactory.output.Suffixed
 
-internal object WallBlockState : ContentGenerator("Wall Block State", "blockstates", Categories.BlockVariants, Subcategories.Walls) {
+internal object WallBlockState : ContentGenerator("Wall Block State", "blockstates", GeneratorInfo.WALLS) {
     override fun generate(id: Identifier) = listOf(
         Suffixed(
             MultipartBlockState(

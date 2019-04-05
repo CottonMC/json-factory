@@ -3,10 +3,11 @@ package io.github.cottonmc.jsonfactory.gens.variants
 import io.github.cottonmc.jsonfactory.data.Identifier
 import io.github.cottonmc.jsonfactory.data.ListProperty
 import io.github.cottonmc.jsonfactory.gens.ContentGenerator
+import io.github.cottonmc.jsonfactory.gens.GeneratorInfo
 import io.github.cottonmc.jsonfactory.output.ModelBlockState
 import io.github.cottonmc.jsonfactory.output.Suffixed
 
-internal object TrapdoorBlockState : ContentGenerator("Trapdoor Block State", "blockstates", Categories.BlockVariants, Subcategories.Trapdoors) {
+internal object TrapdoorBlockState : ContentGenerator("Trapdoor Block State", "blockstates", GeneratorInfo.TRAPDOORS) {
     override fun generate(id: Identifier) = listOf(
         Suffixed(
             ModelBlockState.create(id, listOf(ListProperty.horizontalFacing, ListProperty.half, ListProperty.open)) {

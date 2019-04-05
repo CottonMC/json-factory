@@ -3,10 +3,11 @@ package io.github.cottonmc.jsonfactory.gens.variants
 import io.github.cottonmc.jsonfactory.data.Identifier
 import io.github.cottonmc.jsonfactory.data.ListProperty
 import io.github.cottonmc.jsonfactory.gens.ContentGenerator
+import io.github.cottonmc.jsonfactory.gens.GeneratorInfo
 import io.github.cottonmc.jsonfactory.output.ModelBlockState
 import io.github.cottonmc.jsonfactory.output.Suffixed
 
-internal object DoorBlockState : ContentGenerator("Door Block State", "blockstates", Categories.BlockVariants, Subcategories.Doors) {
+internal object DoorBlockState : ContentGenerator("Door Block State", "blockstates", GeneratorInfo.DOORS) {
     private val properties = listOf(
         /* facing */ ListProperty.horizontalFacing,
         /* half   */ ListProperty.halfUL,
