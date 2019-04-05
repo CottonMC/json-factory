@@ -20,6 +20,12 @@ object Settings {
             save()
         }
 
+    var showTipsOnStartup: Boolean = true
+        set(value) {
+            field = value
+            save()
+        }
+
     var theme: Theme = Theme.DEFAULT
         set(value) {
             val old = field
@@ -41,6 +47,7 @@ object Settings {
             val props = Properties()
             props.load(Files.newInputStream(LOCATION))
             playFinishedSound = props["play-finished-sound"].toString().toBoolean()
+            showTipsOnStartup = props["show-tips-on-startup"].toString().toBoolean()
             theme = Theme.values().find { props["theme"].toString().equals(it.name, ignoreCase = true) } ?: Theme.DEFAULT
         } catch (e: IOException) {
             // TODO: Exception handling
@@ -60,6 +67,7 @@ object Settings {
     private fun createProperties(): Properties =
         Properties().apply {
             put("play-finished-sound", playFinishedSound.toString())
+            put("show-tips-on-startup", showTipsOnStartup.toString())
             put("theme", theme.name)
         }
 

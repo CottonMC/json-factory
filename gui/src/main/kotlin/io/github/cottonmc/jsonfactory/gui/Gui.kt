@@ -4,10 +4,13 @@ import io.github.cottonmc.jsonfactory.gens.ContentGenerator
 import io.github.cottonmc.jsonfactory.data.Identifier
 import io.github.cottonmc.jsonfactory.gens.Gens
 import net.miginfocom.swing.MigLayout
+import org.jdesktop.swingx.JXTipOfTheDay
 import org.jdesktop.swingx.JXTitledPanel
+import org.jdesktop.swingx.tips.TipLoader
 import java.awt.*
 import java.io.File
 import java.nio.file.Files
+import java.util.*
 import javax.swing.*
 import javax.swing.text.AttributeSet
 import javax.swing.text.DefaultCaret
@@ -41,6 +44,13 @@ internal class Gui private constructor() {
                 }
             })
 
+            add(JCheckBoxMenuItem("Show Tips on Startup").apply {
+                isSelected = Settings.showTipsOnStartup
+                addActionListener {
+                    Settings.showTipsOnStartup = isSelected
+                }
+            })
+
             addSeparator()
             add(JLabel("<html><b>Theme</b>"))
             val buttonGroup = ButtonGroup()
@@ -59,7 +69,22 @@ internal class Gui private constructor() {
                 })
             }
         })
+
+        add(JMenu("Help").apply {
+            add(JMenuItem("About").apply {
+                addActionListener {
+                    // TODO
+                }
+            })
+
+            add(JMenuItem("Tip of the Day").apply {
+                addActionListener {
+                    showTips()
+                }
+            })
+        })
     }
+    private val tipOfTheDay: JXTipOfTheDay
 
     init {
         val rightPanel = JSplitPane(JSplitPane.VERTICAL_SPLIT, JPanel(MigLayout()).apply {
@@ -73,6 +98,11 @@ internal class Gui private constructor() {
 
         val panel = JSplitPane(JSplitPane.HORIZONTAL_SPLIT, JXTitledPanel("Generators", generators), rightPanel)
         panel.dividerLocation = 320
+
+        // Load tipOfTheDay
+        val props = Properties()
+        props.load(Gui::class.java.getResourceAsStream("/json-factory/tips.properties"))
+        tipOfTheDay = JXTipOfTheDay(TipLoader.load(props))
 
         frame.apply {
             title = "JSON Factory"
@@ -191,6 +221,10 @@ internal class Gui private constructor() {
         outputTextArea.repaint()
     }
 
+    private fun showTips() {
+        tipOfTheDay.showDialog(frame)
+    }
+
     companion object {
         private val defaultAttributes = SimpleAttributeSet().apply {
             StyleConstants.setForeground(this, Color(0x2E9DFF))
@@ -213,7 +247,12 @@ internal class Gui private constructor() {
         }
 
         fun show() = SwingUtilities.invokeAndWait {
-            Gui().show()
+            Gui().apply {
+                show()
+                if (Settings.showTipsOnStartup) {
+                    showTips()
+                }
+            }
         }
     }
 }
