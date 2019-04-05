@@ -94,7 +94,7 @@ object Settings {
             Theme.ChallengerDeep -> SubstanceChallengerDeepLookAndFeel::class.java.name
             Theme.Creme -> SubstanceCremeLookAndFeel::class.java.name
             Theme.CremeCoffee -> SubstanceCremeCoffeeLookAndFeel::class.java.name
-            Theme.Gemini -> SubstanceCremeCoffeeLookAndFeel::class.java.name
+            Theme.Gemini -> SubstanceGeminiLookAndFeel::class.java.name
             Theme.Graphite -> SubstanceGraphiteLookAndFeel::class.java.name
             Theme.Magellan -> SubstanceMagellanLookAndFeel::class.java.name
             Theme.Mariner -> SubstanceMarinerLookAndFeel::class.java.name
