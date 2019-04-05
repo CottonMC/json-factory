@@ -4,12 +4,12 @@ import io.github.cottonmc.jsonfactory.gens.ContentGenerator
 import io.github.cottonmc.jsonfactory.data.Identifier
 import io.github.cottonmc.jsonfactory.gens.Gens
 import net.miginfocom.swing.MigLayout
-import org.jdesktop.swingx.JXTextField
-import org.jdesktop.swingx.JXTipOfTheDay
-import org.jdesktop.swingx.JXTitledPanel
+import org.jdesktop.swingx.*
+import org.jdesktop.swingx.hyperlink.HyperlinkAction
 import org.jdesktop.swingx.tips.TipLoader
 import java.awt.*
 import java.io.File
+import java.net.URI
 import java.nio.file.Files
 import java.util.*
 import javax.imageio.ImageIO
@@ -77,7 +77,7 @@ internal class Gui private constructor() {
         add(JMenu("Help").apply {
             add(JMenuItem("About").apply {
                 addActionListener {
-                    // TODO
+                    showAboutDialog()
                 }
             })
 
@@ -114,10 +114,7 @@ internal class Gui private constructor() {
             contentPane = panel
             jMenuBar = this@Gui.menuBar
             try {
-                iconImages = listOf(
-                    ImageIO.read(Gui::class.java.getResourceAsStream("/json-factory/icon.png")),
-                    ImageIO.read(Gui::class.java.getResourceAsStream("/json-factory/icon32.png"))
-                )
+                iconImages = listOf(icon, icon32, icon128)
             } catch (e: Exception) {
                 System.err.println("Exception while loading icon")
                 e.printStackTrace()
@@ -239,6 +236,25 @@ internal class Gui private constructor() {
         tipOfTheDay.showDialog(frame)
     }
 
+    private fun showAboutDialog() = JXDialog(frame, JPanel(BorderLayout()).apply {
+        name = "About JSON Factory"
+
+        add(JPanel().apply {
+            layout = BoxLayout(this, BoxLayout.Y_AXIS)
+            add(JLabel("<html><b>About JSON Factory</b>"))
+            add(JLabel("JSON Factory is developed by the Cotton project."))
+            add(JLabel("It is licensed under the MIT license."))
+            add(JXHyperlink(HyperlinkAction.createHyperlinkAction(
+                URI.create("https://github.com/CottonMC/json-factory"),
+                Desktop.Action.BROWSE
+            )))
+        }, BorderLayout.CENTER)
+        add(JLabel(ImageIcon(icon128)), BorderLayout.WEST)
+    }).apply {
+        pack()
+        isVisible = true
+    }
+
     companion object {
         private val defaultAttributes = SimpleAttributeSet().apply {
             StyleConstants.setForeground(this, Color(0x2E9DFF))
@@ -259,6 +275,13 @@ internal class Gui private constructor() {
             StyleConstants.setForeground(this, Color.BLACK)
             StyleConstants.setBold(this, true)
         }
+
+        private val icon = readImage("icon")
+        private val icon32 = readImage("icon32")
+        private val icon128 = readImage("icon128")
+
+        private fun readImage(name: String) =
+            ImageIO.read(Gui::class.java.getResourceAsStream("/json-factory/$name.png"))
 
         fun show() = SwingUtilities.invokeAndWait {
             Gui().apply {
