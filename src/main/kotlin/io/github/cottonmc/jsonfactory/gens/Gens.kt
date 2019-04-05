@@ -99,7 +99,7 @@ object Gens {
         /**
          * The slab item model generator.
          */
-        val slabItemModel = SuffixedBlockItemModel("Slab", "slab")
+        val slabItemModel = SuffixedBlockItemModel("Slab", "slab", subcategory = ContentGenerator.Subcategories.Slabs)
 
         /**
          * The slab loot table generator.
@@ -126,12 +126,12 @@ object Gens {
         /**
          * The stair item model generator.
          */
-        val stairItemModel = SuffixedBlockItemModel("Stair", "stairs")
+        val stairItemModel = SuffixedBlockItemModel("Stair", "stairs", subcategory = ContentGenerator.Subcategories.Stairs)
 
         /**
          * The stair loot table generator.
          */
-        val stairLootTable = SuffixedLootTable("Stair", "stairs")
+        val stairLootTable = SuffixedLootTable("Stair", "stairs", subcategory = ContentGenerator.Subcategories.Stairs)
 
         /**
          * A list of all stair generators.
@@ -154,13 +154,13 @@ object Gens {
          * The pressure plate item model generator.
          */
         val pressurePlateItemModel =
-            SuffixedBlockItemModel("Pressure Plate", "pressure_plate")
+            SuffixedBlockItemModel("Pressure Plate", "pressure_plate", subcategory = ContentGenerator.Subcategories.PressurePlates)
 
         /**
          * The pressure plate loot table generator.
          */
         val pressurePlateLootTable =
-            SuffixedLootTable("Pressure Plate", "pressure_plate")
+            SuffixedLootTable("Pressure Plate", "pressure_plate", subcategory = ContentGenerator.Subcategories.PressurePlates)
 
         /**
          * A list of all pressure plate generators.
@@ -183,12 +183,12 @@ object Gens {
          * The button item model generator.
          */
         val buttonItemModel =
-            SuffixedBlockItemModel("Button", "button", "button_inventory")
+            SuffixedBlockItemModel("Button", "button", "button_inventory", subcategory = ContentGenerator.Subcategories.Buttons)
 
         /**
          * The button loot table generator.
          */
-        val buttonLootTable = SuffixedLootTable("Button", "button")
+        val buttonLootTable = SuffixedLootTable("Button", "button", subcategory = ContentGenerator.Subcategories.Buttons)
 
         /**
          * A list of all button generators.
@@ -211,12 +211,12 @@ object Gens {
          * The fence item model generator.
          */
         val fenceItemModel =
-            SuffixedBlockItemModel("Fence", "fence", "fence_inventory")
+            SuffixedBlockItemModel("Fence", "fence", "fence_inventory", subcategory = ContentGenerator.Subcategories.Fences)
 
         /**
          * The fence loot table generator.
          */
-        val fenceLootTable = SuffixedLootTable("Fence", "fence")
+        val fenceLootTable = SuffixedLootTable("Fence", "fence", subcategory = ContentGenerator.Subcategories.Fences)
 
         /**
          * A list of all fence generators.
@@ -239,12 +239,12 @@ object Gens {
          * The wall item model generator.
          */
         val wallItemModel =
-            SuffixedBlockItemModel("Wall", "wall", "wall_inventory")
+            SuffixedBlockItemModel("Wall", "wall", "wall_inventory", subcategory = ContentGenerator.Subcategories.Walls)
 
         /**
          * The wall loot table generator.
          */
-        val wallLootTable = SuffixedLootTable("Wall", "wall")
+        val wallLootTable = SuffixedLootTable("Wall", "wall", subcategory = ContentGenerator.Subcategories.Walls)
 
         /**
          * A list of all wall generators.
@@ -270,13 +270,14 @@ object Gens {
             Identifier.mc("item/generated"),
             "Sign",
             "sign",
-            ContentGenerator.Categories.BlockVariants
+            ContentGenerator.Categories.BlockVariants,
+            ContentGenerator.Subcategories.Signs
         )
 
         /**
          * The sign loot table generator.
          */
-        val signLootTable = SuffixedLootTable("Sign", "sign")
+        val signLootTable = SuffixedLootTable("Sign", "sign", subcategory = ContentGenerator.Subcategories.Signs)
 
         /**
          * A list of all sign generators.
@@ -299,12 +300,12 @@ object Gens {
          * The fence gate item model generator.
          */
         val fenceGateItemModel =
-            SuffixedBlockItemModel("Fence Gate", "fence_gate")
+            SuffixedBlockItemModel("Fence Gate", "fence_gate", subcategory = ContentGenerator.Subcategories.FenceGates)
 
         /**
          * The fence gate loot table generator.
          */
-        val fenceGateLootTable = SuffixedLootTable("Fence Gate", "fence_gate")
+        val fenceGateLootTable = SuffixedLootTable("Fence Gate", "fence_gate", subcategory = ContentGenerator.Subcategories.FenceGates)
 
         /**
          * A list of all fence gate generators.
@@ -327,12 +328,12 @@ object Gens {
          * The trapdoor item model generator.
          */
         val trapdoorItemModel =
-            SuffixedBlockItemModel("Trapdoor", "trapdoor", "trapdoor_bottom")
+            SuffixedBlockItemModel("Trapdoor", "trapdoor", "trapdoor_bottom", subcategory = ContentGenerator.Subcategories.Trapdoors)
 
         /**
          * The trapdoor loot table generator.
          */
-        val trapdoorLootTable = SuffixedLootTable("Trapdoor", "trapdoor")
+        val trapdoorLootTable = SuffixedLootTable("Trapdoor", "trapdoor", subcategory = ContentGenerator.Subcategories.Trapdoors)
 
         /**
          * A list of all trapdoor generators.
@@ -358,13 +359,14 @@ object Gens {
             Identifier.mc("item/generated"),
             "Door",
             "door",
-            ContentGenerator.Categories.BlockVariants
+            ContentGenerator.Categories.BlockVariants,
+            ContentGenerator.Subcategories.Doors
         )
 
         /**
          * The door loot table generator.
          */
-        val doorLootTable = SuffixedLootTable("Door", "door")
+        val doorLootTable = SuffixedLootTable("Door", "door", subcategory = ContentGenerator.Subcategories.Doors)
 
         /**
          * A list of all door generators.
@@ -390,13 +392,14 @@ object Gens {
             Identifier.mc("item/generated"),
             "Ladder",
             "ladder",
-            ContentGenerator.Categories.BlockVariants
+            ContentGenerator.Categories.BlockVariants,
+            ContentGenerator.Subcategories.Ladders
         )
 
         /**
          * The ladder loot table generator.
          */
-        val ladderLootTable = SuffixedLootTable("Ladder", "ladder")
+        val ladderLootTable = SuffixedLootTable("Ladder", "ladder", subcategory = ContentGenerator.Subcategories.Ladders)
 
         /**
          * A list of all ladder generators.

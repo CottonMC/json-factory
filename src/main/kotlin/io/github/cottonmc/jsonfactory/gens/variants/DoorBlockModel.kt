@@ -6,7 +6,7 @@ import io.github.cottonmc.jsonfactory.output.Model
 import io.github.cottonmc.jsonfactory.output.Suffixed
 
 internal object DoorBlockModel : ContentGenerator("Door Block Model", "models/block",
-    Categories.BlockVariants
+    Categories.BlockVariants, Subcategories.Doors
 ) {
     override fun generate(id: Identifier) = listOf(
         Suffixed(Model(

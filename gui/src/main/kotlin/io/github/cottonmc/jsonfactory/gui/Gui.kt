@@ -215,12 +215,27 @@ internal class Gui private constructor() {
                     add(JLabel(it), "wrap")
                 }
 
-                for (gen in gens.filter { it.category == category }) {
-                    add(JCheckBox(gen.displayName, false).apply {
-                        addActionListener {
-                            selectedGens[gen] = isSelected
+                val categoryGens = gens.filter { it.category == category }
+
+                val subcategories = categoryGens.map { it.subcategory }.distinct().sortedBy {
+                    it?.displayName ?: "A"
+                }
+
+                for (subcategory in subcategories) {
+                    if (subcategory != null) {
+                        add(JXTitledSeparator("<html><b>${subcategory.displayName}</b>"), "wrap")
+                        subcategory.description?.let {
+                            add(JLabel("<html><i>$it</i>"), "wrap")
                         }
-                    }, "wrap")
+                    }
+
+                    for (gen in categoryGens.filter { it.subcategory == subcategory }) {
+                        add(JCheckBox(gen.displayName, false).apply {
+                            addActionListener {
+                                selectedGens[gen] = isSelected
+                            }
+                        }, "wrap")
+                    }
                 }
             }))
         }

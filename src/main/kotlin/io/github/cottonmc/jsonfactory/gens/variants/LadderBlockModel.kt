@@ -1,14 +1,12 @@
 package io.github.cottonmc.jsonfactory.gens.variants
 
 import io.github.cottonmc.jsonfactory.data.Identifier
-import io.github.cottonmc.jsonfactory.data.ListProperty
 import io.github.cottonmc.jsonfactory.data.Point
 import io.github.cottonmc.jsonfactory.gens.ContentGenerator
 import io.github.cottonmc.jsonfactory.output.Model
-import io.github.cottonmc.jsonfactory.output.ModelBlockState
 import io.github.cottonmc.jsonfactory.output.Suffixed
 
-internal object LadderBlockModel : ContentGenerator("Ladder Block Model", "models/block", Categories.BlockVariants) {
+internal object LadderBlockModel : ContentGenerator("Ladder Block Model", "models/block", Categories.BlockVariants, Subcategories.Ladders) {
     override fun generate(id: Identifier) = listOf(
         Suffixed(
             Model(

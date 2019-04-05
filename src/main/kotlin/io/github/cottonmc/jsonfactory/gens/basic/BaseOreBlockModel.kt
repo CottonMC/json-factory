@@ -6,7 +6,7 @@ import io.github.cottonmc.jsonfactory.data.Point
 import io.github.cottonmc.jsonfactory.gens.ContentGenerator
 
 internal object BaseOreBlockModel : ContentGenerator("Base Ore Block Model (use the ID namespace:ore_template)", "models/block",
-    Categories.Ore
+    Categories.Block, Subcategories.Ores
 ) {
     override fun generate(id: Identifier) = listOf(
         Model(

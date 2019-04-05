@@ -8,9 +8,10 @@ import io.github.cottonmc.jsonfactory.output.Suffixed
 class SuffixedBlockItemModel(
     display: String,
     private val fileNameSuffix: String,
-    private val parentSuffix: String = fileNameSuffix
+    private val parentSuffix: String = fileNameSuffix,
+    subcategory: Subcategory? = null
 ) : ContentGenerator("$display Block Item Model", "models/item",
-    Categories.BlockVariants
+    Categories.BlockVariants, subcategory
 ) {
     override fun generate(id: Identifier) = listOf(
         Suffixed(Model(
