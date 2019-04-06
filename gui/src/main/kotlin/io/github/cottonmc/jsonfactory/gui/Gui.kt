@@ -108,7 +108,7 @@ internal class Gui private constructor() {
             add(idField, "span 2, wrap")
             add(saveButton, "skip, span, wrap")
             add(JLabel("<html><i>Note: save in src/main/resources or pack root </i>"), "span, wrap")
-        }, JScrollPane(JPanel(GridLayout()).apply {
+        }, JFScrollPane(JPanel(GridLayout()).apply {
             add(outputTextArea)
         }))
 
@@ -214,7 +214,7 @@ internal class Gui private constructor() {
         val gens = selectedGens.keys
 
         for (category in GeneratorInfo.Categories.categories) {
-            pane.addTab(category.displayName, JScrollPane(JPanel(MigLayout()).apply {
+            pane.addTab(category.displayName, JFScrollPane(JPanel(MigLayout()).apply {
                 category.description?.let {
                     add(JLabel(it), "wrap")
                 }
@@ -241,9 +241,7 @@ internal class Gui private constructor() {
                         }, "wrap")
                     }
                 }
-            }).apply {
-                verticalScrollBar.unitIncrement = 16
-            })
+            }))
         }
 
         return pane
