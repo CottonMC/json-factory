@@ -1,5 +1,6 @@
 package io.github.cottonmc.jsonfactory.gui
 
+import io.github.cottonmc.jsonfactory.gui.themes.SolarizedSkin
 import org.jdesktop.swingx.JXErrorPane
 import org.pushingpixels.substance.api.skin.*
 import java.awt.Window
@@ -114,6 +115,8 @@ object Settings {
             Theme.OfficeBlue -> SubstanceOfficeBlue2007LookAndFeel::class.java.name
             Theme.OfficeSilver -> SubstanceOfficeSilver2007LookAndFeel::class.java.name
             Theme.Twilight -> SubstanceTwilightLookAndFeel::class.java.name
+            Theme.SolarizedLight -> SolarizedSkin.LightLAF::class.java.name
+            Theme.SolarizedDark -> SolarizedSkin.DarkLAF::class.java.name
         })
         JFrame.setDefaultLookAndFeelDecorated(themeWindowDecorations)
 
@@ -165,6 +168,8 @@ object Settings {
         OfficeBlue,
         OfficeSilver,
         Twilight(ThemeGroup.Dark),
+        SolarizedLight,
+        SolarizedDark(Settings.ThemeGroup.Dark),
         ;
 
         companion object {
