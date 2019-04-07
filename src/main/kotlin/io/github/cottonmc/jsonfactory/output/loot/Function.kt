@@ -21,4 +21,15 @@ open class Function(
             +Property("count", count)
         }
     )
+
+    class SetCountMinMax(conditions: List<Condition>, min: Double, max: Double, type: Identifier = Identifier.mc("uniform")) : Function(
+        Identifier.mc("set_count"), conditions,
+        createProperties {
+            +Property("count", mapOf(
+                "min" to min,
+                "max" to max,
+                "type" to type
+            ))
+        }
+    )
 }

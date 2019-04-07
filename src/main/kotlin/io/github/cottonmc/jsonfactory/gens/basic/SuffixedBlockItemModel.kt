@@ -14,6 +14,7 @@ class SuffixedBlockItemModel(
 ) : ContentGenerator("$display Block Item Model", "models/item", info) {
     override fun generate(id: Identifier) = listOf(
         Suffixed(Model(
-        parent = id.copy(path = "block/${id.path}_$parentSuffix")
-    ), fileNameSuffix))
+            parent = id.copy(path = "block/${id.path}_$parentSuffix")
+        ), fileNameSuffix)
+    )
 }
