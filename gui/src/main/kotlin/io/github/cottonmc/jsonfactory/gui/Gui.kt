@@ -61,7 +61,7 @@ internal class Gui private constructor() {
 
                 for ((group, themes) in Settings.Theme.values().groupBy(Settings.Theme::group)) {
                     add(JMenu(group.name).apply {
-                        for (theme in themes) {
+                        for (theme in themes.sortedBy { it.name }) {
                             add(JRadioButtonMenuItem(theme.name).apply {
                                 addActionListener {
                                     Settings.theme = theme
