@@ -19,7 +19,7 @@ internal object DoorBlockState : ContentGenerator("Door Block State", "blockstat
         Suffixed(
             ModelBlockState.create(id, properties) {
                     values, variant ->
-                val suffix = when {
+                val suffix = "_" + getHalf(values["half"]) + when {
                     values["open"] == "true" && values["hinge"] == "left" -> "_hinge"
                     values["open"] == "false" && values["hinge"] == "right" -> "_hinge"
                     else -> ""
@@ -42,5 +42,10 @@ internal object DoorBlockState : ContentGenerator("Door Block State", "blockstat
         "west" -> 180
         "north" -> 270
         else -> 0
+    }
+
+    private fun getHalf(half: String?) = when (half) {
+        "lower" -> "bottom"
+        else -> "top"
     }
 }

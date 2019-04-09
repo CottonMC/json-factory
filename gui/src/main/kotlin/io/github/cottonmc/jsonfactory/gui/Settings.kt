@@ -169,7 +169,7 @@ object Settings {
         OfficeSilver,
         Twilight(ThemeGroup.Dark),
         SolarizedLight,
-        SolarizedDark(Settings.ThemeGroup.Dark),
+        SolarizedDark(ThemeGroup.Dark),
         ;
 
         companion object {
