@@ -1,9 +1,22 @@
 package io.github.cottonmc.jsonfactory.gens
 
 import io.github.cottonmc.jsonfactory.data.Identifier
-import io.github.cottonmc.jsonfactory.gens.Gens.allGens
-import io.github.cottonmc.jsonfactory.gens.basic.*
-import io.github.cottonmc.jsonfactory.gens.variants.*
+import io.github.cottonmc.jsonfactory.gens.block.*
+import io.github.cottonmc.jsonfactory.gens.block.button.*
+import io.github.cottonmc.jsonfactory.gens.block.door.*
+import io.github.cottonmc.jsonfactory.gens.block.fence.*
+import io.github.cottonmc.jsonfactory.gens.block.fencegate.*
+import io.github.cottonmc.jsonfactory.gens.block.ladder.*
+import io.github.cottonmc.jsonfactory.gens.block.leaf.*
+import io.github.cottonmc.jsonfactory.gens.block.ore.*
+import io.github.cottonmc.jsonfactory.gens.block.pillar.*
+import io.github.cottonmc.jsonfactory.gens.block.pressureplate.*
+import io.github.cottonmc.jsonfactory.gens.block.sign.*
+import io.github.cottonmc.jsonfactory.gens.block.slab.*
+import io.github.cottonmc.jsonfactory.gens.block.stair.*
+import io.github.cottonmc.jsonfactory.gens.block.trapdoor.*
+import io.github.cottonmc.jsonfactory.gens.block.wall.*
+import io.github.cottonmc.jsonfactory.gens.item.*
 
 /**
  * Lists [ContentGenerator]s.
@@ -305,7 +318,11 @@ object Gens {
         /**
          * The fence gate loot table generator.
          */
-        val fenceGateLootTable: ContentGenerator = SuffixedLootTable("Fence Gate", "fence_gate", GeneratorInfo.FENCE_GATES)
+        val fenceGateLootTable: ContentGenerator = SuffixedLootTable(
+            "Fence Gate",
+            "fence_gate",
+            GeneratorInfo.FENCE_GATES
+        )
 
         /**
          * A list of all fence gate generators.
@@ -435,81 +452,36 @@ object Gens {
     /**
      * A list of all generators.
      */
-    val allGens = listOf(
-        basicBlockModel,
-        basicItemModel,
-        basicHandheldItemModel,
-        basicBlockItemModel,
-        basicBlockState,
-        basicLootTable,
-        placeholderTextureBlock,
-        placeholderTextureItem,
-        // Ores
-        oreTemplateModel,
-        stoneOreBlockModel,
-        netherrackOreBlockModel,
-        // Pillars
-        pillarBlockModel,
-        pillarBlockState,
-        // Slabs
-        Variants.slabBlockModel,
-        Variants.slabBlockState,
-        Variants.slabItemModel,
-        Variants.slabLootTable,
-        // Stairs
-        Variants.stairBlockModel,
-        Variants.stairBlockState,
-        Variants.stairItemModel,
-        Variants.stairLootTable,
-        // Pressure plates
-        Variants.pressurePlateBlockModel,
-        Variants.pressurePlateBlockState,
-        Variants.pressurePlateItemModel,
-        Variants.pressurePlateLootTable,
-        // Buttons
-        Variants.buttonBlockModel,
-        Variants.buttonBlockState,
-        Variants.buttonItemModel,
-        Variants.buttonLootTable,
-        // Fences
-        Variants.fenceBlockModel,
-        Variants.fenceBlockState,
-        Variants.fenceItemModel,
-        Variants.fenceLootTable,
-        // Walls
-        Variants.wallBlockModel,
-        Variants.wallBlockState,
-        Variants.wallItemModel,
-        Variants.wallLootTable,
-        // Signs
-        Variants.signBlockModel,
-        Variants.signBlockState,
-        Variants.signItemModel,
-        Variants.signLootTable,
-        // Fence gates
-        Variants.fenceGateBlockModel,
-        Variants.fenceGateBlockState,
-        Variants.fenceGateItemModel,
-        Variants.fenceGateLootTable,
-        // Trapdoors
-        Variants.trapdoorBlockModel,
-        Variants.trapdoorBlockState,
-        Variants.trapdoorItemModel,
-        Variants.trapdoorLootTable,
-        // Doors
-        Variants.doorBlockModel,
-        Variants.doorBlockState,
-        Variants.doorItemModel,
-        Variants.doorLootTable,
-        // Ladders
-        Variants.ladderBlockModel,
-        Variants.ladderBlockState,
-        Variants.ladderItemModel,
-        Variants.ladderLootTable,
-        // Leaves
-        Variants.leafBlockModel,
-        Variants.leafBlockState,
-        Variants.leafItemModel,
-        Variants.leafLootTable
-    )
+    val allGens = sequence {
+        yield(basicBlockModel)
+        yield(basicItemModel)
+        yield(basicHandheldItemModel)
+        yield(basicBlockItemModel)
+        yield(basicBlockState)
+        yield(basicLootTable)
+        yield(placeholderTextureBlock)
+        yield(placeholderTextureItem)
+
+        // Ore
+        yield(oreTemplateModel)
+        yield(stoneOreBlockModel)
+        yield(netherrackOreBlockModel)
+
+        // Pillar
+        yield(pillarBlockModel)
+        yield(pillarBlockState)
+
+        yieldAll(Variants.allSlabs)
+        yieldAll(Variants.allStairs)
+        yieldAll(Variants.allPressurePlates)
+        yieldAll(Variants.allButtons)
+        yieldAll(Variants.allFences)
+        yieldAll(Variants.allWalls)
+        yieldAll(Variants.allSigns)
+        yieldAll(Variants.allFenceGates)
+        yieldAll(Variants.allTrapdoors)
+        yieldAll(Variants.allDoors)
+        yieldAll(Variants.allLadders)
+        yieldAll(Variants.allLeaves)
+    }.toList()
 }
