@@ -1,7 +1,7 @@
 package io.github.cottonmc.jsonfactory.output
 
 import io.github.cottonmc.jsonfactory.data.Identifier
-import io.github.cottonmc.jsonfactory.data.ListProperty
+import io.github.cottonmc.jsonfactory.data.BlockStateProperty
 
 /**
  * Represents a `blockstates` file using [variants].
@@ -26,19 +26,29 @@ data class ModelBlockState(val variants: Map<String, Variant>) : Json {
     }
 
     companion object {
+        // Uses strings instead of `BlockStateProperty`s as the key of `values`
+        @Deprecated("", replaceWith = ReplaceWith("create(id, properties, transform)"))
+        internal inline fun createOld(
+            id: Identifier,
+            properties: List<BlockStateProperty>,
+            crossinline transform: (values: Map<String, String>, variant: Variant) -> Variant = { _, variant -> variant }
+        ) = create(id, properties) { values, variant ->
+            transform(values.mapKeys { (prop, _) -> prop.name }, variant)
+        }
+
         /**
          * Creates a [ModelBlockState] from an [id], a list of [properties] and a [transform] function.
          */
         fun create(
             id: Identifier,
-            properties: List<ListProperty>,
-            transform: (values: Map<String, String>, variant: Variant) -> Variant = { _, variant -> variant }
+            properties: List<BlockStateProperty>,
+            transform: (values: Map<BlockStateProperty, String>, variant: Variant) -> Variant = { _, variant -> variant }
         ): ModelBlockState {
-            val output: Sequence<Sequence<Pair<String, String>>> = properties.fold(sequenceOf(emptySequence())) { acc, prop ->
+            val output: Sequence<Sequence<Pair<BlockStateProperty, String>>> = properties.fold(sequenceOf(emptySequence())) { acc, prop ->
                 acc.flatMap { existing ->
                     prop.values.asSequence().map { value ->
                         sequence {
-                            yield(prop.name to value)
+                            yield(prop to value)
                             yieldAll(existing)
                         }
                     }
@@ -48,7 +58,7 @@ data class ModelBlockState(val variants: Map<String, Variant>) : Json {
             val variants = HashMap<String, Variant>()
 
             for (o in output) {
-                val key = o.joinToString(separator = ",") { (name, value) -> "$name=$value" }
+                val key = o.joinToString(separator = ",") { (prop, value) -> "${prop.name}=$value" }
                 val variant = Variant(id.prefixPath("block/"))
 
                 variants[key] = transform(o.toMap(), variant)

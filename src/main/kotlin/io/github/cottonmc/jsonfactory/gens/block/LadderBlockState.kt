@@ -1,7 +1,7 @@
 package io.github.cottonmc.jsonfactory.gens.block
 
 import io.github.cottonmc.jsonfactory.data.Identifier
-import io.github.cottonmc.jsonfactory.data.ListProperty
+import io.github.cottonmc.jsonfactory.data.BlockStateProperty
 import io.github.cottonmc.jsonfactory.gens.ContentGenerator
 import io.github.cottonmc.jsonfactory.gens.GeneratorInfo
 import io.github.cottonmc.jsonfactory.output.ModelBlockState
@@ -17,7 +17,7 @@ internal object LadderBlockState : ContentGenerator("Ladder Block State", "block
 
     override fun generate(id: Identifier) = listOf(
         Suffixed(
-            ModelBlockState.create(id, listOf(ListProperty.horizontalFacing)) { values, variant ->
+            ModelBlockState.createOld(id, listOf(BlockStateProperty.horizontalFacing)) { values, variant ->
                 variant.copy(
                     model = variant.model.suffixPath("_ladder"),
                     y = getYRotation(values["facing"]!!)

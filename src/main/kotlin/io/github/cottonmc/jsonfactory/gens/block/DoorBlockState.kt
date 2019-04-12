@@ -1,7 +1,7 @@
 package io.github.cottonmc.jsonfactory.gens.block
 
 import io.github.cottonmc.jsonfactory.data.Identifier
-import io.github.cottonmc.jsonfactory.data.ListProperty
+import io.github.cottonmc.jsonfactory.data.BlockStateProperty
 import io.github.cottonmc.jsonfactory.gens.ContentGenerator
 import io.github.cottonmc.jsonfactory.gens.GeneratorInfo
 import io.github.cottonmc.jsonfactory.output.ModelBlockState
@@ -9,15 +9,15 @@ import io.github.cottonmc.jsonfactory.output.Suffixed
 
 internal object DoorBlockState : ContentGenerator("Door Block State", "blockstates", GeneratorInfo.DOORS) {
     private val properties = listOf(
-        /* facing */ ListProperty.horizontalFacing,
-        /* half   */ ListProperty.halfUL,
-        /* hinge  */ ListProperty.doorHinge,
-        /* open   */ ListProperty.open
+        /* facing */ BlockStateProperty.horizontalFacing,
+        /* half   */ BlockStateProperty.halfUL,
+        /* hinge  */ BlockStateProperty.doorHinge,
+        /* open   */ BlockStateProperty.open
     )
 
     override fun generate(id: Identifier) = listOf(
         Suffixed(
-            ModelBlockState.create(id, properties) {
+            ModelBlockState.createOld(id, properties) {
                     values, variant ->
                 val suffix = "_" + getHalf(values["half"]) + when {
                     values["open"] == "true" && values["hinge"] == "left" -> "_hinge"

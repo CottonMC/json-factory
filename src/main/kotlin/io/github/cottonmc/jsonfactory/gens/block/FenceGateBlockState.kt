@@ -1,7 +1,7 @@
 package io.github.cottonmc.jsonfactory.gens.block
 
 import io.github.cottonmc.jsonfactory.data.Identifier
-import io.github.cottonmc.jsonfactory.data.ListProperty
+import io.github.cottonmc.jsonfactory.data.BlockStateProperty
 import io.github.cottonmc.jsonfactory.gens.ContentGenerator
 import io.github.cottonmc.jsonfactory.gens.GeneratorInfo
 import io.github.cottonmc.jsonfactory.output.ModelBlockState
@@ -10,7 +10,7 @@ import io.github.cottonmc.jsonfactory.output.Suffixed
 internal object FenceGateBlockState : ContentGenerator("Fence Gate Block State", "blockstates", GeneratorInfo.FENCE_GATES) {
     override fun generate(id: Identifier) = listOf(
         Suffixed(
-            ModelBlockState.create(id, listOf(ListProperty.horizontalFacing, ListProperty.gateInWall, ListProperty.open)) {
+            ModelBlockState.createOld(id, listOf(BlockStateProperty.horizontalFacing, BlockStateProperty.gateInWall, BlockStateProperty.open)) {
                     values, variant ->
                 variant.copy(
                     model = variant.model.suffixPath("_fence_gate").let {

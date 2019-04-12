@@ -1,7 +1,7 @@
 package io.github.cottonmc.jsonfactory.tests
 
 import io.github.cottonmc.jsonfactory.data.Identifier
-import io.github.cottonmc.jsonfactory.data.ListProperty
+import io.github.cottonmc.jsonfactory.data.BlockStateProperty
 import io.github.cottonmc.jsonfactory.output.ModelBlockState
 import org.junit.jupiter.api.Test
 import strikt.api.expectThat
@@ -9,8 +9,8 @@ import strikt.assertions.contains
 
 class ModelBlockStateTests {
     private val properties2 = listOf(
-        ListProperty("a", listOf("a1", "a2")),
-        ListProperty("b", listOf("b1", "b2"))
+        BlockStateProperty("a", listOf("a1", "a2")),
+        BlockStateProperty("b", listOf("b1", "b2"))
     )
 
     private val expected2 = setOf(

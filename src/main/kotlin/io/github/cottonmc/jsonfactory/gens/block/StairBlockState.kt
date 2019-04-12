@@ -1,7 +1,7 @@
 package io.github.cottonmc.jsonfactory.gens.block
 
 import io.github.cottonmc.jsonfactory.data.Identifier
-import io.github.cottonmc.jsonfactory.data.ListProperty
+import io.github.cottonmc.jsonfactory.data.BlockStateProperty
 import io.github.cottonmc.jsonfactory.gens.ContentGenerator
 import io.github.cottonmc.jsonfactory.gens.GeneratorInfo
 import io.github.cottonmc.jsonfactory.output.ModelBlockState
@@ -11,7 +11,7 @@ internal object StairBlockState : ContentGenerator("Stair Block State", "blockst
     GeneratorInfo.STAIRS
 ) {
     override fun generate(id: Identifier) = listOf(Suffixed(
-        ModelBlockState.create(id, listOf(ListProperty.horizontalFacing, ListProperty.half, ListProperty.stairShape)) { values, variant ->
+        ModelBlockState.createOld(id, listOf(BlockStateProperty.horizontalFacing, BlockStateProperty.half, BlockStateProperty.stairShape)) { values, variant ->
             val shape = values["shape"]!!
             val x = if (values["half"] == "top") 180 else 0
             val y = getYRotation(values["facing"]!!).let {
