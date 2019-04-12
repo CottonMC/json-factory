@@ -444,7 +444,7 @@ object Gens {
         /**
          * The potted plant block state generator.
          */
-        val pottedPlantBlockState: ContentGenerator = SuffixedBlockState("Potted Plant Block State", "potted", GeneratorInfo.POTTED_PLANTS)
+        val pottedPlantBlockState: ContentGenerator = PrefixedBlockState("Potted Plant Block State", "potted", GeneratorInfo.POTTED_PLANTS)
 
         /**
          * The potted plant loot table generator.

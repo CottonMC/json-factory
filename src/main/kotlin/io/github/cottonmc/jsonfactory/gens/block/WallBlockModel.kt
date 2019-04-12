@@ -4,27 +4,27 @@ import io.github.cottonmc.jsonfactory.data.Identifier
 import io.github.cottonmc.jsonfactory.gens.ContentGenerator
 import io.github.cottonmc.jsonfactory.gens.GeneratorInfo
 import io.github.cottonmc.jsonfactory.output.model.Model
-import io.github.cottonmc.jsonfactory.output.Suffixed
+import io.github.cottonmc.jsonfactory.output.suffixed
 
 internal object WallBlockModel : ContentGenerator("Wall Block Model", "models/block", GeneratorInfo.WALLS) {
     override fun generate(id: Identifier) = listOf(
-        Suffixed(Model(
+        Model(
             parent = Identifier.mc("block/template_wall_post"),
             textures = mapOf(
                 "wall" to id.prefixPath("block/")
             )
-        ), "wall_post"),
-        Suffixed(Model(
+        ).suffixed("wall_post"),
+        Model(
             parent = Identifier.mc("block/template_wall_side"),
             textures = mapOf(
                 "wall" to id.prefixPath("block/")
             )
-        ), "wall_side"),
-        Suffixed(Model(
+        ).suffixed("wall_side"),
+        Model(
             parent = Identifier.mc("block/wall_inventory"),
             textures = mapOf(
                 "wall" to id.prefixPath("block/")
             )
-        ), "wall_inventory")
+        ).suffixed("wall_inventory")
     )
 }

@@ -5,7 +5,7 @@ import io.github.cottonmc.jsonfactory.data.BlockStateProperty
 import io.github.cottonmc.jsonfactory.gens.ContentGenerator
 import io.github.cottonmc.jsonfactory.gens.GeneratorInfo
 import io.github.cottonmc.jsonfactory.output.model.ModelBlockState
-import io.github.cottonmc.jsonfactory.output.Suffixed
+import io.github.cottonmc.jsonfactory.output.suffixed
 
 internal object ButtonBlockState : ContentGenerator("Button Block State", "blockstates", GeneratorInfo.BUTTONS) {
     private fun getXRotation(face: String) = when (face) {
@@ -21,19 +21,17 @@ internal object ButtonBlockState : ContentGenerator("Button Block State", "block
         else -> 0
     }
 
-    override fun generate(id: Identifier) = listOf(Suffixed(
-        ModelBlockState.createOld(id, listOf(BlockStateProperty.horizontalFacing, BlockStateProperty.powered, BlockStateProperty.buttonFace)) { values, variant ->
-            val suffix = if (values["powered"] == "true") "_pressed" else ""
+    override fun generate(id: Identifier) = listOf(ModelBlockState.createOld(id, listOf(BlockStateProperty.horizontalFacing, BlockStateProperty.powered, BlockStateProperty.buttonFace)) { values, variant ->
+        val suffix = if (values["powered"] == "true") "_pressed" else ""
 
-            variant.copy(
-                model = variant.model.suffixPath("_button$suffix"),
-                x = getXRotation(values["face"]!!),
-                y = getYRotation(values["facing"]!!).let {
-                    if (values["face"] == "ceiling") (it + 180) % 360
-                    else it
-                },
-                uvlock = values["face"] == "wall"
-            )
-        },
-        "button"))
+        variant.copy(
+            model = variant.model.suffixPath("_button$suffix"),
+            x = getXRotation(values["face"]!!),
+            y = getYRotation(values["facing"]!!).let {
+                if (values["face"] == "ceiling") (it + 180) % 360
+                else it
+            },
+            uvlock = values["face"] == "wall"
+        )
+    }.suffixed("button"))
 }

@@ -5,7 +5,7 @@ import io.github.cottonmc.jsonfactory.data.BlockStateProperty
 import io.github.cottonmc.jsonfactory.gens.ContentGenerator
 import io.github.cottonmc.jsonfactory.gens.GeneratorInfo
 import io.github.cottonmc.jsonfactory.output.model.ModelBlockState
-import io.github.cottonmc.jsonfactory.output.Suffixed
+import io.github.cottonmc.jsonfactory.output.suffixed
 
 internal object SlabBlockState : ContentGenerator("Slab Block State", "blockstates", GeneratorInfo.SLABS) {
     private val typeSuffixes = mapOf(
@@ -15,16 +15,14 @@ internal object SlabBlockState : ContentGenerator("Slab Block State", "blockstat
     )
 
     override fun generate(id: Identifier) = listOf(
-        Suffixed(
-            ModelBlockState.createOld(
-                id, listOf(BlockStateProperty.slabType)
-            ) { values, variant ->
-                variant.copy(
-                    model = variant.model.suffixPath(
-                        typeSuffixes[values["type"]] ?: ""
-                    )
+        ModelBlockState.createOld(
+            id, listOf(BlockStateProperty.slabType)
+        ) { values, variant ->
+            variant.copy(
+                model = variant.model.suffixPath(
+                    typeSuffixes[values["type"]] ?: ""
                 )
-            }, "slab"
-        )
+            )
+        }.suffixed("slab")
     )
 }

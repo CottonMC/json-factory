@@ -4,16 +4,14 @@ import io.github.cottonmc.jsonfactory.data.Identifier
 import io.github.cottonmc.jsonfactory.gens.ContentGenerator
 import io.github.cottonmc.jsonfactory.gens.GeneratorInfo
 import io.github.cottonmc.jsonfactory.output.model.ModelBlockState
-import io.github.cottonmc.jsonfactory.output.Suffixed
+import io.github.cottonmc.jsonfactory.output.suffixed
 
 internal object SignBlockState : ContentGenerator("Sign Block State", "blockstates", GeneratorInfo.SIGNS) {
     override fun generate(id: Identifier) = listOf(
-        Suffixed(
-            ModelBlockState(mapOf("" to ModelBlockState.Variant(id.copy(path = "block/${id.path}_sign")))),
+        ModelBlockState(mapOf("" to ModelBlockState.Variant(id.copy(path = "block/${id.path}_sign")))).suffixed(
             "sign"
         ),
-        Suffixed(
-            ModelBlockState(mapOf("" to ModelBlockState.Variant(id.copy(path = "block/${id.path}_sign")))),
+        ModelBlockState(mapOf("" to ModelBlockState.Variant(id.copy(path = "block/${id.path}_sign")))).suffixed(
             "wall_sign"
         )
     )

@@ -4,23 +4,23 @@ import io.github.cottonmc.jsonfactory.data.Identifier
 import io.github.cottonmc.jsonfactory.gens.ContentGenerator
 import io.github.cottonmc.jsonfactory.gens.GeneratorInfo
 import io.github.cottonmc.jsonfactory.output.model.Model
-import io.github.cottonmc.jsonfactory.output.Suffixed
+import io.github.cottonmc.jsonfactory.output.suffixed
 
 internal object PressurePlateBlockModel : ContentGenerator("Pressure Plate Block Model", "models/block",
     GeneratorInfo.PRESSURE_PLATES
 ) {
     override fun generate(id: Identifier) = listOf(
-        Suffixed(Model(
+        Model(
             parent = Identifier.mc("block/pressure_plate_up"),
             textures = mapOf(
                 "texture" to id.prefixPath("block/")
             )
-        ), "pressure_plate"),
-        Suffixed(Model(
+        ).suffixed("pressure_plate"),
+        Model(
             parent = Identifier.mc("block/pressure_plate_down"),
             textures = mapOf(
                 "texture" to id.prefixPath("block/")
             )
-        ), "pressure_plate_down")
+        ).suffixed("pressure_plate_down")
     )
 }

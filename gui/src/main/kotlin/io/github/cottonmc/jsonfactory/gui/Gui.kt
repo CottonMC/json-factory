@@ -185,11 +185,11 @@ internal class Gui private constructor() {
             val generated = gen.generate(id)
 
             for (value in generated) {
-                val s = if (value.suffix.isEmpty()) "" else "_${value.suffix}"
+                val name = value.nameWrapper.applyTo(fileName)
 
                 val file = File(
                     resourceDir,
-                    "$root$sep$namespace$sep$directory$sep$fileName$s.$extension"
+                    "$root$sep$namespace$sep$directory$sep$name.$extension"
                 )
 
                 if (file.exists()) {

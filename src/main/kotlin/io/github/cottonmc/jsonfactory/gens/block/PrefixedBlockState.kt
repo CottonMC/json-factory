@@ -4,17 +4,17 @@ import io.github.cottonmc.jsonfactory.data.Identifier
 import io.github.cottonmc.jsonfactory.gens.ContentGenerator
 import io.github.cottonmc.jsonfactory.gens.GeneratorInfo
 import io.github.cottonmc.jsonfactory.output.model.ModelBlockState
-import io.github.cottonmc.jsonfactory.output.suffixed
+import io.github.cottonmc.jsonfactory.output.prefixed
 
 /**
  * @since 0.4.0
  */
-class SuffixedBlockState(displayName: String, private val suffix: String, info: GeneratorInfo) : ContentGenerator(displayName, "blockstates", info) {
+class PrefixedBlockState(displayName: String, private val prefix: String, info: GeneratorInfo) : ContentGenerator(displayName, "blockstates", info) {
     override fun generate(id: Identifier) = listOf(
         ModelBlockState(
             mapOf(
-                "" to ModelBlockState.Variant(id.wrapPath("block/", "_$suffix"))
+                "" to ModelBlockState.Variant(id.prefixPath("block/${prefix}_"))
             )
-        ).suffixed(suffix)
+        ).prefixed(prefix)
     )
 }

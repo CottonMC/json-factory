@@ -4,7 +4,7 @@ data class BlockStateProperty(val name: String, val values: List<String>) {
     companion object {
         val axis = BlockStateProperty("axis", listOf("x", "y", "z"))
         val horizontalFacing = BlockStateProperty("facing", listOf("north", "east", "south", "west"))
-        val half = BlockStateProperty("half", listOf("bottom", "top"))
+        val halfTB = BlockStateProperty("half", listOf("bottom", "top"))
         val halfUL = BlockStateProperty("half", listOf("upper", "lower"))
         val slabType = BlockStateProperty("type", listOf("bottom", "top", "double"))
         val stairShape = BlockStateProperty("shape", listOf("straight", "outer_right", "outer_left", "inner_right", "inner_left"))

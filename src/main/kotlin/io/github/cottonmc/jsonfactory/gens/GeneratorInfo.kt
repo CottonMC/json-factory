@@ -66,10 +66,21 @@ data class GeneratorInfo(val category: Category, val subcategory: Subcategory? =
 
     enum class Subcategories(_displayName: String? = null, override val description: String? = null) :
         Subcategory {
-        Ores, Pillars, Slabs, Stairs, PressurePlates("Pressure Plates"), Buttons, Fences, Walls, Signs,
-        FenceGates("Fence Gates"), Trapdoors, Doors, Ladders, Leaves,
-
-        PottedPlants("Potted Plants", "Uses suffix naming instead of vanilla's prefixes. (mymod:plantname_potted)");
+        Ores,
+        Pillars,
+        Slabs,
+        Stairs,
+        PressurePlates("Pressure Plates"),
+        Buttons,
+        Fences,
+        Walls,
+        Signs,
+        FenceGates("Fence Gates"),
+        Trapdoors,
+        Doors,
+        Ladders,
+        Leaves,
+        PottedPlants("Potted Plants");
 
         override val displayName = _displayName ?: name
     }

@@ -5,40 +5,39 @@ import io.github.cottonmc.jsonfactory.data.BlockStateProperty
 import io.github.cottonmc.jsonfactory.gens.ContentGenerator
 import io.github.cottonmc.jsonfactory.gens.GeneratorInfo
 import io.github.cottonmc.jsonfactory.output.model.ModelBlockState
-import io.github.cottonmc.jsonfactory.output.Suffixed
+import io.github.cottonmc.jsonfactory.output.suffixed
 
 internal object StairBlockState : ContentGenerator("Stair Block State", "blockstates",
     GeneratorInfo.STAIRS
 ) {
-    override fun generate(id: Identifier) = listOf(Suffixed(
-        ModelBlockState.createOld(id, listOf(BlockStateProperty.horizontalFacing, BlockStateProperty.half, BlockStateProperty.stairShape)) { values, variant ->
-            val shape = values["shape"]!!
-            val x = if (values["half"] == "top") 180 else 0
-            val y = getYRotation(values["facing"]!!).let {
-                if ("left" in shape)
-                    (it + 270) % 360
-                else it
-            }.let {
-                if (values["half"] == "top" && shape != "straight")
-                    (it + 90) % 360
-                else it
-            }
+    override fun generate(id: Identifier) = listOf(ModelBlockState.createOld(id, listOf(BlockStateProperty.horizontalFacing, BlockStateProperty.halfTB, BlockStateProperty.stairShape)) { values, variant ->
+        val shape = values["shape"]!!
+        val x = if (values["half"] == "top") 180 else 0
+        val y = getYRotation(values["facing"]!!).let {
+            if ("left" in shape)
+                (it + 270) % 360
+            else it
+        }.let {
+            if (values["half"] == "top" && shape != "straight")
+                (it + 90) % 360
+            else it
+        }
 
-            val suffix = when {
-                "outer" in shape -> "_outer"
-                "inner" in shape -> "_inner"
-                else -> ""
-            }
+        val suffix = when {
+            "outer" in shape -> "_outer"
+            "inner" in shape -> "_inner"
+            else -> ""
+        }
 
-            variant.copy(
-                model = variant.model.suffixPath(
-                    "_stairs$suffix"
-                ),
-                x = x,
-                y = y,
-                uvlock = x != 0 || y != 0
-            )
-        }, "stairs"))
+        variant.copy(
+            model = variant.model.suffixPath(
+                "_stairs$suffix"
+            ),
+            x = x,
+            y = y,
+            uvlock = x != 0 || y != 0
+        )
+    }.suffixed("stairs"))
 
     private fun getYRotation(facing: String): Int = when (facing) {
         "south" -> 90

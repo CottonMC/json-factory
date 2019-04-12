@@ -5,29 +5,29 @@ import io.github.cottonmc.jsonfactory.data.BlockStateProperty
 import io.github.cottonmc.jsonfactory.gens.ContentGenerator
 import io.github.cottonmc.jsonfactory.gens.GeneratorInfo
 import io.github.cottonmc.jsonfactory.output.model.ModelBlockState
-import io.github.cottonmc.jsonfactory.output.Suffixed
+import io.github.cottonmc.jsonfactory.output.suffixed
 
 internal object TrapdoorBlockState : ContentGenerator("Trapdoor Block State", "blockstates", GeneratorInfo.TRAPDOORS) {
     override fun generate(id: Identifier) = listOf(
-        Suffixed(
-            ModelBlockState.createOld(id, listOf(BlockStateProperty.horizontalFacing, BlockStateProperty.half, BlockStateProperty.open)) {
-                    values, variant ->
-                val suffix = when {
-                    values["open"] == "true" -> "open"
-                    else -> values["half"]
-                }
+        ModelBlockState.createOld(id, listOf(BlockStateProperty.horizontalFacing, BlockStateProperty.halfTB, BlockStateProperty.open)) {
+                values, variant ->
+            val suffix = when {
+                values["open"] == "true" -> "open"
+                else -> values["half"]
+            }
 
-                variant.copy(
-                    model = variant.model.suffixPath("_trapdoor_$suffix"),
-                    x = if (values["open"] == "true" && values["half"] == "top") 180
-                        else 0,
-                    y = getYRotation(values["facing"] ?: "").let {
-                        if (values["open"] == "true" && values["half"] == "top")
-                            (it + 180) % 360
-                        else it
-                    }
-                )
-            }, "trapdoor"
+            variant.copy(
+                model = variant.model.suffixPath("_trapdoor_$suffix"),
+                x = if (values["open"] == "true" && values["half"] == "top") 180
+                else 0,
+                y = getYRotation(values["facing"] ?: "").let {
+                    if (values["open"] == "true" && values["half"] == "top")
+                        (it + 180) % 360
+                    else it
+                }
+            )
+        }.suffixed(
+            "trapdoor"
         )
     )
 
