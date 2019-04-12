@@ -1,7 +1,9 @@
-package io.github.cottonmc.jsonfactory.output
+package io.github.cottonmc.jsonfactory.output.model
 
 import io.github.cottonmc.jsonfactory.data.Identifier
 import io.github.cottonmc.jsonfactory.data.BlockStateProperty
+import io.github.cottonmc.jsonfactory.output.Json
+import io.github.cottonmc.jsonfactory.output.createProperties
 
 /**
  * Represents a `blockstates` file using [variants].
@@ -15,7 +17,8 @@ data class ModelBlockState(val variants: Map<String, Variant>) : Json {
      * @property y the y rotation
      * @property uvlock the uvlock flag (prevents texture rotation)
      */
-    data class Variant(val model: Identifier, val x: Int = 0, val y: Int = 0, val uvlock: Boolean = false) : Json.ByProperties {
+    data class Variant(val model: Identifier, val x: Int = 0, val y: Int = 0, val uvlock: Boolean = false) :
+        Json.ByProperties {
         override val properties = createProperties { self ->
             +self::model
 

@@ -3,7 +3,7 @@ package io.github.cottonmc.jsonfactory.gens.item
 import io.github.cottonmc.jsonfactory.data.Identifier
 import io.github.cottonmc.jsonfactory.gens.ContentGenerator
 import io.github.cottonmc.jsonfactory.gens.GeneratorInfo
-import io.github.cottonmc.jsonfactory.output.Model
+import io.github.cottonmc.jsonfactory.output.model.Model
 import io.github.cottonmc.jsonfactory.output.Suffixed
 
 class SuffixedItemModel(val parent: Identifier, display: String, private val suffix: String, info: GeneratorInfo = GeneratorInfo.ITEM) :

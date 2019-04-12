@@ -433,6 +433,28 @@ object Gens {
          * A list of all leaf generators.
          */
         val allLeaves = listOf(leafBlockModel, leafBlockState, leafItemModel, leafLootTable)
+
+        // POTTED PLANTS
+
+        /**
+         * The potted plant model generator.
+         */
+        val pottedPlantBlockModel: ContentGenerator = PottedPlantModel
+
+        /**
+         * The potted plant block state generator.
+         */
+        val pottedPlantBlockState: ContentGenerator = SuffixedBlockState("Potted Plant Block State", "potted", GeneratorInfo.POTTED_PLANTS)
+
+        /**
+         * The potted plant loot table generator.
+         */
+        val pottedPlantLootTable: ContentGenerator = PottedPlantLootTable
+
+        /**
+         * A list of all potted plant generators.
+         */
+        val allPottedPlants = listOf(pottedPlantBlockModel, pottedPlantBlockState, pottedPlantLootTable)
     }
 
     /**
@@ -469,5 +491,6 @@ object Gens {
         yieldAll(Variants.allDoors)
         yieldAll(Variants.allLadders)
         yieldAll(Variants.allLeaves)
+        yieldAll(Variants.allPottedPlants)
     }.toList()
 }

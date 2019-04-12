@@ -1,4 +1,4 @@
-package io.github.cottonmc.jsonfactory.output
+package io.github.cottonmc.jsonfactory.output.model
 
 import com.google.gson.JsonArray
 import com.google.gson.JsonSerializationContext
@@ -6,6 +6,9 @@ import com.google.gson.JsonSerializer
 import com.google.gson.annotations.JsonAdapter
 import io.github.cottonmc.jsonfactory.data.Identifier
 import io.github.cottonmc.jsonfactory.data.Point
+import io.github.cottonmc.jsonfactory.output.Json
+import io.github.cottonmc.jsonfactory.output.Property
+import io.github.cottonmc.jsonfactory.output.createProperties
 import java.lang.reflect.Type
 
 /**
@@ -35,7 +38,8 @@ data class Model(
      * @property to the ending point
      * @property faces the face settings
      */
-    data class Element(val from: Point, val to: Point, val faces: Map<String, Face>, val shade: Boolean = true) : Json.ByProperties {
+    data class Element(val from: Point, val to: Point, val faces: Map<String, Face>, val shade: Boolean = true) :
+        Json.ByProperties {
         override val properties = createProperties { self ->
             +self::from
             +self::to

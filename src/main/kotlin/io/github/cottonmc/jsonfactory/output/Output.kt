@@ -7,6 +7,7 @@ import java.io.OutputStream
  * A type that can write itself to a file.
  */
 interface Output {
+    // TODO: Add prefixes
     /**
      * The file name suffix (placed before the extension if not empty).
      */

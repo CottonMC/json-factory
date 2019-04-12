@@ -1,6 +1,9 @@
-package io.github.cottonmc.jsonfactory.output
+package io.github.cottonmc.jsonfactory.output.model
 
-import io.github.cottonmc.jsonfactory.output.ModelBlockState.Variant
+import io.github.cottonmc.jsonfactory.output.Json
+import io.github.cottonmc.jsonfactory.output.Property
+import io.github.cottonmc.jsonfactory.output.createProperties
+import io.github.cottonmc.jsonfactory.output.model.ModelBlockState.Variant
 
 /**
  * A `blockstates` file using the multipart format.

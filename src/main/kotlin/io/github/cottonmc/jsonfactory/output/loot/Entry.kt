@@ -6,9 +6,7 @@ import io.github.cottonmc.jsonfactory.output.createProperties
 
 data class Entry(
     val name: Identifier?,
-    val type: Identifier = Identifier.mc(
-        "item"
-    ),
+    val type: Identifier = Identifier.mc("item"),
     val conditions: List<Condition> = emptyList(),
     val functions: List<Function> = emptyList(),
     val children: List<Entry> = emptyList()

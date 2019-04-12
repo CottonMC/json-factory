@@ -2,7 +2,7 @@ package io.github.cottonmc.jsonfactory.tests
 
 import io.github.cottonmc.jsonfactory.data.Identifier
 import io.github.cottonmc.jsonfactory.data.BlockStateProperty
-import io.github.cottonmc.jsonfactory.output.ModelBlockState
+import io.github.cottonmc.jsonfactory.output.model.ModelBlockState
 import org.junit.jupiter.api.Test
 import strikt.api.expectThat
 import strikt.assertions.contains
