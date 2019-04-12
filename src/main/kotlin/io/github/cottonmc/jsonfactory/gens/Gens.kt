@@ -2,20 +2,6 @@ package io.github.cottonmc.jsonfactory.gens
 
 import io.github.cottonmc.jsonfactory.data.Identifier
 import io.github.cottonmc.jsonfactory.gens.block.*
-import io.github.cottonmc.jsonfactory.gens.block.button.*
-import io.github.cottonmc.jsonfactory.gens.block.door.*
-import io.github.cottonmc.jsonfactory.gens.block.fence.*
-import io.github.cottonmc.jsonfactory.gens.block.fencegate.*
-import io.github.cottonmc.jsonfactory.gens.block.ladder.*
-import io.github.cottonmc.jsonfactory.gens.block.leaf.*
-import io.github.cottonmc.jsonfactory.gens.block.ore.*
-import io.github.cottonmc.jsonfactory.gens.block.pillar.*
-import io.github.cottonmc.jsonfactory.gens.block.pressureplate.*
-import io.github.cottonmc.jsonfactory.gens.block.sign.*
-import io.github.cottonmc.jsonfactory.gens.block.slab.*
-import io.github.cottonmc.jsonfactory.gens.block.stair.*
-import io.github.cottonmc.jsonfactory.gens.block.trapdoor.*
-import io.github.cottonmc.jsonfactory.gens.block.wall.*
 import io.github.cottonmc.jsonfactory.gens.item.*
 
 /**
