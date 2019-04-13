@@ -50,13 +50,6 @@ internal class Gui private constructor() {
                 }
             })
 
-            add(JCheckBoxMenuItem("Show Tips on Startup").apply {
-                isSelected = Settings.showTipsOnStartup
-                addActionListener {
-                    Settings.showTipsOnStartup = isSelected
-                }
-            })
-
             add(JMenu("Theme").apply {
                 horizontalAlignment = SwingConstants.CENTER
                 val buttonGroup = ButtonGroup()
@@ -97,7 +90,7 @@ internal class Gui private constructor() {
 
             add(JMenuItem("Tip of the Day").apply {
                 addActionListener {
-                    showTips()
+                    showTips(isStartup = false)
                 }
             })
         })
@@ -265,9 +258,9 @@ internal class Gui private constructor() {
         outputTextArea.repaint()
     }
 
-    private fun showTips() {
+    private fun showTips(isStartup: Boolean) {
         tipOfTheDay.currentTip = (0 until tipOfTheDay.model.tipCount).random()
-        tipOfTheDay.showDialog(frame)
+        tipOfTheDay.showDialog(frame, Settings.createTipOfTheDayChoice(if (isStartup) null else true))
     }
 
     private fun showAboutDialog() = JXDialog(frame, JPanel(BorderLayout()).apply {
@@ -323,7 +316,7 @@ internal class Gui private constructor() {
             Gui().apply {
                 show()
                 if (Settings.showTipsOnStartup) {
-                    showTips()
+                    showTips(isStartup = true)
                 }
             }
         }

@@ -2,6 +2,7 @@ package io.github.cottonmc.jsonfactory.gui
 
 import io.github.cottonmc.jsonfactory.gui.themes.SolarizedSkin
 import org.jdesktop.swingx.JXErrorPane
+import org.jdesktop.swingx.JXTipOfTheDay
 import org.pushingpixels.substance.api.skin.*
 import java.awt.Window
 import java.io.IOException
@@ -75,6 +76,15 @@ object Settings {
             JXErrorPane.showDialog(e)
         }
     }
+
+    /**
+     * Used to make sure that the TotD dialog gets displayed when the user manually views it,
+     * but the correct value of [showTipsOnStartup] gets displayed in it.
+     *
+     * @param initialValue if not `null`, the result returns it from `isShowOnStartup` on the first call
+     */
+    fun createTipOfTheDayChoice(initialValue: Boolean? = null): JXTipOfTheDay.ShowOnStartupChoice =
+        ShowOnStartupChoiceImpl(initialValue)
 
     private fun createProperties(): Properties =
         Properties().apply {
@@ -174,6 +184,22 @@ object Settings {
 
         companion object {
             val DEFAULT = Mariner
+        }
+    }
+
+    private class ShowOnStartupChoiceImpl(val initialValue: Boolean?) : JXTipOfTheDay.ShowOnStartupChoice {
+        private var called = false
+
+        override fun isShowingOnStartup(): Boolean {
+            if (!called) {
+                called = true
+                return initialValue ?: showTipsOnStartup
+            }
+
+            return showTipsOnStartup
+        }
+        override fun setShowingOnStartup(showOnStartup: Boolean) {
+            showTipsOnStartup = showOnStartup
         }
     }
 }
