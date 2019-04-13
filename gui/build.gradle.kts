@@ -27,14 +27,11 @@ dependencies {
     implementation("com.miglayout:miglayout-swing:5.2")
     implementation("com.github.insubstantial:substance:7.3")
     implementation("com.github.insubstantial:substance-swingx:7.3") {
-        exclude("org.swinglabs.swingx", "swingx-action")
-        exclude("org.swinglabs.swingx", "swingx-autocomplete")
-        exclude("org.swinglabs.swingx", "swingx-common")
-        exclude("org.swinglabs.swingx", "swingx-core")
-        exclude("org.swinglabs.swingx", "swingx-painters")
-        exclude("org.swinglabs.swingx", "swingx-plaf")
+        exclude(group = "org.swinglabs.swingx")
     }
     implementation("org.swinglabs.swingx:swingx-all:1.6.5-1")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.2.0")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-swing:1.2.0")
 }
 
 application {

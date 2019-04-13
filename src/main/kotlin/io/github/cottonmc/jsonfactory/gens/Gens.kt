@@ -49,10 +49,10 @@ object Gens {
         PlaceholderTexture(GeneratorInfo.BLOCK)
 
     /**
-     * The placeholder block texture generator.
+     * The placeholder item texture generator.
      */
     val placeholderTextureItem: ContentGenerator =
-        PlaceholderTexture(GeneratorInfo.BLOCK)
+        PlaceholderTexture(GeneratorInfo.ITEM)
 
     /**
      * The base ore block model generator.

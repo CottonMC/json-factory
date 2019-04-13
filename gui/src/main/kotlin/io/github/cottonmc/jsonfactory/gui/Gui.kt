@@ -3,6 +3,8 @@ package io.github.cottonmc.jsonfactory.gui
 import io.github.cottonmc.jsonfactory.data.Identifier
 import io.github.cottonmc.jsonfactory.gens.GeneratorInfo
 import io.github.cottonmc.jsonfactory.gens.Gens
+import kotlinx.coroutines.*
+import kotlinx.coroutines.swing.Swing
 import net.miginfocom.swing.MigLayout
 import org.jdesktop.swingx.*
 import org.jdesktop.swingx.hyperlink.HyperlinkAction
@@ -31,7 +33,7 @@ internal class Gui private constructor() {
     private val generators = createGeneratorPanel()
     private val saveButton = JButton("Generate").apply {
         addActionListener {
-            saveAll()
+            generateAll()
         }
     }
     private val outputTextArea = JTextPane().apply {
@@ -142,10 +144,10 @@ internal class Gui private constructor() {
         }
     }
 
-    private fun saveAll() {
+    private fun generateAll() = GlobalScope.launch(Dispatchers.Swing) {
         if (selectedGens.none { (_, value) -> value }) {
             printMessage("Note:", "No generators selected.", noteAttributes)
-            return
+            return@launch
         }
 
         val answer = fileChooser.showSaveDialog(frame)
@@ -156,16 +158,17 @@ internal class Gui private constructor() {
             printMessage("In", fileChooser.selectedFile.path)
 
             val split = idField.text.split(',')
-            for (idText in split) {
-                val id = Identifier.orNull(idText)
-
-                if (id == null) {
-                    printMessage("Invalid ID:", idText, errorAttributes)
-                    continue
+            split.mapNotNull { idText ->
+                Identifier.orNull(idText).also { id ->
+                    if (id == null) {
+                        printMessage("Invalid ID:", idText, errorAttributes)
+                    }
                 }
-
-                save(id, fileChooser.selectedFile)
-            }
+            }.map { id ->
+                launch(Dispatchers.IO) {
+                    generate(id, fileChooser.selectedFile)
+                }
+            }.joinAll()
 
             printMessage("Finished", "generating.", boldAttributes)
             if (Settings.playFinishedSound) {
@@ -174,39 +177,43 @@ internal class Gui private constructor() {
         }
     }
 
-    private fun save(id: Identifier, resourceDir: File) {
-        for (gen in selectedGens.filter { (_, value) -> value }.keys) {
-            val root = gen.resourceRoot.path
-            val sep = File.separatorChar
-            val namespace = id.namespace
-            val directory = gen.path
-            val fileName = id.path
-            val extension = gen.extension
-            val generated = gen.generate(id)
+    private suspend fun generate(id: Identifier, resourceDir: File) = coroutineScope {
+        selectedGens.filter { (_, value) -> value }.keys.map { gen ->
+            launch {
+                val root = gen.resourceRoot.path
+                val sep = File.separatorChar
+                val namespace = id.namespace
+                val directory = gen.path
+                val fileName = id.path
+                val extension = gen.extension
+                val generated = gen.generate(id)
 
-            for (value in generated) {
-                val name = value.nameWrapper.applyTo(fileName)
+                for (value in generated) {
+                    val name = value.nameWrapper.applyTo(fileName)
 
-                val file = File(
-                    resourceDir,
-                    "$root$sep$namespace$sep$directory$sep$name.$extension"
-                )
+                    val file = File(
+                        resourceDir,
+                        "$root$sep$namespace$sep$directory$sep$name.$extension"
+                    )
 
-                if (file.exists()) {
-                    Sounds.confirm.start()
-                    val confirm =
-                        JOptionPane.showConfirmDialog(frame, "Do you want to overwrite the existing file $file?")
+                    if (file.exists()) {
+                        Sounds.confirm.start()
+                        val confirm =
+                            JOptionPane.showConfirmDialog(frame, "Do you want to overwrite the existing file $file?")
 
-                    if (confirm != JOptionPane.YES_OPTION)
-                        return
+                        if (confirm != JOptionPane.YES_OPTION)
+                            return@launch
+                    }
+
+                    Files.createDirectories(file.parentFile?.toPath())
+                    value.writeToFile(file)
+
+                    launch(Dispatchers.Swing) {
+                        printMessage("Generated", file.toRelativeString(resourceDir))
+                    }
                 }
-
-                Files.createDirectories(file.parentFile?.toPath())
-                value.writeToFile(file)
-
-                printMessage("Generated", file.toRelativeString(resourceDir))
             }
-        }
+        }.joinAll()
     }
 
     private fun createGeneratorPanel(): JTabbedPane {
