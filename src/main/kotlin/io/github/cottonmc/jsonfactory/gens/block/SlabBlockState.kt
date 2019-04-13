@@ -15,8 +15,8 @@ internal object SlabBlockState : ContentGenerator("Slab Block State", "blockstat
     )
 
     override fun generate(id: Identifier) = listOf(
-        ModelBlockState.createOld(
-            id, listOf(BlockStateProperty.slabType)
+        ModelBlockState.create(
+            id, setOf(BlockStateProperty.slabType)
         ) { values, variant ->
             variant.copy(
                 model = variant.model.suffixPath(

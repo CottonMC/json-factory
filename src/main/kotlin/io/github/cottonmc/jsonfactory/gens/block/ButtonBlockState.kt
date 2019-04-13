@@ -2,6 +2,9 @@ package io.github.cottonmc.jsonfactory.gens.block
 
 import io.github.cottonmc.jsonfactory.data.Identifier
 import io.github.cottonmc.jsonfactory.data.BlockStateProperty
+import io.github.cottonmc.jsonfactory.data.BlockStateProperty.Companion.buttonFace
+import io.github.cottonmc.jsonfactory.data.BlockStateProperty.Companion.horizontalFacing
+import io.github.cottonmc.jsonfactory.data.BlockStateProperty.Companion.powered
 import io.github.cottonmc.jsonfactory.gens.ContentGenerator
 import io.github.cottonmc.jsonfactory.gens.GeneratorInfo
 import io.github.cottonmc.jsonfactory.output.model.ModelBlockState
@@ -21,17 +24,17 @@ internal object ButtonBlockState : ContentGenerator("Button Block State", "block
         else -> 0
     }
 
-    override fun generate(id: Identifier) = listOf(ModelBlockState.createOld(id, listOf(BlockStateProperty.horizontalFacing, BlockStateProperty.powered, BlockStateProperty.buttonFace)) { values, variant ->
-        val suffix = if (values["powered"] == "true") "_pressed" else ""
+    override fun generate(id: Identifier) = listOf(ModelBlockState.create(id, setOf(horizontalFacing, powered, buttonFace)) { values, variant ->
+        val suffix = if (values[powered] == "true") "_pressed" else ""
 
         variant.copy(
             model = variant.model.suffixPath("_button$suffix"),
-            x = getXRotation(values["face"]!!),
-            y = getYRotation(values["facing"]!!).let {
-                if (values["face"] == "ceiling") (it + 180) % 360
+            x = getXRotation(values[buttonFace]!!),
+            y = getYRotation(values[horizontalFacing]!!).let {
+                if (values[buttonFace] == "ceiling") (it + 180) % 360
                 else it
             },
-            uvlock = values["face"] == "wall"
+            uvlock = values[buttonFace] == "wall"
         )
     }.suffixed("button"))
 }

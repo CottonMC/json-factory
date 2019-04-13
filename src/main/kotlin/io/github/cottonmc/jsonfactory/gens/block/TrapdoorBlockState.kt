@@ -9,7 +9,7 @@ import io.github.cottonmc.jsonfactory.output.suffixed
 
 internal object TrapdoorBlockState : ContentGenerator("Trapdoor Block State", "blockstates", GeneratorInfo.TRAPDOORS) {
     override fun generate(id: Identifier) = listOf(
-        ModelBlockState.createOld(id, listOf(BlockStateProperty.horizontalFacing, BlockStateProperty.halfTB, BlockStateProperty.open)) {
+        ModelBlockState.create(id, setOf(BlockStateProperty.horizontalFacing, BlockStateProperty.halfTB, BlockStateProperty.open)) {
                 values, variant ->
             val suffix = when {
                 values["open"] == "true" -> "open"

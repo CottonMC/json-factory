@@ -16,10 +16,10 @@ internal object LadderBlockState : ContentGenerator("Ladder Block State", "block
     }
 
     override fun generate(id: Identifier) = listOf(
-        ModelBlockState.createOld(id, listOf(BlockStateProperty.horizontalFacing)) { values, variant ->
+        ModelBlockState.create(id, setOf(BlockStateProperty.horizontalFacing)) { values, variant ->
             variant.copy(
                 model = variant.model.suffixPath("_ladder"),
-                y = getYRotation(values["facing"]!!)
+                y = getYRotation(values["facing"] ?: "")
             )
         }.suffixed("ladder")
     )

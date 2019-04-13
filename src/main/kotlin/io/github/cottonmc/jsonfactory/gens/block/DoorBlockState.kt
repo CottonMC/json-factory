@@ -8,7 +8,7 @@ import io.github.cottonmc.jsonfactory.output.model.ModelBlockState
 import io.github.cottonmc.jsonfactory.output.suffixed
 
 internal object DoorBlockState : ContentGenerator("Door Block State", "blockstates", GeneratorInfo.DOORS) {
-    private val properties = listOf(
+    private val properties = setOf(
         /* facing */ BlockStateProperty.horizontalFacing,
         /* half   */ BlockStateProperty.halfUL,
         /* hinge  */ BlockStateProperty.doorHinge,
@@ -16,7 +16,7 @@ internal object DoorBlockState : ContentGenerator("Door Block State", "blockstat
     )
 
     override fun generate(id: Identifier) = listOf(
-        ModelBlockState.createOld(id, properties) {
+        ModelBlockState.create(id, properties) {
                 values, variant ->
             val suffix = "_" + getHalf(values["half"]) + when {
                 values["open"] == "true" && values["hinge"] == "left" -> "_hinge"
@@ -32,9 +32,7 @@ internal object DoorBlockState : ContentGenerator("Door Block State", "blockstat
                     else it
                 }
             )
-        }.suffixed(
-            "door"
-        )
+        }.suffixed("door")
     )
 
     private fun getYRotation(facing: String) = when (facing) {

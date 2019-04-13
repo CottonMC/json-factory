@@ -8,8 +8,8 @@ import io.github.cottonmc.jsonfactory.output.model.ModelBlockState
 
 internal object PillarBlockState : ContentGenerator("Pillar Block State", "blockstates", GeneratorInfo.PILLARS) {
     override fun generate(id: Identifier) = listOf(
-        ModelBlockState.createOld(id, listOf(BlockStateProperty.axis)) { values, variant ->
-            val axis = values["axis"]!!
+        ModelBlockState.create(id, setOf(BlockStateProperty.axis)) { values, variant ->
+            val axis = values["axis"] ?: ""
 
             variant.copy(
                 x = if (axis != "y") 90 else 0,

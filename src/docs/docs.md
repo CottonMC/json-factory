@@ -10,11 +10,20 @@ Various data types
 # Package io.github.cottonmc.jsonfactory.output
 Output types
 
+# Package io.github.cottonmc.jsonfactory.output.model
+Model output
+
 # Package io.github.cottonmc.jsonfactory.output.loot
 Loot table output
 
 # Package io.github.cottonmc.jsonfactory.util
 Various utils
+
+# Package io.github.cottonmc.jsonfactory.gens.block
+Block content generators
+
+# Package io.github.cottonmc.jsonfactory.gens.item
+Item content generators
 
 # Package io.github.cottonmc.jsonfactory.gens
 Contains the content generators.

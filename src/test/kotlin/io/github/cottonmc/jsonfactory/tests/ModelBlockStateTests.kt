@@ -8,7 +8,7 @@ import strikt.api.expectThat
 import strikt.assertions.contains
 
 class ModelBlockStateTests {
-    private val properties2 = listOf(
+    private val properties2 = setOf(
         BlockStateProperty("a", listOf("a1", "a2")),
         BlockStateProperty("b", listOf("b1", "b2"))
     )

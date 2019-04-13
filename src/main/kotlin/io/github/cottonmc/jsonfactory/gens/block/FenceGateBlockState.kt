@@ -9,7 +9,7 @@ import io.github.cottonmc.jsonfactory.output.suffixed
 
 internal object FenceGateBlockState : ContentGenerator("Fence Gate Block State", "blockstates", GeneratorInfo.FENCE_GATES) {
     override fun generate(id: Identifier) = listOf(
-        ModelBlockState.createOld(id, listOf(BlockStateProperty.horizontalFacing, BlockStateProperty.gateInWall, BlockStateProperty.open)) {
+        ModelBlockState.create(id, setOf(BlockStateProperty.horizontalFacing, BlockStateProperty.gateInWall, BlockStateProperty.open)) {
                 values, variant ->
             variant.copy(
                 model = variant.model.suffixPath("_fence_gate").let {

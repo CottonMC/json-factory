@@ -29,27 +29,16 @@ data class ModelBlockState(val variants: Map<String, Variant>) : Json {
     }
 
     companion object {
-        // Uses strings instead of `BlockStateProperty`s as the key of `values`
-        @Deprecated("", replaceWith = ReplaceWith("create(id, properties, transform)"))
-        internal inline fun createOld(
-            id: Identifier,
-            properties: List<BlockStateProperty>,
-            prefix: String = "",
-            crossinline transform: (values: Map<String, String>, variant: Variant) -> Variant = { _, variant -> variant }
-        ) = create(id, properties, prefix) { values, variant ->
-            transform(values.mapKeys { (prop, _) -> prop.name }, variant)
-        }
-
         /**
-         * Creates a [ModelBlockState] from an [id], a list of [properties] and a [transform] function.
+         * Creates a [ModelBlockState] from an [id], a set of [properties] and a [transform] function.
          *
          * @param prefix an optional prefix for the model file
          */
         fun create(
             id: Identifier,
-            properties: List<BlockStateProperty>,
+            properties: Set<BlockStateProperty>,
             prefix: String = "",
-            transform: (values: Map<BlockStateProperty, String>, variant: Variant) -> Variant = { _, variant -> variant }
+            transform: (values: BlockStateProperty.ValueMap, variant: Variant) -> Variant = { _, variant -> variant }
         ): ModelBlockState {
             val output: Sequence<Sequence<Pair<BlockStateProperty, String>>> = properties.fold(sequenceOf(emptySequence())) { acc, prop ->
                 acc.flatMap { existing ->
@@ -68,7 +57,7 @@ data class ModelBlockState(val variants: Map<String, Variant>) : Json {
                 val key = o.joinToString(separator = ",") { (prop, value) -> "${prop.name}=$value" }
                 val variant = Variant(id.prefixPath("block/$prefix"))
 
-                variants[key] = transform(o.toMap(), variant)
+                variants[key] = transform(BlockStateProperty.ValueMap(o.toMap()), variant)
             }
 
             return ModelBlockState(variants)
