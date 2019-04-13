@@ -165,7 +165,7 @@ internal class Gui private constructor() {
                     }
                 }
             }.map { id ->
-                launch(Dispatchers.IO) {
+                launch {
                     generate(id, fileChooser.selectedFile)
                 }
             }.joinAll()
@@ -178,8 +178,8 @@ internal class Gui private constructor() {
     }
 
     private suspend fun generate(id: Identifier, resourceDir: File) = coroutineScope {
-        selectedGens.filter { (_, value) -> value }.keys.map { gen ->
-            launch {
+        selectedGens.filter { (_, value) -> value }.keys.forEach { gen ->
+            launch(Dispatchers.IO) {
                 val root = gen.resourceRoot.path
                 val sep = File.separatorChar
                 val namespace = id.namespace
@@ -213,7 +213,7 @@ internal class Gui private constructor() {
                     }
                 }
             }
-        }.joinAll()
+        }
     }
 
     private fun createGeneratorPanel(): JTabbedPane {
@@ -229,7 +229,7 @@ internal class Gui private constructor() {
                 val categoryGens = gens.filter { it.info.category == category }
 
                 val subcategories = categoryGens.map { it.info.subcategory }.distinct().sortedBy {
-                    it?.displayName ?: "A"
+                    it?.displayName ?: "A" // Weird hack to sort nulls first
                 }
 
                 for (subcategory in subcategories) {
