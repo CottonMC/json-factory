@@ -22,12 +22,14 @@ data class Model(
     val parent: Identifier? = null,
     val textures: Map<String, Any> = emptyMap(),
     val elements: List<Element> = emptyList(),
+    val display: Map<String, DisplayPosition> = emptyMap(),
     val ambientOcclusion: Boolean = true
 ) : Json.ByProperties {
     override val properties = createProperties { self ->
         +self::parent
         +self::textures.removeIfEmpty()
         +self::elements.removeIfEmpty()
+        +self::display.removeIfEmpty()
         +Property("ambientocclusion", ambientOcclusion, Property.Mode.RemoveIfTrue)
     }
 
@@ -83,4 +85,9 @@ data class Model(
                 }
         }
     }
+
+    /**
+     * A display position.
+     */
+    data class DisplayPosition(val rotation: List<Number>, val translation: List<Number>, val scale: List<Number>)
 }

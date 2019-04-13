@@ -32,4 +32,10 @@ open class Function(
             ))
         }
     )
+
+    class CopyName(source: String) : Function(
+        Identifier.mc("copy_name"), additionalProperties = createProperties {
+            +Property("source", source)
+        }
+    )
 }

@@ -80,7 +80,8 @@ data class GeneratorInfo(val category: Category, val subcategory: Subcategory? =
         Doors,
         Ladders,
         Leaves,
-        PottedPlants("Potted Plants");
+        PottedPlants("Potted Plants"),
+        Chests;
 
         override val displayName = _displayName ?: name
     }
@@ -104,5 +105,6 @@ data class GeneratorInfo(val category: Category, val subcategory: Subcategory? =
         val LADDERS = GeneratorInfo(Categories.BlockVariants, Subcategories.Ladders)
         val LEAVES = GeneratorInfo(Categories.BlockVariants, Subcategories.Leaves)
         val POTTED_PLANTS = GeneratorInfo(Categories.BlockVariants, Subcategories.PottedPlants)
+        val CHESTS = GeneratorInfo(Categories.BlockVariants, Subcategories.Chests)
     }
 }

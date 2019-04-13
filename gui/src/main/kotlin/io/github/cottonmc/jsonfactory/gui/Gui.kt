@@ -138,7 +138,11 @@ internal class Gui private constructor() {
     }
 
     private fun generateAll() = GlobalScope.launch(Dispatchers.Swing) {
-        if (selectedGens.none { (_, value) -> value }) {
+        if (idField.text.isBlank()) {
+            printMessage("Note:", "The ID input field is empty.", noteAttributes)
+            return@launch
+
+        } else if (selectedGens.none { (_, value) -> value }) {
             printMessage("Note:", "No generators selected.", noteAttributes)
             return@launch
         }
@@ -150,17 +154,15 @@ internal class Gui private constructor() {
             printMessage("Started", "generating.", boldAttributes)
             printMessage("In", fileChooser.selectedFile.path)
 
-            val split = idField.text.split(',')
+            val split = idField.text.split(',').map(String::trim)
             split.mapNotNull { idText ->
                 Identifier.orNull(idText).also { id ->
                     if (id == null) {
                         printMessage("Invalid ID:", idText, errorAttributes)
                     }
                 }
-            }.map { id ->
-                launch {
-                    generate(id, fileChooser.selectedFile)
-                }
+            }.flatMap { id ->
+                generate(id, fileChooser.selectedFile)
             }.joinAll()
 
             printMessage("Finished", "generating.", boldAttributes)
@@ -171,7 +173,7 @@ internal class Gui private constructor() {
     }
 
     private suspend fun generate(id: Identifier, resourceDir: File) = coroutineScope {
-        selectedGens.filter { (_, value) -> value }.keys.forEach { gen ->
+        selectedGens.filter { (_, value) -> value }.keys.map { gen ->
             launch(Dispatchers.IO) {
                 val root = gen.resourceRoot.path
                 val sep = File.separatorChar
@@ -191,8 +193,9 @@ internal class Gui private constructor() {
 
                     if (file.exists()) {
                         Sounds.confirm.start()
-                        val confirm =
+                        val confirm = withContext(Dispatchers.Swing) {
                             JOptionPane.showConfirmDialog(frame, "Do you want to overwrite the existing file $file?")
+                        }
 
                         if (confirm != JOptionPane.YES_OPTION)
                             return@launch
@@ -201,7 +204,7 @@ internal class Gui private constructor() {
                     Files.createDirectories(file.parentFile?.toPath())
                     value.writeToFile(file)
 
-                    launch(Dispatchers.Swing) {
+                    withContext(Dispatchers.Swing) {
                         printMessage("Generated", file.toRelativeString(resourceDir))
                     }
                 }

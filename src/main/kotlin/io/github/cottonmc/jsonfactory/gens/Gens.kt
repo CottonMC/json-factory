@@ -455,6 +455,33 @@ object Gens {
          * A list of all potted plant generators.
          */
         val allPottedPlants = listOf(pottedPlantBlockModel, pottedPlantBlockState, pottedPlantLootTable)
+
+        // CHESTS
+
+        /**
+         * The chest model generator.
+         */
+        val chestBlockModel: ContentGenerator = ChestBlockModel
+
+        /**
+         * The chest block state generator.
+         */
+        val chestBlockState: ContentGenerator = SuffixedBlockState("Chest Block State", "chest", GeneratorInfo.CHESTS)
+
+        /**
+         * The chest item model generator.
+         */
+        val chestItemModel: ContentGenerator = ChestItemModel
+
+        /**
+         * The chest loot table generator.
+         */
+        val chestLootTable: ContentGenerator = ChestLootTable
+
+        /**
+         * A list of all chest generators.
+         */
+        val allChests = listOf(chestBlockModel, chestBlockState, chestItemModel, chestLootTable)
     }
 
     /**
@@ -492,5 +519,6 @@ object Gens {
         yieldAll(Variants.allLadders)
         yieldAll(Variants.allLeaves)
         yieldAll(Variants.allPottedPlants)
+        yieldAll(Variants.allChests)
     }.toList()
 }
