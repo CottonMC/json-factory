@@ -10,11 +10,7 @@ internal object Tips {
 
     init {
         val props = Properties()
-        props.load(Gui::class.java.getResourceAsStream("/json-factory/tips.properties"))
-        for ((key, value) in props) {
-            props[key] = Markdown.toHtml(value.toString())
-        }
-
+        props.load(Tips::class.java.getResourceAsStream("/json-factory/tips.properties"))
         tipOfTheDay = JXTipOfTheDay(TipLoader.load(props))
     }
 
