@@ -6,7 +6,8 @@ import io.github.cottonmc.jsonfactory.gens.GeneratorInfo
 import io.github.cottonmc.jsonfactory.output.model.Model
 
 class OreBlockModel(display: String, private val base: Identifier) :
-    ContentGenerator("Ore Block Model ($display)", "models/block",
+    ContentGenerator(
+        "Ore Block Model ($display)", "models/block",
         GeneratorInfo.ORES
     ) {
     override fun generate(id: Identifier) = listOf(

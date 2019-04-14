@@ -6,13 +6,16 @@ import io.github.cottonmc.jsonfactory.gens.GeneratorInfo
 import io.github.cottonmc.jsonfactory.output.model.ModelBlockState
 import io.github.cottonmc.jsonfactory.output.suffixed
 
-internal object PressurePlateBlockState : ContentGenerator("Pressure Plate Block State", "blockstates",
+internal object PressurePlateBlockState : ContentGenerator(
+    "Pressure Plate Block State", "blockstates",
     GeneratorInfo.PRESSURE_PLATES
 ) {
     override fun generate(id: Identifier) = listOf(
-        ModelBlockState(mapOf(
-            "powered=false" to ModelBlockState.Variant(id.copy(path = "block/${id.path}_pressure_plate")),
-            "powered=true" to ModelBlockState.Variant(id.copy(path = "block/${id.path}_pressure_plate_down"))
-        )).suffixed("pressure_plate")
+        ModelBlockState(
+            mapOf(
+                "powered=false" to ModelBlockState.Variant(id.copy(path = "block/${id.path}_pressure_plate")),
+                "powered=true" to ModelBlockState.Variant(id.copy(path = "block/${id.path}_pressure_plate_down"))
+            )
+        ).suffixed("pressure_plate")
     )
 }

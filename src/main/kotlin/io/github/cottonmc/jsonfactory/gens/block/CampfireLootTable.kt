@@ -7,8 +7,11 @@ import io.github.cottonmc.jsonfactory.output.loot.*
 import io.github.cottonmc.jsonfactory.output.loot.Function
 import io.github.cottonmc.jsonfactory.output.suffixed
 
-internal object CampfireLootTable : ContentGenerator("Campfire Loot Table", "loot_tables/blocks",
-    GeneratorInfo.CAMPFIRES, resourceRoot = ResourceRoot.Data
+internal object CampfireLootTable : ContentGenerator(
+    "Campfire Loot Table",
+    "loot_tables/blocks",
+    GeneratorInfo.CAMPFIRES,
+    resourceRoot = ResourceRoot.Data
 ) {
     override fun generate(id: Identifier) = listOf(
         LootTable(
@@ -22,15 +25,17 @@ internal object CampfireLootTable : ContentGenerator("Campfire Loot Table", "loo
                                 Entry(
                                     name = id.suffixPath("_campfire"),
                                     conditions = listOf(
-                                        Condition.Alternative(listOf(
-                                            Condition.MatchTool(mapOf("item" to Identifier.mc("axe"))),
-                                            Condition.MatchTool(mapOf(
-                                                "enchantments" to listOf(mapOf(
-                                                    "enchantment" to Identifier.mc("silk_touch"),
-                                                    "levels" to mapOf("min" to 1)
-                                                ))
-                                            ))
-                                        ))
+                                        Condition.MatchTool(mapOf("item" to Identifier.mc("axe"))),
+                                        Condition.MatchTool(
+                                            mapOf(
+                                                "enchantments" to listOf(
+                                                    mapOf(
+                                                        "enchantment" to Identifier.mc("silk_touch"),
+                                                        "levels" to mapOf("min" to 1)
+                                                    )
+                                                )
+                                            )
+                                        )
                                     )
                                 ),
                                 Entry(
@@ -40,7 +45,7 @@ internal object CampfireLootTable : ContentGenerator("Campfire Loot Table", "loo
                                     ),
                                     functions = listOf(
                                         Function.SetCount(
-                                            listOf(Condition(Identifier.mc("survives_explosion"))),
+                                            emptyList(),
                                             4
                                         )
                                     )

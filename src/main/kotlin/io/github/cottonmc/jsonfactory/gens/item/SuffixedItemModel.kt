@@ -6,7 +6,12 @@ import io.github.cottonmc.jsonfactory.gens.GeneratorInfo
 import io.github.cottonmc.jsonfactory.output.model.Model
 import io.github.cottonmc.jsonfactory.output.suffixed
 
-class SuffixedItemModel(val parent: Identifier, display: String, private val suffix: String, info: GeneratorInfo = GeneratorInfo.ITEM) :
+class SuffixedItemModel(
+    val parent: Identifier,
+    display: String,
+    private val suffix: String,
+    info: GeneratorInfo = GeneratorInfo.ITEM
+) :
     ContentGenerator("$display Item Model", "models/item", info) {
     override fun generate(id: Identifier) = listOf(
         Model(

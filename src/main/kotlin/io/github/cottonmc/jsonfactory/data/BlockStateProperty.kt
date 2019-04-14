@@ -32,7 +32,8 @@ data class BlockStateProperty(val name: String, val values: Set<String>) {
         val halfTB = BlockStateProperty("half", setOf("bottom", "top"))
         val halfUL = BlockStateProperty("half", setOf("upper", "lower"))
         val slabType = BlockStateProperty("type", setOf("bottom", "top", "double"))
-        val stairShape = BlockStateProperty("shape", setOf("straight", "outer_right", "outer_left", "inner_right", "inner_left"))
+        val stairShape =
+            BlockStateProperty("shape", setOf("straight", "outer_right", "outer_left", "inner_right", "inner_left"))
         val buttonFace = BlockStateProperty("face", setOf("floor", "wall", "ceiling"))
         val powered = boolean("powered")
         val gateInWall = boolean("in_wall")

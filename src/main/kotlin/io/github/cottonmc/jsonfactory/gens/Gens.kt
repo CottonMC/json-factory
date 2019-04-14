@@ -167,7 +167,8 @@ object Gens {
         /**
          * A list of all pressure plate generators.
          */
-        val allPressurePlates = listOf(pressurePlateBlockModel, pressurePlateBlockState, pressurePlateItemModel, pressurePlateLootTable)
+        val allPressurePlates =
+            listOf(pressurePlateBlockModel, pressurePlateBlockState, pressurePlateItemModel, pressurePlateLootTable)
 
         // BUTTONS
 
@@ -446,7 +447,8 @@ object Gens {
         /**
          * The potted plant block state generator.
          */
-        val pottedPlantBlockState: ContentGenerator = PrefixedBlockState("Potted Plant Block State", "potted", GeneratorInfo.POTTED_PLANTS)
+        val pottedPlantBlockState: ContentGenerator =
+            PrefixedBlockState("Potted Plant Block State", "potted", GeneratorInfo.POTTED_PLANTS)
 
         /**
          * The potted plant loot table generator.
@@ -485,9 +487,11 @@ object Gens {
 
         val scaffoldingBlockModel: ContentGenerator = ScaffoldingBlockModel
         val scaffoldingBlockState: ContentGenerator = ScaffoldingBlockState
-        val scaffoldingItemModel: ContentGenerator = SuffixedBlockItemModel("Scaffolding", "scaffolding", GeneratorInfo.SCAFFOLDING)
+        val scaffoldingItemModel: ContentGenerator =
+            SuffixedBlockItemModel("Scaffolding", "scaffolding", GeneratorInfo.SCAFFOLDING)
         val scaffoldingLootTable: ContentGenerator = ScaffoldingLootTable
-        val allScaffolding = listOf(scaffoldingBlockModel, scaffoldingBlockState, scaffoldingItemModel, scaffoldingLootTable)
+        val allScaffolding =
+            listOf(scaffoldingBlockModel, scaffoldingBlockState, scaffoldingItemModel, scaffoldingLootTable)
 
         val barrelBlockModel: ContentGenerator = BarrelBlockModel
         val barrelBlockState: ContentGenerator = BarrelBlockState
@@ -503,8 +507,8 @@ object Gens {
             suffix = "campfire",
             info = GeneratorInfo.CAMPFIRES
         )
-        val campfireLootTable: ContentGenerator = CampfireLootTable
-        val allCampfires = listOf(campfireBlockModel, campfireBlockState, campfireItemModel, campfireLootTable)
+//        val campfireLootTable: ContentGenerator = CampfireLootTable
+        val allCampfires = listOf(campfireBlockModel, campfireBlockState, campfireItemModel/*, campfireLootTable*/)
     }
 
     /**

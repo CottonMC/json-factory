@@ -114,7 +114,7 @@ data class Property<out T>(val name: String, val value: T, val mode: Mode = Mode
 
         private fun isEmpty(value: Any?) =
             (value as? Collection<*>)?.isEmpty() == true || (value as? String)?.isEmpty() == true ||
-                (value as? Map<*, *>)?.isEmpty() == true
+                    (value as? Map<*, *>)?.isEmpty() == true
     }
 }
 

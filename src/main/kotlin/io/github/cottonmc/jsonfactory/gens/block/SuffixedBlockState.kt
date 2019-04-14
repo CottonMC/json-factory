@@ -9,7 +9,8 @@ import io.github.cottonmc.jsonfactory.output.suffixed
 /**
  * @since 0.4.0
  */
-class SuffixedBlockState(displayName: String, private val suffix: String, info: GeneratorInfo) : ContentGenerator(displayName, "blockstates", info) {
+class SuffixedBlockState(displayName: String, private val suffix: String, info: GeneratorInfo) :
+    ContentGenerator(displayName, "blockstates", info) {
     override fun generate(id: Identifier) = listOf(
         ModelBlockState(
             mapOf(

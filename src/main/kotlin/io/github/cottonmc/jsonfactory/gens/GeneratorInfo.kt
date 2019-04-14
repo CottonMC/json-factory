@@ -28,8 +28,10 @@ data class GeneratorInfo(val category: Category, val subcategory: Subcategory? =
         val description: String?
     }
 
-    enum class Categories(override val displayName: String, override val path: String,
-                          override val description: String? = null) :
+    enum class Categories(
+        override val displayName: String, override val path: String,
+        override val description: String? = null
+    ) :
         Category {
         Block("Block", "block"), Item("Item", "item"),
         BlockVariants("Block Variants", "block", "Suffixes will be added to the output files' names.");

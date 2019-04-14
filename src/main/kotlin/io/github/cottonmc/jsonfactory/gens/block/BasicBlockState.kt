@@ -6,9 +6,11 @@ import io.github.cottonmc.jsonfactory.gens.GeneratorInfo
 import io.github.cottonmc.jsonfactory.output.model.ModelBlockState
 
 internal object BasicBlockState : ContentGenerator("Basic Block State", "blockstates", GeneratorInfo.BLOCK) {
-    override fun generate(id: Identifier) = listOf(ModelBlockState(
-        mapOf(
-            "" to ModelBlockState.Variant(id.prefixPath("block/"))
+    override fun generate(id: Identifier) = listOf(
+        ModelBlockState(
+            mapOf(
+                "" to ModelBlockState.Variant(id.prefixPath("block/"))
+            )
         )
-    ))
+    )
 }

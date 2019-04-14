@@ -9,7 +9,10 @@ import io.github.cottonmc.jsonfactory.output.suffixed
 
 internal object CampfireBlockState : ContentGenerator("Campfire Block State", "blockstates", GeneratorInfo.CAMPFIRES) {
     override fun generate(id: Identifier) = listOf(
-        ModelBlockState.create(id, setOf(BlockStateProperty.horizontalFacing, BlockStateProperty.lit)) { values, variant ->
+        ModelBlockState.create(
+            id,
+            setOf(BlockStateProperty.horizontalFacing, BlockStateProperty.lit)
+        ) { values, variant ->
             val y = getYRotation(values["facing"]!!).let {
                 it
             }
