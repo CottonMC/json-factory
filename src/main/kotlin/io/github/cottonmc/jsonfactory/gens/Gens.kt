@@ -487,31 +487,92 @@ object Gens {
          */
         val allChests = listOf(chestBlockModel, chestBlockState, chestItemModel, chestLootTable)
 
-        // TODO: Comments
+        // SCAFFOLDING
 
+        /**
+         * The scaffolding block model generator.
+         */
         val scaffoldingBlockModel: ContentGenerator = ScaffoldingBlockModel
+
+        /**
+         * The scaffolding block state generator.
+         */
         val scaffoldingBlockState: ContentGenerator = ScaffoldingBlockState
+
+        /**
+         * The scaffolding item model generator.
+         */
         val scaffoldingItemModel: ContentGenerator =
             SuffixedBlockItemModel("Scaffolding", "scaffolding", GeneratorInfo.SCAFFOLDING)
+
+        /**
+         * The scaffolding loot table generator.
+         */
         val scaffoldingLootTable: ContentGenerator = ScaffoldingLootTable
+
+        /**
+         * A list of all scaffolding generators.
+         */
         val allScaffolding =
             listOf(scaffoldingBlockModel, scaffoldingBlockState, scaffoldingItemModel, scaffoldingLootTable)
 
+        // BARRELS
+
+        /**
+         * The barrel block model generator.
+         */
         val barrelBlockModel: ContentGenerator = BarrelBlockModel
+
+        /**
+         * The barrel block state generator.
+         */
         val barrelBlockState: ContentGenerator = BarrelBlockState
+
+        /**
+         * The barrel item model generator.
+         */
         val barrelItemModel: ContentGenerator = SuffixedBlockItemModel("Barrel", "barrel", GeneratorInfo.BARRELS)
+
+        /**
+         * The barrel loot table generator.
+         */
         val barrelLootTable: ContentGenerator = BarrelLootTable
+
+        /**
+         * A list of all barrel generators.
+         */
         val allBarrels = listOf(barrelBlockModel, barrelBlockState, barrelItemModel, barrelLootTable)
 
+        // CAMPFIRES
+
+        /**
+         * The campfire block model generator.
+         */
         val campfireBlockModel: ContentGenerator = CampfireBlockModel
+
+        /**
+         * The campfire block state generator.
+         */
         val campfireBlockState: ContentGenerator = CampfireBlockState
+
+        /**
+         * The campfire item model generator.
+         */
         val campfireItemModel: ContentGenerator = SuffixedItemModel(
             parent = Identifier.mc("item/generated"),
             display = "Campfire",
             suffix = "campfire",
             info = GeneratorInfo.CAMPFIRES
         )
+
+        /**
+         * The campfire loot table generator.
+         */
         val campfireLootTable: ContentGenerator = CampfireLootTable
+
+        /**
+         * A list of all campfire generators.
+         */
         val allCampfires = listOf(campfireBlockModel, campfireBlockState, campfireItemModel, campfireLootTable)
     }
 
