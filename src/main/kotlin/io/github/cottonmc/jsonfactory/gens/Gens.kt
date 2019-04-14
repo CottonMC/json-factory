@@ -511,8 +511,8 @@ object Gens {
             suffix = "campfire",
             info = GeneratorInfo.CAMPFIRES
         )
-        //        val campfireLootTable: ContentGenerator = CampfireLootTable
-        val allCampfires = listOf(campfireBlockModel, campfireBlockState, campfireItemModel/*, campfireLootTable*/)
+        val campfireLootTable: ContentGenerator = CampfireLootTable
+        val allCampfires = listOf(campfireBlockModel, campfireBlockState, campfireItemModel, campfireLootTable)
     }
 
     /**

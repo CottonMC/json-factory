@@ -25,7 +25,6 @@ internal object CampfireLootTable : ContentGenerator(
                                 Entry(
                                     name = id.suffixPath("_campfire"),
                                     conditions = listOf(
-                                        Condition.MatchTool(mapOf("item" to Identifier.mc("axe"))),
                                         Condition.MatchTool(
                                             mapOf(
                                                 "enchantments" to listOf(
@@ -46,7 +45,7 @@ internal object CampfireLootTable : ContentGenerator(
                                     functions = listOf(
                                         Function.SetCount(
                                             emptyList(),
-                                            4
+                                            2
                                         )
                                     )
                                 )
@@ -55,6 +54,6 @@ internal object CampfireLootTable : ContentGenerator(
                     )
                 )
             )
-        ).suffixed("_campfire")
+        ).suffixed("campfire")
     )
 }
