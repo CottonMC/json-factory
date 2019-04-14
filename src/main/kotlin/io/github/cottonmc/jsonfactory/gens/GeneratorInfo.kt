@@ -23,7 +23,7 @@ data class GeneratorInfo(val category: Category, val subcategory: Subcategory? =
         val path: String
 
         /**
-         * An optional description.
+         * An optional description. Can be a Markdown string.
          */
         val description: String?
     }
@@ -59,14 +59,14 @@ data class GeneratorInfo(val category: Category, val subcategory: Subcategory? =
         val displayName: String
 
         /**
-         * An optional description.
+         * An optional description. Can be a Markdown string.
          */
         val description: String?
     }
 
     enum class Subcategories(_displayName: String? = null, override val description: String? = null) :
         Subcategory {
-        Ores,
+        Ores(description = "Note: The child ore models assume that the template is named `modid:ore_template`."),
         Pillars,
         Slabs,
         Stairs,

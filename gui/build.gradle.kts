@@ -32,6 +32,7 @@ dependencies {
     implementation("org.swinglabs.swingx:swingx-all:1.6.5-1")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.2.0")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-swing:1.2.0")
+    implementation("com.vladsch.flexmark:flexmark:0.42.4")
 }
 
 application {

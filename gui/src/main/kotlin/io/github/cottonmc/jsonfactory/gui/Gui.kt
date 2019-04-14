@@ -1,19 +1,11 @@
 package io.github.cottonmc.jsonfactory.gui
 
-import io.github.cottonmc.jsonfactory.data.Identifier
 import io.github.cottonmc.jsonfactory.gens.GeneratorInfo
-import io.github.cottonmc.jsonfactory.gens.Gens
-import kotlinx.coroutines.*
-import kotlinx.coroutines.swing.Swing
 import net.miginfocom.swing.MigLayout
 import org.jdesktop.swingx.*
 import org.jdesktop.swingx.hyperlink.HyperlinkAction
-import org.jdesktop.swingx.tips.TipLoader
 import java.awt.*
-import java.io.File
 import java.net.URI
-import java.nio.file.Files
-import java.util.*
 import javax.imageio.ImageIO
 import javax.swing.*
 import javax.swing.text.AttributeSet
@@ -22,18 +14,18 @@ import javax.swing.text.SimpleAttributeSet
 import javax.swing.text.StyleConstants
 
 internal class Gui private constructor() {
-    private val frame = JFrame()
-    private val fileChooser = JFileChooser().apply {
+    internal val frame = JFrame()
+    internal val fileChooser = JFileChooser().apply {
         fileSelectionMode = JFileChooser.DIRECTORIES_ONLY
     }
     private val idField = JXTextField("enter an id or comma-separated list of ids").apply {
         columns = 25
     }
-    private val selectedGens = Gens.allGens.map { it to false }.toMap().toMutableMap()
+    private val generator = Generator(this)
     private val generators = createGeneratorPanel()
     private val saveButton = JButton("Generate").apply {
         addActionListener {
-            generateAll()
+            generator.generateAll(idField.text)
         }
     }
     private val outputTextArea = JTextPane().apply {
@@ -90,12 +82,11 @@ internal class Gui private constructor() {
 
             add(JMenuItem("Tip of the Day").apply {
                 addActionListener {
-                    showTips(isStartup = false)
+                    Tips.show(frame, isStartup = false)
                 }
             })
         })
     }
-    private val tipOfTheDay: JXTipOfTheDay
 
     init {
         val rightPanel = JSplitPane(JSplitPane.VERTICAL_SPLIT, JPanel(MigLayout()).apply {
@@ -109,11 +100,6 @@ internal class Gui private constructor() {
 
         val panel = JSplitPane(JSplitPane.HORIZONTAL_SPLIT, JXTitledPanel("Generators", generators), rightPanel)
         panel.dividerLocation = 320
-
-        // Load tipOfTheDay
-        val props = Properties()
-        props.load(Gui::class.java.getResourceAsStream("/json-factory/tips.properties"))
-        tipOfTheDay = JXTipOfTheDay(TipLoader.load(props))
 
         frame.apply {
             title = "JSON Factory"
@@ -137,89 +123,16 @@ internal class Gui private constructor() {
         }
     }
 
-    private fun generateAll() = GlobalScope.launch(Dispatchers.Swing) {
-        if (idField.text.isBlank()) {
-            printMessage("Note:", "The ID input field is empty.", noteAttributes)
-            return@launch
 
-        } else if (selectedGens.none { (_, value) -> value }) {
-            printMessage("Note:", "No generators selected.", noteAttributes)
-            return@launch
-        }
-
-        val answer = fileChooser.showSaveDialog(frame)
-
-        if (answer == JFileChooser.APPROVE_OPTION) {
-            printMessage("", "-".repeat(25))
-            printMessage("Started", "generating.", boldAttributes)
-            printMessage("In", fileChooser.selectedFile.path)
-
-            val split = idField.text.split(',').map(String::trim)
-            split.mapNotNull { idText ->
-                Identifier.orNull(idText).also { id ->
-                    if (id == null) {
-                        printMessage("Invalid ID:", idText, errorAttributes)
-                    }
-                }
-            }.flatMap { id ->
-                generate(id, fileChooser.selectedFile)
-            }.joinAll()
-
-            printMessage("Finished", "generating.", boldAttributes)
-            if (Settings.playFinishedSound) {
-                Sounds.finished.start()
-            }
-        }
-    }
-
-    private suspend fun generate(id: Identifier, resourceDir: File) = coroutineScope {
-        selectedGens.filter { (_, value) -> value }.keys.map { gen ->
-            launch(Dispatchers.IO) {
-                val root = gen.resourceRoot.path
-                val sep = File.separatorChar
-                val namespace = id.namespace
-                val directory = gen.path
-                val fileName = id.path
-                val extension = gen.extension
-                val generated = gen.generate(id)
-
-                for (value in generated) {
-                    val name = value.nameWrapper.applyTo(fileName)
-
-                    val file = File(
-                        resourceDir,
-                        "$root$sep$namespace$sep$directory$sep$name.$extension"
-                    )
-
-                    if (file.exists()) {
-                        Sounds.confirm.start()
-                        val confirm = withContext(Dispatchers.Swing) {
-                            JOptionPane.showConfirmDialog(frame, "Do you want to overwrite the existing file $file?")
-                        }
-
-                        if (confirm != JOptionPane.YES_OPTION)
-                            return@launch
-                    }
-
-                    Files.createDirectories(file.parentFile?.toPath())
-                    value.writeToFile(file)
-
-                    withContext(Dispatchers.Swing) {
-                        printMessage("Generated", file.toRelativeString(resourceDir))
-                    }
-                }
-            }
-        }
-    }
 
     private fun createGeneratorPanel(): JTabbedPane {
         val pane = JTabbedPane(SwingConstants.TOP)
-        val gens = selectedGens.keys
+        val gens = generator.gens2Selections.keys
 
         for (category in GeneratorInfo.Categories.categories) {
             pane.addTab(category.displayName, JFScrollPane(JPanel(MigLayout()).apply {
                 category.description?.let {
-                    add(JLabel(it), "wrap")
+                    add(JLabel(Markdown.toHtml(it)), "wrap")
                 }
 
                 val categoryGens = gens.filter { it.info.category == category }
@@ -232,14 +145,14 @@ internal class Gui private constructor() {
                     if (subcategory != null) {
                         add(JXTitledSeparator("<html><b>${subcategory.displayName}</b>"), "wrap")
                         subcategory.description?.let {
-                            add(JLabel("<html><i>$it</i>"), "wrap")
+                            add(JLabel(Markdown.toHtml("*$it*")), "wrap")
                         }
                     }
 
                     for (gen in categoryGens.filter { it.info.subcategory == subcategory }) {
                         add(JCheckBox(gen.displayName, false).apply {
                             addActionListener {
-                                selectedGens[gen] = isSelected
+                                generator.gens2Selections[gen] = isSelected
                             }
                         }, "wrap")
                     }
@@ -250,7 +163,7 @@ internal class Gui private constructor() {
         return pane
     }
 
-    private fun printMessage(prefix: String, msg: String, prefixAttributes: AttributeSet = defaultAttributes) {
+    internal fun printMessage(prefix: String, msg: String, prefixAttributes: AttributeSet = defaultAttributes) {
         val doc = outputTextArea.styledDocument
 
         if (prefix.isNotEmpty()) {
@@ -259,11 +172,6 @@ internal class Gui private constructor() {
         }
         doc.insertString(doc.length, "$msg\n", null)
         outputTextArea.repaint()
-    }
-
-    private fun showTips(isStartup: Boolean) {
-        tipOfTheDay.currentTip = (0 until tipOfTheDay.model.tipCount).random()
-        tipOfTheDay.showDialog(frame, Settings.createTipOfTheDayChoice(if (isStartup) null else true))
     }
 
     private fun showAboutDialog() = JXDialog(frame, JPanel(BorderLayout()).apply {
@@ -288,21 +196,21 @@ internal class Gui private constructor() {
     }
 
     companion object {
-        private val defaultAttributes = SimpleAttributeSet().apply {
+        internal val defaultAttributes = SimpleAttributeSet().apply {
             StyleConstants.setForeground(this, Color(0x2E9DFF))
         }
 
-        private val boldAttributes = SimpleAttributeSet().apply {
+        internal val boldAttributes = SimpleAttributeSet().apply {
             StyleConstants.setForeground(this, Color(0x2E9DFF))
             StyleConstants.setBold(this, true)
         }
 
-        private val errorAttributes = SimpleAttributeSet().apply {
+        internal val errorAttributes = SimpleAttributeSet().apply {
             StyleConstants.setForeground(this, Color.RED)
             StyleConstants.setBold(this, true)
         }
 
-        private val noteAttributes = SimpleAttributeSet().apply {
+        internal val noteAttributes = SimpleAttributeSet().apply {
             StyleConstants.setBackground(this, Color.ORANGE)
             StyleConstants.setForeground(this, Color.BLACK)
             StyleConstants.setBold(this, true)
@@ -319,7 +227,7 @@ internal class Gui private constructor() {
             Gui().apply {
                 show()
                 if (Settings.showTipsOnStartup) {
-                    showTips(isStartup = true)
+                    Tips.show(frame, isStartup = true)
                 }
             }
         }

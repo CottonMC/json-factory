@@ -9,8 +9,8 @@ import strikt.assertions.contains
 
 class ModelBlockStateTests {
     private val properties2 = setOf(
-        BlockStateProperty("a", listOf("a1", "a2")),
-        BlockStateProperty("b", listOf("b1", "b2"))
+        BlockStateProperty("a", setOf("a1", "a2")),
+        BlockStateProperty("b", setOf("b1", "b2"))
     )
 
     private val expected2 = setOf(
