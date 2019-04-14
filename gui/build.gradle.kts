@@ -10,20 +10,13 @@ base {
     archivesBaseName = "json-factory-gui"
 }
 
-// This should be false for releasing, true for developing
-val local = true
-
 repositories {
     maven(url = "http://server.bbkr.space:8081/artifactory/libs-release")
     maven(url = "http://server.bbkr.space:8081/artifactory/libs-snapshot")
 }
 
 dependencies {
-    if (local) {
-        implementation(project(":"))
-    } else {
-        implementation("io.github.cottonmc:json-factory:$version")
-    }
+    implementation(project(":"))
     implementation("com.miglayout:miglayout-swing:5.2")
     implementation("com.github.insubstantial:substance:7.3")
     implementation("com.github.insubstantial:substance-swingx:7.3") {
