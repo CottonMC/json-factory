@@ -106,3 +106,4 @@ private.properties
 private.gradle
 !**/gradle-wrapper.jar
 run/
+*.iml

@@ -38,6 +38,9 @@ data class BlockStateProperty(val name: String, val values: Set<String>) {
         val gateInWall = boolean("in_wall")
         val open = boolean("open")
         val doorHinge = BlockStateProperty("hinge", setOf("left", "right"))
+        val bottom = BlockStateProperty("bottom", setOf("true", "false"))
+        val facing = BlockStateProperty("facing", setOf("north", "east", "south", "west", "up", "down"))
+        val lit = boolean("lit")
 
         /**
          * Creates a [BlockStateProperty] with the [name] and the two boolean values: `true` and `false`.

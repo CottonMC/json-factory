@@ -1,8 +1,10 @@
 package io.github.cottonmc.jsonfactory.gens
 
 import io.github.cottonmc.jsonfactory.data.Identifier
+import io.github.cottonmc.jsonfactory.gens.Gens.allGens
 import io.github.cottonmc.jsonfactory.gens.block.*
-import io.github.cottonmc.jsonfactory.gens.item.*
+import io.github.cottonmc.jsonfactory.gens.item.BasicItemModel
+import io.github.cottonmc.jsonfactory.gens.item.SuffixedItemModel
 
 /**
  * Lists [ContentGenerator]s.
@@ -456,8 +458,6 @@ object Gens {
          */
         val allPottedPlants = listOf(pottedPlantBlockModel, pottedPlantBlockState, pottedPlantLootTable)
 
-        // CHESTS
-
         /**
          * The chest model generator.
          */
@@ -482,6 +482,29 @@ object Gens {
          * A list of all chest generators.
          */
         val allChests = listOf(chestBlockModel, chestBlockState, chestItemModel, chestLootTable)
+
+        val scaffoldingBlockModel: ContentGenerator = ScaffoldingBlockModel
+        val scaffoldingBlockState: ContentGenerator = ScaffoldingBlockState
+        val scaffoldingItemModel: ContentGenerator = SuffixedBlockItemModel("Scaffolding", "scaffolding", GeneratorInfo.SCAFFOLDING)
+        val scaffoldingLootTable: ContentGenerator = ScaffoldingLootTable
+        val allScaffolding = listOf(scaffoldingBlockModel, scaffoldingBlockState, scaffoldingItemModel, scaffoldingLootTable)
+
+        val barrelBlockModel: ContentGenerator = BarrelBlockModel
+        val barrelBlockState: ContentGenerator = BarrelBlockState
+        val barrelItemModel: ContentGenerator = SuffixedBlockItemModel("Barrel", "barrel", GeneratorInfo.BARRELS)
+        val barrelLootTable: ContentGenerator = BarrelLootTable
+        val allBarrels = listOf(barrelBlockModel, barrelBlockState, barrelItemModel, barrelLootTable)
+
+        val campfireBlockModel: ContentGenerator = CampfireBlockModel
+        val campfireBlockState: ContentGenerator = CampfireBlockState
+        val campfireItemModel: ContentGenerator = SuffixedItemModel(
+            parent = Identifier.mc("item/generated"),
+            display = "Campfire",
+            suffix = "campfire",
+            info = GeneratorInfo.CAMPFIRES
+        )
+        val campfireLootTable: ContentGenerator = CampfireLootTable
+        val allCampfires = listOf(campfireBlockModel, campfireBlockState, campfireItemModel, campfireLootTable)
     }
 
     /**
@@ -520,5 +543,8 @@ object Gens {
         yieldAll(Variants.allLeaves)
         yieldAll(Variants.allPottedPlants)
         yieldAll(Variants.allChests)
+        yieldAll(Variants.allScaffolding)
+        yieldAll(Variants.allBarrels)
+        yieldAll(Variants.allCampfires)
     }.toList()
 }

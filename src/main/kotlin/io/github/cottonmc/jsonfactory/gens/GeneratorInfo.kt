@@ -81,7 +81,11 @@ data class GeneratorInfo(val category: Category, val subcategory: Subcategory? =
         Ladders,
         Leaves,
         PottedPlants("Potted Plants"),
-        Chests;
+        Scaffolding,
+        Chests,
+        Campfires,
+        Barrels,
+        Saplings;
 
         override val displayName = _displayName ?: name
     }
@@ -106,5 +110,9 @@ data class GeneratorInfo(val category: Category, val subcategory: Subcategory? =
         val LEAVES = GeneratorInfo(Categories.BlockVariants, Subcategories.Leaves)
         val POTTED_PLANTS = GeneratorInfo(Categories.BlockVariants, Subcategories.PottedPlants)
         val CHESTS = GeneratorInfo(Categories.BlockVariants, Subcategories.Chests)
+        val SCAFFOLDING = GeneratorInfo(Categories.BlockVariants, Subcategories.Scaffolding)
+        val SAPLINGS = GeneratorInfo(Categories.BlockVariants, Subcategories.Saplings)
+        val BARRELS = GeneratorInfo(Categories.BlockVariants, Subcategories.Barrels)
+        val CAMPFIRES = GeneratorInfo(Categories.BlockVariants, Subcategories.Campfires)
     }
 }
