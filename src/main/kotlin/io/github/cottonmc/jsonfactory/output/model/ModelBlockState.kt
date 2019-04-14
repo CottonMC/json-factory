@@ -31,13 +31,10 @@ data class ModelBlockState(val variants: Map<String, Variant>) : Json {
     companion object {
         /**
          * Creates a [ModelBlockState] from an [id], a set of [properties] and a [transform] function.
-         *
-         * @param prefix an optional prefix for the model file
          */
         fun create(
             id: Identifier,
             properties: Set<BlockStateProperty>,
-            prefix: String = "",
             transform: (values: BlockStateProperty.ValueMap, variant: Variant) -> Variant = { _, variant -> variant }
         ): ModelBlockState {
             val output: Sequence<Sequence<Pair<BlockStateProperty, String>>> = properties.fold(sequenceOf(emptySequence())) { acc, prop ->
@@ -55,9 +52,13 @@ data class ModelBlockState(val variants: Map<String, Variant>) : Json {
 
             for (o in output) {
                 val key = o.joinToString(separator = ",") { (prop, value) -> "${prop.name}=$value" }
-                val variant = Variant(id.prefixPath("block/$prefix"))
+                val variant = Variant(model = id)
 
                 variants[key] = transform(BlockStateProperty.ValueMap(o.toMap()), variant)
+                    .let {
+                        // Prefix the model here so the transformation can apply its own prefixes
+                        it.copy(model = it.model.prefixPath("block/"))
+                    }
             }
 
             return ModelBlockState(variants)
