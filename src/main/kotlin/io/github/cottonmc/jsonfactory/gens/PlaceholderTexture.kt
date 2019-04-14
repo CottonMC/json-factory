@@ -46,6 +46,10 @@ class PlaceholderTexture(info: GeneratorInfo) : ContentGenerator(
 
     private fun Color.withDifferentHue(): Color {
         val hsb = Color.RGBtoHSB(red, green, blue, null)
-        return Color.getHSBColor((hsb[0] + ThreadLocalRandom.current().nextDouble(0.2, 0.8).toFloat()) % 1f, hsb[1], hsb[2])
+        return Color.getHSBColor(
+            (hsb[0] + ThreadLocalRandom.current().nextDouble(0.2, 0.8).toFloat()) % 1f,
+            hsb[1],
+            hsb[2]
+        )
     }
 }

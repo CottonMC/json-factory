@@ -1,7 +1,7 @@
 package io.github.cottonmc.jsonfactory.output.model
 
-import io.github.cottonmc.jsonfactory.data.Identifier
 import io.github.cottonmc.jsonfactory.data.BlockStateProperty
+import io.github.cottonmc.jsonfactory.data.Identifier
 import io.github.cottonmc.jsonfactory.output.Json
 import io.github.cottonmc.jsonfactory.output.createProperties
 
@@ -37,16 +37,17 @@ data class ModelBlockState(val variants: Map<String, Variant>) : Json {
             properties: Set<BlockStateProperty>,
             transform: (values: BlockStateProperty.ValueMap, variant: Variant) -> Variant = { _, variant -> variant }
         ): ModelBlockState {
-            val output: Sequence<Sequence<Pair<BlockStateProperty, String>>> = properties.fold(sequenceOf(emptySequence())) { acc, prop ->
-                acc.flatMap { existing ->
-                    prop.values.asSequence().map { value ->
-                        sequence {
-                            yield(prop to value)
-                            yieldAll(existing)
+            val output: Sequence<Sequence<Pair<BlockStateProperty, String>>> =
+                properties.fold(sequenceOf(emptySequence())) { acc, prop ->
+                    acc.flatMap { existing ->
+                        prop.values.asSequence().map { value ->
+                            sequence {
+                                yield(prop to value)
+                                yieldAll(existing)
+                            }
                         }
                     }
                 }
-            }
 
             val variants = HashMap<String, Variant>()
 

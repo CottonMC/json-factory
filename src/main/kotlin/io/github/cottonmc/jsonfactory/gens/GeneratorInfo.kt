@@ -28,9 +28,10 @@ data class GeneratorInfo(val category: Category, val subcategory: Subcategory? =
         val description: String?
     }
 
-    enum class Categories(override val displayName: String, override val path: String,
-                          override val description: String? = null) :
-        Category {
+    enum class Categories(
+        override val displayName: String, override val path: String,
+        override val description: String? = null
+    ) : Category {
         Block("Block", "block"), Item("Item", "item"),
         BlockVariants("Block Variants", "block", "Suffixes will be added to the output files' names.");
 
@@ -64,8 +65,7 @@ data class GeneratorInfo(val category: Category, val subcategory: Subcategory? =
         val description: String?
     }
 
-    enum class Subcategories(_displayName: String? = null, override val description: String? = null) :
-        Subcategory {
+    enum class Subcategories(_displayName: String? = null, override val description: String? = null) : Subcategory {
         Ores(description = "Note: The child ore models assume that the template is named `modid:ore_template`."),
         Pillars,
         Slabs,
@@ -111,8 +111,8 @@ data class GeneratorInfo(val category: Category, val subcategory: Subcategory? =
         val POTTED_PLANTS = GeneratorInfo(Categories.BlockVariants, Subcategories.PottedPlants)
         val CHESTS = GeneratorInfo(Categories.BlockVariants, Subcategories.Chests)
         val SCAFFOLDING = GeneratorInfo(Categories.BlockVariants, Subcategories.Scaffolding)
-        val SAPLINGS = GeneratorInfo(Categories.BlockVariants, Subcategories.Saplings)
         val BARRELS = GeneratorInfo(Categories.BlockVariants, Subcategories.Barrels)
         val CAMPFIRES = GeneratorInfo(Categories.BlockVariants, Subcategories.Campfires)
+        val SAPLINGS = GeneratorInfo(Categories.BlockVariants, Subcategories.Saplings)
     }
 }

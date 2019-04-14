@@ -15,8 +15,8 @@ internal object Sounds {
     val confirm = load("confirm")
 
     private fun load(path: String): Clip {
-        val url = Sounds::class.java.getResource("/json-factory/sounds/$path.wav") ?:
-            throw FileNotFoundException("Sound clip $path not found")
+        val url = Sounds::class.java.getResource("/json-factory/sounds/$path.wav")
+            ?: throw FileNotFoundException("Sound clip $path not found")
 
         val stream = AudioSystem.getAudioInputStream(url)
         val clip = AudioSystem.getClip()

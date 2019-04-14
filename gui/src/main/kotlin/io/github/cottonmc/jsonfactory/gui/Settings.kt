@@ -61,7 +61,10 @@ object Settings {
             forceSystemWindowDecorations = props["force-system-window-decorations"].toString().toBoolean()
             playFinishedSound = props["play-finished-sound"].toString().toBoolean()
             showTipsOnStartup = props["show-tips-on-startup"].toString().toBoolean()
-            theme = Theme.values().find { props["theme"].toString().equals(it.name, ignoreCase = true) } ?: Theme.DEFAULT
+            theme =
+                Theme.values().find {
+                    props["theme"].toString().equals(it.name, ignoreCase = true)
+                } ?: Theme.DEFAULT
         } catch (e: IOException) {
             JXErrorPane.showDialog(e)
         }
@@ -97,37 +100,40 @@ object Settings {
     private fun refreshTheme(theme: Theme, oldTheme: Theme?, forceRefreshDecorations: Boolean = false) {
         fun providesWindowDecorations(theme: Theme) =
             !forceSystemWindowDecorations && theme.providesWindowDecorations
+
         val themeWindowDecorations = providesWindowDecorations(theme)
         val shouldRefreshDecorations = forceRefreshDecorations ||
-            (oldTheme != null && providesWindowDecorations(theme) != providesWindowDecorations(oldTheme))
+                (oldTheme != null && providesWindowDecorations(theme) != providesWindowDecorations(oldTheme))
 
-        UIManager.setLookAndFeel(when (theme) {
-            Theme.Native -> UIManager.getSystemLookAndFeelClassName()
-            Theme.Business -> SubstanceBusinessLookAndFeel::class.java.name
-            Theme.BusinessBlackSteel -> SubstanceBusinessBlackSteelLookAndFeel::class.java.name
-            Theme.BusinessBlueSteel -> SubstanceBusinessBlueSteelLookAndFeel::class.java.name
-            Theme.Cerulean -> SubstanceCeruleanLookAndFeel::class.java.name
-            Theme.ChallengerDeep -> SubstanceChallengerDeepLookAndFeel::class.java.name
-            Theme.Creme -> SubstanceCremeLookAndFeel::class.java.name
-            Theme.CremeCoffee -> SubstanceCremeCoffeeLookAndFeel::class.java.name
-            Theme.Dust -> SubstanceDustLookAndFeel::class.java.name
-            Theme.DustCoffee -> SubstanceDustCoffeeLookAndFeel::class.java.name
-            Theme.EmeraldDusk -> SubstanceEmeraldDuskLookAndFeel::class.java.name
-            Theme.Gemini -> SubstanceGeminiLookAndFeel::class.java.name
-            Theme.Graphite -> SubstanceGraphiteLookAndFeel::class.java.name
-            Theme.Magellan -> SubstanceMagellanLookAndFeel::class.java.name
-            Theme.Mariner -> SubstanceMarinerLookAndFeel::class.java.name
-            Theme.MistAqua -> SubstanceMistAquaLookAndFeel::class.java.name
-            Theme.MistSilver -> SubstanceMistSilverLookAndFeel::class.java.name
-            Theme.Nebula -> SubstanceNebulaLookAndFeel::class.java.name
-            Theme.NebulaBrickWall -> SubstanceNebulaBrickWallLookAndFeel::class.java.name
-            Theme.OfficeBlack -> SubstanceOfficeBlack2007LookAndFeel::class.java.name
-            Theme.OfficeBlue -> SubstanceOfficeBlue2007LookAndFeel::class.java.name
-            Theme.OfficeSilver -> SubstanceOfficeSilver2007LookAndFeel::class.java.name
-            Theme.Twilight -> SubstanceTwilightLookAndFeel::class.java.name
-            Theme.SolarizedLight -> SolarizedSkin.LightLAF::class.java.name
-            Theme.SolarizedDark -> SolarizedSkin.DarkLAF::class.java.name
-        })
+        UIManager.setLookAndFeel(
+            when (theme) {
+                Theme.Native -> UIManager.getSystemLookAndFeelClassName()
+                Theme.Business -> SubstanceBusinessLookAndFeel::class.java.name
+                Theme.BusinessBlackSteel -> SubstanceBusinessBlackSteelLookAndFeel::class.java.name
+                Theme.BusinessBlueSteel -> SubstanceBusinessBlueSteelLookAndFeel::class.java.name
+                Theme.Cerulean -> SubstanceCeruleanLookAndFeel::class.java.name
+                Theme.ChallengerDeep -> SubstanceChallengerDeepLookAndFeel::class.java.name
+                Theme.Creme -> SubstanceCremeLookAndFeel::class.java.name
+                Theme.CremeCoffee -> SubstanceCremeCoffeeLookAndFeel::class.java.name
+                Theme.Dust -> SubstanceDustLookAndFeel::class.java.name
+                Theme.DustCoffee -> SubstanceDustCoffeeLookAndFeel::class.java.name
+                Theme.EmeraldDusk -> SubstanceEmeraldDuskLookAndFeel::class.java.name
+                Theme.Gemini -> SubstanceGeminiLookAndFeel::class.java.name
+                Theme.Graphite -> SubstanceGraphiteLookAndFeel::class.java.name
+                Theme.Magellan -> SubstanceMagellanLookAndFeel::class.java.name
+                Theme.Mariner -> SubstanceMarinerLookAndFeel::class.java.name
+                Theme.MistAqua -> SubstanceMistAquaLookAndFeel::class.java.name
+                Theme.MistSilver -> SubstanceMistSilverLookAndFeel::class.java.name
+                Theme.Nebula -> SubstanceNebulaLookAndFeel::class.java.name
+                Theme.NebulaBrickWall -> SubstanceNebulaBrickWallLookAndFeel::class.java.name
+                Theme.OfficeBlack -> SubstanceOfficeBlack2007LookAndFeel::class.java.name
+                Theme.OfficeBlue -> SubstanceOfficeBlue2007LookAndFeel::class.java.name
+                Theme.OfficeSilver -> SubstanceOfficeSilver2007LookAndFeel::class.java.name
+                Theme.Twilight -> SubstanceTwilightLookAndFeel::class.java.name
+                Theme.SolarizedLight -> SolarizedSkin.LightLAF::class.java.name
+                Theme.SolarizedDark -> SolarizedSkin.DarkLAF::class.java.name
+            }
+        )
         JFrame.setDefaultLookAndFeelDecorated(themeWindowDecorations)
 
         for (window in Window.getWindows()) {
@@ -198,6 +204,7 @@ object Settings {
 
             return showTipsOnStartup
         }
+
         override fun setShowingOnStartup(showOnStartup: Boolean) {
             showTipsOnStartup = showOnStartup
         }

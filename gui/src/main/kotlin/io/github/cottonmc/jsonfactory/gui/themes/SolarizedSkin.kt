@@ -1,6 +1,9 @@
 package io.github.cottonmc.jsonfactory.gui.themes
 
-import org.pushingpixels.substance.api.*
+import org.pushingpixels.substance.api.DecorationAreaType
+import org.pushingpixels.substance.api.SubstanceColorSchemeBundle
+import org.pushingpixels.substance.api.SubstanceLookAndFeel
+import org.pushingpixels.substance.api.SubstanceSkin
 import org.pushingpixels.substance.api.painter.border.FlatBorderPainter
 import org.pushingpixels.substance.api.painter.decoration.FlatDecorationPainter
 import org.pushingpixels.substance.api.painter.fill.MatteFillPainter
@@ -58,7 +61,7 @@ class SolarizedSkin(private val name: String, isDark: Boolean) : SubstanceSkin()
             ultraLight = BASE02
         )
 
-          // Reference color scheme
+        // Reference color scheme
 //        val COLOR_SCHEME = JFColorScheme(
 //            "Test", false,
 //            Color.BLACK,

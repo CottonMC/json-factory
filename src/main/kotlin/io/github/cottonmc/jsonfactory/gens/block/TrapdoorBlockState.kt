@@ -1,7 +1,7 @@
 package io.github.cottonmc.jsonfactory.gens.block
 
-import io.github.cottonmc.jsonfactory.data.Identifier
 import io.github.cottonmc.jsonfactory.data.BlockStateProperty
+import io.github.cottonmc.jsonfactory.data.Identifier
 import io.github.cottonmc.jsonfactory.gens.ContentGenerator
 import io.github.cottonmc.jsonfactory.gens.GeneratorInfo
 import io.github.cottonmc.jsonfactory.output.model.ModelBlockState
@@ -9,8 +9,10 @@ import io.github.cottonmc.jsonfactory.output.suffixed
 
 internal object TrapdoorBlockState : ContentGenerator("Trapdoor Block State", "blockstates", GeneratorInfo.TRAPDOORS) {
     override fun generate(id: Identifier) = listOf(
-        ModelBlockState.create(id, setOf(BlockStateProperty.horizontalFacing, BlockStateProperty.halfTB, BlockStateProperty.open)) {
-                values, variant ->
+        ModelBlockState.create(
+            id,
+            setOf(BlockStateProperty.horizontalFacing, BlockStateProperty.halfTB, BlockStateProperty.open)
+        ) { values, variant ->
             val suffix = when {
                 values["open"] == "true" -> "open"
                 else -> values["half"]

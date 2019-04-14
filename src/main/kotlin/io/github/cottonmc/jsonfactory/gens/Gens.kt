@@ -1,8 +1,10 @@
 package io.github.cottonmc.jsonfactory.gens
 
 import io.github.cottonmc.jsonfactory.data.Identifier
+import io.github.cottonmc.jsonfactory.gens.Gens.allGens
 import io.github.cottonmc.jsonfactory.gens.block.*
-import io.github.cottonmc.jsonfactory.gens.item.*
+import io.github.cottonmc.jsonfactory.gens.item.BasicItemModel
+import io.github.cottonmc.jsonfactory.gens.item.SuffixedItemModel
 
 /**
  * Lists [ContentGenerator]s.
@@ -165,7 +167,8 @@ object Gens {
         /**
          * A list of all pressure plate generators.
          */
-        val allPressurePlates = listOf(pressurePlateBlockModel, pressurePlateBlockState, pressurePlateItemModel, pressurePlateLootTable)
+        val allPressurePlates =
+            listOf(pressurePlateBlockModel, pressurePlateBlockState, pressurePlateItemModel, pressurePlateLootTable)
 
         // BUTTONS
 
@@ -444,7 +447,8 @@ object Gens {
         /**
          * The potted plant block state generator.
          */
-        val pottedPlantBlockState: ContentGenerator = PrefixedBlockState("Potted Plant Block State", "potted", GeneratorInfo.POTTED_PLANTS)
+        val pottedPlantBlockState: ContentGenerator =
+            PrefixedBlockState("Potted Plant Block State", "potted", GeneratorInfo.POTTED_PLANTS)
 
         /**
          * The potted plant loot table generator.
@@ -490,7 +494,8 @@ object Gens {
         val scaffoldingItemModel: ContentGenerator =
             SuffixedBlockItemModel("Scaffolding", "scaffolding", GeneratorInfo.SCAFFOLDING)
         val scaffoldingLootTable: ContentGenerator = ScaffoldingLootTable
-        val allScaffolding = listOf(scaffoldingBlockModel, scaffoldingBlockState, scaffoldingItemModel, scaffoldingLootTable)
+        val allScaffolding =
+            listOf(scaffoldingBlockModel, scaffoldingBlockState, scaffoldingItemModel, scaffoldingLootTable)
 
         val barrelBlockModel: ContentGenerator = BarrelBlockModel
         val barrelBlockState: ContentGenerator = BarrelBlockState

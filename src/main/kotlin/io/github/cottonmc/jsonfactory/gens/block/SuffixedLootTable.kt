@@ -9,7 +9,8 @@ import io.github.cottonmc.jsonfactory.output.loot.LootTable
 import io.github.cottonmc.jsonfactory.output.loot.Pool
 import io.github.cottonmc.jsonfactory.output.suffixed
 
-class SuffixedLootTable(display: String, private val suffix: String, info: GeneratorInfo) : ContentGenerator("$display Loot Table", "loot_tables/blocks",
+class SuffixedLootTable(display: String, private val suffix: String, info: GeneratorInfo) : ContentGenerator(
+    "$display Loot Table", "loot_tables/blocks",
     info, resourceRoot = ResourceRoot.Data
 ) {
     override fun generate(id: Identifier) = listOf(

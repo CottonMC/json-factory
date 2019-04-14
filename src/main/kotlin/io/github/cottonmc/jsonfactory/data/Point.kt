@@ -1,6 +1,8 @@
 package io.github.cottonmc.jsonfactory.data
 
-import com.google.gson.*
+import com.google.gson.JsonArray
+import com.google.gson.JsonSerializationContext
+import com.google.gson.JsonSerializer
 import com.google.gson.annotations.JsonAdapter
 import java.lang.reflect.Type
 

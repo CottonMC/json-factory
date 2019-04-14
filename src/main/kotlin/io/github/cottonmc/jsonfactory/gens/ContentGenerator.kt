@@ -23,6 +23,7 @@ abstract class ContentGenerator(
      * Generates Outputs from an [id].
      */
     abstract fun generate(id: Identifier): List<Output>
+
     override fun toString() = displayName
 
     enum class ResourceRoot(val path: String) {

@@ -123,8 +123,6 @@ internal class Gui private constructor() {
         }
     }
 
-
-
     private fun createGeneratorPanel(): JTabbedPane {
         val pane = JTabbedPane(SwingConstants.TOP)
         val gens = generator.gens2Selections.keys
@@ -182,10 +180,14 @@ internal class Gui private constructor() {
             add(JLabel("<html><b>About JSON Factory</b>"))
             add(JLabel("JSON Factory is developed by the Cotton project."))
             add(JLabel("It is licensed under the MIT license."))
-            add(JXHyperlink(HyperlinkAction.createHyperlinkAction(
-                URI.create("https://github.com/CottonMC/json-factory"),
-                Desktop.Action.BROWSE
-            )))
+            add(
+                JXHyperlink(
+                    HyperlinkAction.createHyperlinkAction(
+                        URI.create("https://github.com/CottonMC/json-factory"),
+                        Desktop.Action.BROWSE
+                    )
+                )
+            )
         }, BorderLayout.CENTER)
         add(JLabel(ImageIcon(icon128)), BorderLayout.WEST)
     }).apply {

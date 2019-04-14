@@ -5,7 +5,6 @@ import io.github.cottonmc.jsonfactory.gens.ContentGenerator
 import io.github.cottonmc.jsonfactory.gens.GeneratorInfo
 import io.github.cottonmc.jsonfactory.output.loot.*
 import io.github.cottonmc.jsonfactory.output.loot.Function
-import io.github.cottonmc.jsonfactory.output.model.Model
 import io.github.cottonmc.jsonfactory.output.suffixed
 
 internal object ChestLootTable : ContentGenerator(
@@ -18,12 +17,14 @@ internal object ChestLootTable : ContentGenerator(
         LootTable(
             pools = listOf(
                 Pool(
-                    entries = listOf(Entry(
-                        name = id.suffixPath("_chest"),
-                        functions = listOf(
-                            Function.CopyName(source = "block_entity")
+                    entries = listOf(
+                        Entry(
+                            name = id.suffixPath("_chest"),
+                            functions = listOf(
+                                Function.CopyName(source = "block_entity")
+                            )
                         )
-                    )),
+                    ),
                     conditions = listOf(Condition(Identifier.mc("survives_explosion")))
                 )
             )

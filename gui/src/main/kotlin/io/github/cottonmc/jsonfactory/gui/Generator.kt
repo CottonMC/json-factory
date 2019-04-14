@@ -79,7 +79,10 @@ internal class Generator(private val gui: Gui) {
                     if (file.exists()) {
                         Sounds.confirm.start()
                         val confirm = withContext(Dispatchers.Swing) {
-                            JOptionPane.showConfirmDialog(gui.frame, "Do you want to overwrite the existing file $file?")
+                            JOptionPane.showConfirmDialog(
+                                gui.frame,
+                                "Do you want to overwrite the existing file $file?"
+                            )
                         }
 
                         if (confirm != JOptionPane.YES_OPTION)
