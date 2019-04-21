@@ -3,8 +3,8 @@ package io.github.cottonmc.jsonfactory.frontend
 import io.github.cottonmc.jsonfactory.data.Identifier
 import io.github.cottonmc.jsonfactory.gens.Gens
 import kotlinx.coroutines.*
+import java.io.File
 import java.nio.file.Files
-import java.nio.file.Path
 
 class Generator(private val frontend: Frontend) {
     /**
@@ -18,11 +18,11 @@ class Generator(private val frontend: Frontend) {
      */
     fun generateAll(idText: String) = GlobalScope.launch {
         if (idText.isBlank()) {
-            frontend.printMessage("The ID input field is empty.", MessageType.Note)
+            frontend.printMessage("The ID input field is empty.", MessageType.Warn)
             return@launch
 
         } else if (gens2Selections.none { (_, value) -> value }) {
-            frontend.printMessage("No generators selected.", MessageType.Note)
+            frontend.printMessage("No generators selected.", MessageType.Warn)
             return@launch
         }
 
@@ -47,11 +47,11 @@ class Generator(private val frontend: Frontend) {
         }
     }
 
-    private suspend fun generate(id: Identifier, resourceDir: Path) = coroutineScope {
+    private suspend fun generate(id: Identifier, resourceDir: File) = coroutineScope {
         gens2Selections.filter { (_, value) -> value }.keys.map { gen ->
             launch(Dispatchers.IO) {
                 val root = gen.resourceRoot.path
-                val sep = resourceDir.fileSystem.separator
+                val sep = File.separatorChar
                 val namespace = id.namespace
                 val directory = gen.path
                 val fileName = id.path
@@ -61,18 +61,18 @@ class Generator(private val frontend: Frontend) {
                 for (value in generated) {
                     val name = value.nameWrapper.applyTo(fileName)
 
-                    val path = resourceDir.resolve(
+                    val file = resourceDir.resolve(
                         "$root$sep$namespace$sep$directory$sep$name.$extension"
                     )
 
-                    if (Files.exists(path) && !frontend.shouldOverwriteFile(path)) {
+                    if (file.exists() && !frontend.shouldOverwriteFile(file)) {
                         return@launch
                     }
 
-                    Files.createDirectories(path.parent)
-                    value.writeToStream(Files.newOutputStream(path))
+                    Files.createDirectories(file.parentFile.toPath())
+                    value.writeToFile(file)
 
-                    frontend.printMessage("Generated " + path.relativize(resourceDir).toString())
+                    frontend.printMessage("Generated " + file.toRelativeString(resourceDir))
                 }
             }
         }

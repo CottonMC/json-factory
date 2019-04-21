@@ -1,16 +1,16 @@
 package io.github.cottonmc.jsonfactory.frontend
 
-import java.nio.file.Path
+import java.io.File
 
 interface Frontend {
     fun printMessage(msg: String, type: MessageType = MessageType.Default)
     fun printSeparator()
     fun onFinishedGenerating()
-    fun shouldOverwriteFile(path: Path): Boolean
+    suspend fun shouldOverwriteFile(file: File): Boolean
 
     /**
-     * Shows the user the output path selection menu, if one exists, and returns
+     * Shows the user the output file selection menu, if one exists, and returns
      * the directory if one is selected or `null` if nothing is selected.
      */
-    fun selectOutputDirectory(): Path?
+    suspend fun selectOutputDirectory(): File?
 }
