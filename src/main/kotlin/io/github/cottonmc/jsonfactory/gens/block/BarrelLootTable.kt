@@ -8,7 +8,7 @@ import io.github.cottonmc.jsonfactory.output.loot.Function
 import io.github.cottonmc.jsonfactory.output.suffixed
 
 internal object BarrelLootTable : ContentGenerator(
-    "Barrel Loot Table", "loot_tables/blocks",
+    "barrels.loot_table", "loot_tables/blocks",
     GeneratorInfo.BARRELS, resourceRoot = ResourceRoot.Data
 ) {
     override fun generate(id: Identifier) = listOf(

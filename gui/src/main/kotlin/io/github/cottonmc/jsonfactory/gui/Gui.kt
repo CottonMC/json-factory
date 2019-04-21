@@ -148,7 +148,7 @@ internal class Gui private constructor() {
                     }
 
                     for (gen in categoryGens.filter { it.info.subcategory == subcategory }) {
-                        add(JCheckBox(gen.displayName, false).apply {
+                        add(JCheckBox(gen.id, false).apply {
                             addActionListener {
                                 generator.gens2Selections[gen] = isSelected
                             }

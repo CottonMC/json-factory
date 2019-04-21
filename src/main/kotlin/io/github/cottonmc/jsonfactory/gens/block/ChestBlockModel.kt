@@ -6,7 +6,7 @@ import io.github.cottonmc.jsonfactory.gens.GeneratorInfo
 import io.github.cottonmc.jsonfactory.output.model.Model
 import io.github.cottonmc.jsonfactory.output.suffixed
 
-internal object ChestBlockModel : ContentGenerator("Chest Block Model", "models/block", GeneratorInfo.CHESTS) {
+internal object ChestBlockModel : ContentGenerator("chests.block_model", "models/block", GeneratorInfo.CHESTS) {
     override fun generate(id: Identifier) = listOf(
         Model(
             textures = mapOf(

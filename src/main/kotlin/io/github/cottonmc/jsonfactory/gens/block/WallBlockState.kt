@@ -7,7 +7,7 @@ import io.github.cottonmc.jsonfactory.output.model.ModelBlockState
 import io.github.cottonmc.jsonfactory.output.model.MultipartBlockState
 import io.github.cottonmc.jsonfactory.output.suffixed
 
-internal object WallBlockState : ContentGenerator("Wall Block State", "blockstates", GeneratorInfo.WALLS) {
+internal object WallBlockState : ContentGenerator("walls.block_state", "blockstates", GeneratorInfo.WALLS) {
     override fun generate(id: Identifier) = listOf(
         MultipartBlockState(
             listOf(

@@ -7,7 +7,7 @@ import io.github.cottonmc.jsonfactory.gens.GeneratorInfo
 import io.github.cottonmc.jsonfactory.output.model.ModelBlockState
 import io.github.cottonmc.jsonfactory.output.suffixed
 
-internal object CampfireBlockState : ContentGenerator("Campfire Block State", "blockstates", GeneratorInfo.CAMPFIRES) {
+internal object CampfireBlockState : ContentGenerator("campfires.block_state", "blockstates", GeneratorInfo.CAMPFIRES) {
     override fun generate(id: Identifier) = listOf(
         ModelBlockState.create(
             id,

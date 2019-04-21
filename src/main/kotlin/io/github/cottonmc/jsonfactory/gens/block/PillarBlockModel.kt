@@ -5,7 +5,7 @@ import io.github.cottonmc.jsonfactory.gens.ContentGenerator
 import io.github.cottonmc.jsonfactory.gens.GeneratorInfo
 import io.github.cottonmc.jsonfactory.output.model.Model
 
-internal object PillarBlockModel : ContentGenerator("Pillar Block Model", "models/block", GeneratorInfo.PILLARS) {
+internal object PillarBlockModel : ContentGenerator("pillars.block_model", "models/block", GeneratorInfo.PILLARS) {
     override fun generate(id: Identifier) = listOf(
         Model(
             parent = Identifier.mc("block/cube_column"),

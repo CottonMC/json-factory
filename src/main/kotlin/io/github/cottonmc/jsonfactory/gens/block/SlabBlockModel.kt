@@ -6,7 +6,7 @@ import io.github.cottonmc.jsonfactory.gens.GeneratorInfo
 import io.github.cottonmc.jsonfactory.output.model.Model
 import io.github.cottonmc.jsonfactory.output.suffixed
 
-internal object SlabBlockModel : ContentGenerator("Slab Block Model", "models/block", GeneratorInfo.SLABS) {
+internal object SlabBlockModel : ContentGenerator("slabs.block_model", "models/block", GeneratorInfo.SLABS) {
     override fun generate(id: Identifier) = listOf(
         Model(
             parent = Identifier.mc("block/slab"),

@@ -9,13 +9,13 @@ import io.github.cottonmc.jsonfactory.output.prefixed
 /**
  * @since 0.4.0
  */
-class PrefixedBlockState(displayName: String, private val prefix: String, info: GeneratorInfo) :
-    ContentGenerator(displayName, "blockstates", info) {
+class PrefixedBlockState(private val type: String, info: GeneratorInfo) :
+    ContentGenerator("$type.block_state", "blockstates", info) {
     override fun generate(id: Identifier) = listOf(
         ModelBlockState(
             mapOf(
-                "" to ModelBlockState.Variant(id.prefixPath("block/${prefix}_"))
+                "" to ModelBlockState.Variant(id.prefixPath("block/${type}_"))
             )
-        ).prefixed(prefix)
+        ).prefixed(type)
     )
 }

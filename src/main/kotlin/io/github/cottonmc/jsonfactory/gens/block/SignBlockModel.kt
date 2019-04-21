@@ -6,7 +6,7 @@ import io.github.cottonmc.jsonfactory.gens.GeneratorInfo
 import io.github.cottonmc.jsonfactory.output.model.Model
 import io.github.cottonmc.jsonfactory.output.suffixed
 
-internal object SignBlockModel : ContentGenerator("Sign Block Model", "models/block", GeneratorInfo.SIGNS) {
+internal object SignBlockModel : ContentGenerator("signs.block_model", "models/block", GeneratorInfo.SIGNS) {
     override fun generate(id: Identifier) = listOf(
         Model(textures = mapOf("particle" to id.prefixPath("block/"))).suffixed("sign")
     )

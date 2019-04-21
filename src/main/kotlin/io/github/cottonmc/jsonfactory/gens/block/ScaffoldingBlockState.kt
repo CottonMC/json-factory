@@ -8,7 +8,7 @@ import io.github.cottonmc.jsonfactory.output.model.ModelBlockState
 import io.github.cottonmc.jsonfactory.output.suffixed
 
 internal object ScaffoldingBlockState :
-    ContentGenerator("Scaffolding Block State", "blockstates", GeneratorInfo.SCAFFOLDING) {
+    ContentGenerator("scaffolding.block_state", "blockstates", GeneratorInfo.SCAFFOLDING) {
 
     private val typePrefixes = mapOf(
         "true" to "unstable_",

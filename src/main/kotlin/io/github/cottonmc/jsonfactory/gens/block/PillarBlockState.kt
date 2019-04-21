@@ -6,7 +6,7 @@ import io.github.cottonmc.jsonfactory.gens.ContentGenerator
 import io.github.cottonmc.jsonfactory.gens.GeneratorInfo
 import io.github.cottonmc.jsonfactory.output.model.ModelBlockState
 
-internal object PillarBlockState : ContentGenerator("Pillar Block State", "blockstates", GeneratorInfo.PILLARS) {
+internal object PillarBlockState : ContentGenerator("pillars.block_state", "blockstates", GeneratorInfo.PILLARS) {
     override fun generate(id: Identifier) = listOf(
         ModelBlockState.create(id, setOf(BlockStateProperty.axis)) { values, variant ->
             val axis = values["axis"] ?: ""

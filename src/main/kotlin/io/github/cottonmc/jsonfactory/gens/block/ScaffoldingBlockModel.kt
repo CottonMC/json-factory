@@ -7,7 +7,7 @@ import io.github.cottonmc.jsonfactory.output.model.Model
 import io.github.cottonmc.jsonfactory.output.suffixed
 
 internal object ScaffoldingBlockModel :
-    ContentGenerator("Scaffolding Block Model", "models/block", GeneratorInfo.SCAFFOLDING) {
+    ContentGenerator("scaffolding.block_model", "models/block", GeneratorInfo.SCAFFOLDING) {
     override fun generate(id: Identifier) = listOf(
         Model(
             parent = Identifier.mc("block/scaffolding_stable"),

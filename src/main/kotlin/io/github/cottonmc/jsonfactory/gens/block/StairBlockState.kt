@@ -8,7 +8,7 @@ import io.github.cottonmc.jsonfactory.output.model.ModelBlockState
 import io.github.cottonmc.jsonfactory.output.suffixed
 
 internal object StairBlockState : ContentGenerator(
-    "Stair Block State", "blockstates",
+    "stairs.block_state", "blockstates",
     GeneratorInfo.STAIRS
 ) {
     override fun generate(id: Identifier) = listOf(

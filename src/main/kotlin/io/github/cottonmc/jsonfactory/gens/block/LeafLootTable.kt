@@ -8,7 +8,7 @@ import io.github.cottonmc.jsonfactory.output.loot.Function
 import io.github.cottonmc.jsonfactory.output.suffixed
 
 internal object LeafLootTable : ContentGenerator(
-    "Leaf Loot Table", "loot_tables/blocks",
+    "leaves.loot_table", "loot_tables/blocks",
     GeneratorInfo.LEAVES, resourceRoot = ResourceRoot.Data
 ) {
     override fun generate(id: Identifier) = listOf(

@@ -6,7 +6,7 @@ import io.github.cottonmc.jsonfactory.gens.GeneratorInfo
 import io.github.cottonmc.jsonfactory.output.model.Model
 import io.github.cottonmc.jsonfactory.output.prefixed
 
-object PottedPlantModel : ContentGenerator("Potted Plant Model", "models/block", GeneratorInfo.POTTED_PLANTS) {
+object PottedPlantModel : ContentGenerator("potted_plants.block_model", "models/block", GeneratorInfo.POTTED_PLANTS) {
     override fun generate(id: Identifier) = listOf(
         Model(
             parent = Identifier.mc("block/flower_pot_cross"),

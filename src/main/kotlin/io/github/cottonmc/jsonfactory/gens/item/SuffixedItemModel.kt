@@ -8,16 +8,15 @@ import io.github.cottonmc.jsonfactory.output.suffixed
 
 class SuffixedItemModel(
     val parent: Identifier,
-    display: String,
-    private val suffix: String,
+    private val type: String,
     info: GeneratorInfo = GeneratorInfo.ITEM
-) : ContentGenerator("$display Item Model", "models/item", info) {
+) : ContentGenerator("$type.item_model", "models/item", info) {
     override fun generate(id: Identifier) = listOf(
         Model(
             parent = parent,
             textures = mapOf(
-                "layer0" to id.copy(path = "item/${id.path}_$suffix")
+                "layer0" to id.copy(path = "item/${id.path}_$type")
             )
-        ).suffixed(suffix)
+        ).suffixed(type)
     )
 }

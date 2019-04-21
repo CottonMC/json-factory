@@ -9,13 +9,13 @@ import io.github.cottonmc.jsonfactory.output.suffixed
 /**
  * @since 0.4.0
  */
-class SuffixedBlockState(displayName: String, private val suffix: String, info: GeneratorInfo) :
-    ContentGenerator(displayName, "blockstates", info) {
+class SuffixedBlockState(private val type: String, info: GeneratorInfo) :
+    ContentGenerator("$type.block_state", "blockstates", info) {
     override fun generate(id: Identifier) = listOf(
         ModelBlockState(
             mapOf(
-                "" to ModelBlockState.Variant(id.wrapPath("block/", "_$suffix"))
+                "" to ModelBlockState.Variant(id.wrapPath("block/", "_$type"))
             )
-        ).suffixed(suffix)
+        ).suffixed(type)
     )
 }

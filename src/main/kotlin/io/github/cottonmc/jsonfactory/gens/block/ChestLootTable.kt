@@ -8,7 +8,7 @@ import io.github.cottonmc.jsonfactory.output.loot.Function
 import io.github.cottonmc.jsonfactory.output.suffixed
 
 internal object ChestLootTable : ContentGenerator(
-    "Chest Loot Table",
+    "chests.loot_table",
     "loot_tables/blocks",
     GeneratorInfo.CHESTS,
     resourceRoot = ResourceRoot.Data

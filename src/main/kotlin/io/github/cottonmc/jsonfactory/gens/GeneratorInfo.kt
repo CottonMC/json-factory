@@ -13,27 +13,22 @@ data class GeneratorInfo(val category: Category, val subcategory: Subcategory? =
      */
     interface Category {
         /**
-         * The display name.
+         * The identifier.
          */
-        val displayName: String
+        val id: String
 
         /**
          * The output path of the category. (Example: `models/block`)
          */
         val path: String
-
-        /**
-         * An optional description. Can be a Markdown string.
-         */
-        val description: String?
     }
 
     enum class Categories(
-        override val displayName: String, override val path: String,
-        override val description: String? = null
+        override val id: String, override val path: String,
+        val description: String? = null
     ) : Category {
-        Block("Block", "block"), Item("Item", "item"),
-        BlockVariants("Block Variants", "block", "Suffixes will be added to the output files' names.");
+        Block("block", "block"), Item("item", "item"),
+        BlockVariants("block_variants", "block", "Suffixes will be added to the output files' names.");
 
         companion object {
             private val _categories = LinkedHashSet<Category>()
@@ -55,39 +50,32 @@ data class GeneratorInfo(val category: Category, val subcategory: Subcategory? =
      */
     interface Subcategory {
         /**
-         * The display name.
+         * The identifier.
          */
-        val displayName: String
-
-        /**
-         * An optional description. Can be a Markdown string.
-         */
-        val description: String?
+        val id: String
     }
 
-    enum class Subcategories(_displayName: String? = null, override val description: String? = null) : Subcategory {
-        Ores(description = "Note: The child ore models assume that the template is named `modid:ore_template`."),
-        Pillars,
-        Slabs,
-        Stairs,
-        PressurePlates("Pressure Plates"),
-        Buttons,
-        Fences,
-        Walls,
-        Signs,
-        FenceGates("Fence Gates"),
-        Trapdoors,
-        Doors,
-        Ladders,
-        Leaves,
-        PottedPlants("Potted Plants"),
-        Chests,
-        Scaffolding,
-        Campfires,
-        Barrels,
-        Saplings;
-
-        override val displayName = _displayName ?: name
+    enum class Subcategories(override val id: String, val description: String? = null) : Subcategory {
+        Ores("ores", description = "Note: The child ore models assume that the template is named `modid:ore_template`."),
+        Pillars("pillars"),
+        Slabs("slabs"),
+        Stairs("stairs"),
+        PressurePlates("pressure_plates"),
+        Buttons("buttons"),
+        Fences("fences"),
+        Walls("walls"),
+        Signs("signs"),
+        FenceGates("fence_gates"),
+        Trapdoors("trapdoors"),
+        Doors("doors"),
+        Ladders("ladders"),
+        Leaves("leaves"),
+        PottedPlants("potted_plants"),
+        Chests("chests"),
+        Scaffolding("scaffolding"),
+        Campfires("campfires"),
+        Barrels("barrels"),
+        Saplings("saplings");
     }
 
     companion object {
