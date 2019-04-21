@@ -11,7 +11,7 @@ object PottedPlantModel : ContentGenerator("Potted Plant Model", "models/block",
         Model(
             parent = Identifier.mc("block/flower_pot_cross"),
             textures = mapOf(
-                "plant" to id
+                "plant" to id.prefixPath("block/")
             )
         ).prefixed("potted")
     )

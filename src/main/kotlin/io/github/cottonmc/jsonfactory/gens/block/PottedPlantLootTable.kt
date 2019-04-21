@@ -10,7 +10,7 @@ import io.github.cottonmc.jsonfactory.output.loot.Pool
 import io.github.cottonmc.jsonfactory.output.prefixed
 
 object PottedPlantLootTable : ContentGenerator(
-    "Potted Plant Model", "loot_tables/blocks", GeneratorInfo.POTTED_PLANTS,
+    "Potted Plant Loot Table", "loot_tables/blocks", GeneratorInfo.POTTED_PLANTS,
     resourceRoot = ResourceRoot.Data
 ) {
     override fun generate(id: Identifier) = listOf(
