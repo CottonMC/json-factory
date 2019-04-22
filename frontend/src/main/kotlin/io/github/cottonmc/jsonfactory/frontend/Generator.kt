@@ -1,22 +1,23 @@
 package io.github.cottonmc.jsonfactory.frontend
 
 import io.github.cottonmc.jsonfactory.data.Identifier
-import io.github.cottonmc.jsonfactory.gens.Gens
+import io.github.cottonmc.jsonfactory.gens.ContentGenerator
 import kotlinx.coroutines.*
 import java.io.File
 import java.nio.file.Files
 
-class Generator(private val frontend: Frontend) {
+class Generator(private val frontend: Frontend, generators: List<ContentGenerator>) {
     /**
      * A map of all generators to a boolean.
      * If `true`, the generator is selected.
      */
-    val gens2Selections = Gens.allGens.map { it to false }.toMap().toMutableMap()
+    val gens2Selections: MutableMap<ContentGenerator, Boolean> = generators.map { it to false }.toMap().toMutableMap()
 
     /**
      * Generates files with all selected generators.
      */
     fun generateAll(idText: String) = GlobalScope.launch {
+        // TODO: L10n for the messages
         if (idText.isBlank()) {
             frontend.printMessage("The ID input field is empty.", MessageType.Warn)
             return@launch

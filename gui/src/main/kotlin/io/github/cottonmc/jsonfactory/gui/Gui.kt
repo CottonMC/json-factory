@@ -3,6 +3,7 @@ package io.github.cottonmc.jsonfactory.gui
 import io.github.cottonmc.jsonfactory.frontend.Frontend
 import io.github.cottonmc.jsonfactory.frontend.Generator
 import io.github.cottonmc.jsonfactory.frontend.MessageType
+import io.github.cottonmc.jsonfactory.gens.ContentGenerator
 import io.github.cottonmc.jsonfactory.gens.GeneratorInfo
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.swing.Swing
@@ -20,7 +21,7 @@ import javax.swing.text.DefaultCaret
 import javax.swing.text.SimpleAttributeSet
 import javax.swing.text.StyleConstants
 
-internal class Gui private constructor() : Frontend {
+internal class Gui private constructor(gens: List<ContentGenerator>) : Frontend {
     internal val frame = JFrame()
     internal val fileChooser = JFileChooser().apply {
         fileSelectionMode = JFileChooser.DIRECTORIES_ONLY
@@ -28,7 +29,7 @@ internal class Gui private constructor() : Frontend {
     private val idField = JXTextField("enter an id or comma-separated list of ids").apply {
         columns = 25
     }
-    private val generator = Generator(this)
+    private val generator = Generator(this, gens)
     private val generators = createGeneratorPanel()
     private val saveButton = JButton("Generate").apply {
         addActionListener {
@@ -274,8 +275,8 @@ internal class Gui private constructor() : Frontend {
         private fun readImage(name: String) =
             ImageIO.read(Gui::class.java.getResourceAsStream("/json-factory/$name.png"))
 
-        fun show() = SwingUtilities.invokeAndWait {
-            Gui().apply {
+        fun createAndShow(gens: List<ContentGenerator>) = SwingUtilities.invokeAndWait {
+            Gui(gens).apply {
                 show()
                 if (Settings.showTipsOnStartup) {
                     Tips.show(frame, isStartup = true)
