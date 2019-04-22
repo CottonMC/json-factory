@@ -16,9 +16,13 @@ data class MultipartBlockState(val multipart: List<Multipart>) : Json {
         }
     }
 
-    data class When(val state: String, val value: String) : Json.ByProperties {
+    data class When(val states: Map<String, String>) : Json.ByProperties {
+        constructor(state: String, value: String) : this(mapOf(state to value))
+
         override val properties = createProperties {
-            +Property(state, value)
+            for ((state, value) in states) {
+                +Property(state, value)
+            }
         }
     }
 }
