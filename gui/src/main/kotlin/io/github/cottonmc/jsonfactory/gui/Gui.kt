@@ -135,7 +135,7 @@ internal class Gui private constructor(gens: List<ContentGenerator>) : Frontend 
         val pane = JTabbedPane(SwingConstants.TOP)
         val gens = generator.gens2Selections.keys
 
-        for (category in GeneratorInfo.Categories.categories) {
+        for (category in gens.map { it.info.category }.distinct()) {
             pane.addTab(category.displayName, JFScrollPane(JPanel(MigLayout()).apply {
                 category.description?.let {
                     add(JLabel(Markdown.toHtml(it)), "wrap")
