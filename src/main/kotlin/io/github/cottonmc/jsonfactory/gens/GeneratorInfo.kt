@@ -20,8 +20,11 @@ data class GeneratorInfo(val category: Category, val subcategory: Subcategory? =
         /**
          * The placeholder texture output path of the category,
          * relative to `/assets/<namespace>/textures`. Example: `block`.
+         *
+         * Can be set to `null` if [PlaceholderTexture] is not used,
+         * but using `PlaceholderTexture` requires a non-null value.
          */
-        val placeholderTexturePath: String
+        val placeholderTexturePath: String?
 
         /**
          * An optional description. Can be a Markdown string.
