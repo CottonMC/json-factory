@@ -11,7 +11,7 @@ plugins {
 
 allprojects {
     group = "io.github.cottonmc"
-    version = "0.4.2"
+    version = "0.5.0-SNAPSHOT"
 
     repositories {
         jcenter()
@@ -64,3 +64,8 @@ tasks.withType<Test> {
     useJUnitPlatform()
 }
 
+tasks.withType<KotlinCompile> {
+    kotlinOptions {
+        freeCompilerArgs += "-Xuse-experimental=kotlin.Experimental"
+    }
+}

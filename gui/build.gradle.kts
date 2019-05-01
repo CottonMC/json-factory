@@ -17,6 +17,7 @@ repositories {
 
 dependencies {
     implementation(project(":"))
+    implementation(project(":frontend"))
     implementation("com.miglayout:miglayout-swing:5.2")
     implementation("com.github.insubstantial:substance:7.3")
     implementation("com.github.insubstantial:substance-swingx:7.3") {

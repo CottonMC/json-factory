@@ -7,8 +7,14 @@ import java.awt.image.BufferedImage
 import java.util.concurrent.ThreadLocalRandom
 
 class PlaceholderTexture(info: GeneratorInfo) : ContentGenerator(
-    "Placeholder ${info.category.displayName} Texture", "textures/${info.category.path}", info, extension = "png"
+    "Placeholder ${info.category.displayName} Texture", "textures/${info.category.placeholderTexturePath}", info, extension = "png"
 ) {
+    init {
+        require(info.category.placeholderTexturePath != null) {
+            "The category must have a placeholder texture path!"
+        }
+    }
+
     override fun generate(id: Identifier) = listOf(run {
         val color1 = randomColor()
         val color2 = color1.withDifferentHue()

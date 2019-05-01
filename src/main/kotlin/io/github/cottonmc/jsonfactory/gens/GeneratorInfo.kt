@@ -18,9 +18,13 @@ data class GeneratorInfo(val category: Category, val subcategory: Subcategory? =
         val displayName: String
 
         /**
-         * The output path of the category. (Example: `models/block`)
+         * The placeholder texture output path of the category,
+         * relative to `/assets/<namespace>/textures`. Example: `block`.
+         *
+         * Can be set to `null` if [PlaceholderTexture] is not used,
+         * but using `PlaceholderTexture` requires a non-null value.
          */
-        val path: String
+        val placeholderTexturePath: String?
 
         /**
          * An optional description. Can be a Markdown string.
@@ -29,24 +33,11 @@ data class GeneratorInfo(val category: Category, val subcategory: Subcategory? =
     }
 
     enum class Categories(
-        override val displayName: String, override val path: String,
+        override val displayName: String, override val placeholderTexturePath: String,
         override val description: String? = null
     ) : Category {
         Block("Block", "block"), Item("Item", "item"),
         BlockVariants("Block Variants", "block", "Suffixes will be added to the output files' names.");
-
-        companion object {
-            private val _categories = LinkedHashSet<Category>()
-            val categories: Set<Category> get() = _categories
-
-            init {
-                values().forEach(::addCategory)
-            }
-
-            fun addCategory(category: Category) {
-                _categories += category
-            }
-        }
     }
 
     /**
