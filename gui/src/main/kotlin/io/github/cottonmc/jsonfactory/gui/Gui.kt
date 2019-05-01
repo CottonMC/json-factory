@@ -71,13 +71,6 @@ internal class Gui private constructor(gens: List<ContentGenerator>) : Frontend 
                         }
                     })
                 }
-
-                add(JCheckBoxMenuItem("Force System Window Decorations").apply {
-                    isSelected = Settings.forceSystemWindowDecorations
-                    addActionListener {
-                        Settings.forceSystemWindowDecorations = isSelected
-                    }
-                })
             })
         })
 
