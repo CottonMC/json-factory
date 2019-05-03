@@ -31,9 +31,8 @@ object Settings {
 
     var theme: Theme = Theme.DEFAULT
         set(value) {
-            val old = field
             field = value
-            refreshTheme(value, old)
+            refreshTheme(value)
             save()
         }
 
@@ -42,7 +41,7 @@ object Settings {
             load()
         }
         save()
-        refreshTheme(theme, null)
+        refreshTheme(theme)
     }
 
     private fun load() {
@@ -86,7 +85,7 @@ object Settings {
             put("theme", theme.name)
         }
 
-    private fun refreshTheme(theme: Theme, oldTheme: Theme?, forceRefreshDecorations: Boolean = false) {
+    private fun refreshTheme(theme: Theme) {
         UIManager.setLookAndFeel(
             when (theme) {
                 Theme.Native -> UIManager.getSystemLookAndFeelClassName()
