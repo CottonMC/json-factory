@@ -10,13 +10,13 @@ import java.io.File
 /**
  * Builder class, as an API frontend.
  * */
-class JsonFactoryBuilder():Frontend{
+class JsonFactoryBuilder() : Frontend {
     override fun printMessage(msg: String, type: MessageType) {
-        when(type){
-            MessageType.Error-> error(msg)
-            MessageType.Important-> println(msg)
-            MessageType.Warn-> println(msg)
-            MessageType.Default->println(msg)
+        when (type) {
+            MessageType.Error -> error(msg)
+            MessageType.Important -> println(msg)
+            MessageType.Warn -> println(msg)
+            MessageType.Default -> println(msg)
         }
     }
 
@@ -25,7 +25,7 @@ class JsonFactoryBuilder():Frontend{
     }
 
     override fun onFinishedGenerating() {
-        printMessage("generation finished",MessageType.Default)
+        printMessage("generation finished", MessageType.Default)
     }
 
     override suspend fun shouldOverwriteFile(file: File): Boolean {
@@ -37,21 +37,40 @@ class JsonFactoryBuilder():Frontend{
     }
 
     var folder: File = File(".")
-    val generators=ArrayList<ContentGenerator>()
-    val identifiers=ArrayList<Identifier>()
+    val generators = ArrayList<ContentGenerator>()
+    val identifiers = ArrayList<Identifier>()
+    var addCallback: (ContentGenerator) -> ContentGenerator = { it }
 
     /**
      * adds a specific content generator to the pool.
      * */
-    fun addGenerator(generator:ContentGenerator):JsonFactoryBuilder{
-        generators.add(generator)
+    fun addGenerator(generator: ContentGenerator): JsonFactoryBuilder {
+        generators.add(addCallback(generator))
         return this
+    }
+
+    fun addGenerator(generators: Set<ContentGenerator>): JsonFactoryBuilder {
+
+        generators.forEach {
+            this.generators.add(addCallback(it))
+        }
+        return this
+    }
+
+
+    /**
+     * Sets a function that is run on each generator when they get added
+     *
+     * Intended to be used to decorate generators, and modify their behaviour.
+     * */
+    fun setGeneratorCallback(callback: (ContentGenerator) -> ContentGenerator) {
+        addCallback = callback
     }
 
     /**
      * Adds a new identifier for generation.
      * */
-    fun addIdentifier(id:Identifier):JsonFactoryBuilder{
+    fun addIdentifier(id: Identifier): JsonFactoryBuilder {
         identifiers.add(id)
         return this
     }
@@ -61,7 +80,7 @@ class JsonFactoryBuilder():Frontend{
      * */
     fun setTarget(folder: File): JsonFactoryBuilder {
 
-        if(!folder.isDirectory)
+        if (!folder.isDirectory)
             throw IllegalStateException("$folder is not a directory!")
         this.folder = folder
         return this
@@ -70,8 +89,8 @@ class JsonFactoryBuilder():Frontend{
     /**
      * Builds all of the required resources.
      * */
-    fun output(){
-            Generator(this,generators).generateAll(identifiers.joinToString(separator = ","))
+    fun output() {
+        Generator(this, generators).generateAll(identifiers.joinToString(separator = ","))
     }
 
 }
