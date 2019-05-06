@@ -13,16 +13,16 @@ import io.github.cottonmc.jsonfactory.output.Output
  * @property resourceRoot the resource root
  */
 abstract class ContentGenerator(
-    val displayName: String,
-    val path: String,
-    val info: GeneratorInfo,
-    val extension: String = "json",
-    val resourceRoot: ResourceRoot = ResourceRoot.Assets
-) {
+    override val displayName: String,
+    override val path: String,
+    override val info: GeneratorInfo,
+    override val extension: String = "json",
+    override val resourceRoot: ResourceRoot = ResourceRoot.Assets
+):ContentGeneratorTemplate {
     /**
      * Generates Outputs from an [id].
      */
-    abstract fun generate(id: Identifier): List<Output>
+    abstract override fun generate(id: Identifier): List<Output>
 
     override fun toString() = displayName
 

@@ -52,6 +52,9 @@ dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.2.0")
     testImplementation("io.strikt:strikt-core:0.17.1")
     testRuntime("org.junit.jupiter:junit-jupiter-engine:5.2.0")
+
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.2.0")
+    implementation("com.vladsch.flexmark:flexmark:0.42.4")
 }
 
 tasks.withType<DokkaTask> {
