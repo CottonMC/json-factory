@@ -6,7 +6,7 @@ import io.github.cottonmc.jsonfactory.gens.Gens
 /**
  * an enum regrouping the settings, just so that we can read the builder a lot easier
  * */
-enum class BuilderSettings(val generators:Set<ContentGenerator>) {
+enum class BuilderSettings(val generators: Set<ContentGenerator>) {
 
     /**
      * basic blocks
@@ -28,25 +28,26 @@ enum class BuilderSettings(val generators:Set<ContentGenerator>) {
     STAIRS(setOf(*Gens.Variants.allStairs.toTypedArray())),
     TRAPDOOR(setOf(*Gens.Variants.allTrapdoors.toTypedArray())),
     WALL(setOf(*Gens.Variants.allWalls.toTypedArray())),
-    PILLAR(setOf(Gens.PILLAR_BLOCK_MODEL,Gens.PILLAR_BLOCK_STATE,Gens.BASIC_LOOT_TABLE,Gens.BASIC_BLOCK_ITEM_MODEL)),
+    PILLAR(setOf(Gens.pillarBlockModel, Gens.pillarBlockState, Gens.basicLootTable, Gens.basicBlockItemModel)),
 
     /**
      * full fences, with gates
      * */
     FULL_FENCE(setOf(*Gens.Variants.allFenceGates.toTypedArray(),*Gens.Variants.allFences.toTypedArray())),
     /**
-     * Everything that a stone block can reasonable have in vanilla ideas
+     * Everything that a stone type block can reasonable have in vanilla ideas
      * */
-    STONE_FULL(SLABS.generators+
+    FULL_STONE(
+        SLABS.generators +
         BUTTON.generators+
         PRESSURE_PLATE.generators+
         STAIRS.generators+
         WALL.generators+
         TRAPDOOR.generators),
     /**
-     * Everything that a wooden block can reasonable have in vanilla ideas
+     * Everything that a wooden type block can reasonable have in vanilla ideas
      * */
-    WOOD_FULL(
+    FULL_WOOD(
         SLABS.generators
         +BUTTON.generators
         +DOOR.generators
@@ -57,7 +58,7 @@ enum class BuilderSettings(val generators:Set<ContentGenerator>) {
         +TRAPDOOR.generators
     ),
     /**
-     * Everything that a block should reasonable have, without any tile entities
+     * Everything that a block type could reasonable have, if it is not a tile entities
      * */
     FULL_NO_TILE_GENERIC(
         SLABS.generators

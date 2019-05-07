@@ -2,7 +2,6 @@ package io.github.cottonmc.jsonfactory.plugin
 
 import io.github.cottonmc.jsonfactory.gens.ContentGenerator
 
-// TODO: Should this be here or in frontend?
 /**
  * A plugin for a json-factory frontend.
  *

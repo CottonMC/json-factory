@@ -1,13 +1,13 @@
 package io.github.cottonmc.jsonfactory.gens.block
 
 import io.github.cottonmc.jsonfactory.data.Identifier
-import io.github.cottonmc.jsonfactory.gens.ContentGenerator
+import io.github.cottonmc.jsonfactory.gens.AbstractContentGenerator
 import io.github.cottonmc.jsonfactory.gens.GeneratorInfo
 import io.github.cottonmc.jsonfactory.output.model.ModelBlockState
 import io.github.cottonmc.jsonfactory.output.model.MultipartBlockState
 import io.github.cottonmc.jsonfactory.output.suffixed
 
-internal object FenceBlockState : ContentGenerator("Fence Block State", "blockstates", GeneratorInfo.FENCES) {
+internal object FenceBlockState : AbstractContentGenerator("Fence Block State", "blockstates", GeneratorInfo.FENCES) {
     override fun generate(id: Identifier) = listOf(
         MultipartBlockState(
             listOf(

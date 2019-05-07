@@ -2,11 +2,11 @@ package io.github.cottonmc.jsonfactory.gens.block
 
 import io.github.cottonmc.jsonfactory.data.Identifier
 import io.github.cottonmc.jsonfactory.data.Point
-import io.github.cottonmc.jsonfactory.gens.ContentGenerator
+import io.github.cottonmc.jsonfactory.gens.AbstractContentGenerator
 import io.github.cottonmc.jsonfactory.gens.GeneratorInfo
 import io.github.cottonmc.jsonfactory.output.model.Model
 
-internal object BaseOreBlockModel : ContentGenerator(
+internal object BaseOreBlockModel : AbstractContentGenerator(
     "Base Ore Block Model (use the ID namespace:ore_template)", "models/block",
     GeneratorInfo.ORES
 ) {

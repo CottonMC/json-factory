@@ -4,6 +4,7 @@ import io.github.cottonmc.jsonfactory.data.Identifier
 import io.github.cottonmc.jsonfactory.frontend.Frontend
 import io.github.cottonmc.jsonfactory.frontend.Generator
 import io.github.cottonmc.jsonfactory.frontend.MessageType
+import io.github.cottonmc.jsonfactory.gens.AbstractContentGenerator
 import io.github.cottonmc.jsonfactory.gens.ContentGenerator
 import java.io.File
 
@@ -49,11 +50,10 @@ class JsonFactoryBuilder : Frontend {
         return this
     }
 
-    fun addGenerator(generators: Set<ContentGenerator>): JsonFactoryBuilder {
+    fun addGenerator(generators: Set<AbstractContentGenerator>): JsonFactoryBuilder {
 
-        generators.forEach {
-            this.generators.add(addCallback(it))
-        }
+        this.generators.addAll(generators.map(addCallback))
+
         return this
     }
 

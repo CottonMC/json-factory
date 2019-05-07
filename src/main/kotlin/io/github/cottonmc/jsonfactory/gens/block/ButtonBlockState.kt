@@ -4,12 +4,13 @@ import io.github.cottonmc.jsonfactory.data.BlockStateProperty.Companion.buttonFa
 import io.github.cottonmc.jsonfactory.data.BlockStateProperty.Companion.horizontalFacing
 import io.github.cottonmc.jsonfactory.data.BlockStateProperty.Companion.powered
 import io.github.cottonmc.jsonfactory.data.Identifier
-import io.github.cottonmc.jsonfactory.gens.ContentGenerator
+import io.github.cottonmc.jsonfactory.gens.AbstractContentGenerator
 import io.github.cottonmc.jsonfactory.gens.GeneratorInfo
 import io.github.cottonmc.jsonfactory.output.model.ModelBlockState
 import io.github.cottonmc.jsonfactory.output.suffixed
 
-internal object ButtonBlockState : ContentGenerator("Button Block State", "blockstates", GeneratorInfo.BUTTONS) {
+internal object ButtonBlockState :
+    AbstractContentGenerator("Button Block State", "blockstates", GeneratorInfo.BUTTONS) {
     private fun getXRotation(face: String) = when (face) {
         "wall" -> 90
         "ceiling" -> 180

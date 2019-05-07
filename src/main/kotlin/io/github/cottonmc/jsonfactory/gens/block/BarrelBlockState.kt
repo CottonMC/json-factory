@@ -2,12 +2,13 @@ package io.github.cottonmc.jsonfactory.gens.block
 
 import io.github.cottonmc.jsonfactory.data.BlockStateProperty
 import io.github.cottonmc.jsonfactory.data.Identifier
-import io.github.cottonmc.jsonfactory.gens.ContentGenerator
+import io.github.cottonmc.jsonfactory.gens.AbstractContentGenerator
 import io.github.cottonmc.jsonfactory.gens.GeneratorInfo
 import io.github.cottonmc.jsonfactory.output.model.ModelBlockState
 import io.github.cottonmc.jsonfactory.output.suffixed
 
-internal object BarrelBlockState : ContentGenerator("Barrel Block State", "blockstates", GeneratorInfo.BARRELS) {
+internal object BarrelBlockState :
+    AbstractContentGenerator("Barrel Block State", "blockstates", GeneratorInfo.BARRELS) {
     override fun generate(id: Identifier) = listOf(
         ModelBlockState.create(id, setOf(BlockStateProperty.facing, BlockStateProperty.open)) { values, variant ->
             val x = getXRotation(values["facing"]!!).let {
