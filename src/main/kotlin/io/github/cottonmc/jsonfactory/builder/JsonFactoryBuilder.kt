@@ -10,7 +10,7 @@ import java.io.File
 /**
  * Builder class, as an API frontend.
  * */
-class JsonFactoryBuilder() : Frontend {
+class JsonFactoryBuilder : Frontend {
     override fun printMessage(msg: String, type: MessageType) {
         when (type) {
             MessageType.Error -> error(msg)
@@ -36,10 +36,10 @@ class JsonFactoryBuilder() : Frontend {
         return folder
     }
 
-    var folder: File = File(".")
-    val generators = ArrayList<ContentGenerator>()
-    val identifiers = ArrayList<Identifier>()
-    var addCallback: (ContentGenerator) -> ContentGenerator = { it }
+    private var folder: File = File(".")
+    private val generators = ArrayList<ContentGenerator>()
+    private val identifiers = ArrayList<Identifier>()
+    private var addCallback: (ContentGenerator) -> ContentGenerator = { it }
 
     /**
      * adds a specific content generator to the pool.
@@ -89,7 +89,7 @@ class JsonFactoryBuilder() : Frontend {
     /**
      * Builds all of the required resources.
      * */
-    fun output() {
+    fun generate() {
         Generator(this, generators).generateAll(identifiers.joinToString(separator = ","))
     }
 
