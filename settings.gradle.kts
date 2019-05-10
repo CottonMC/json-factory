@@ -1,2 +1,2 @@
-include("gui", "frontend", "example-plugin")
+include("gui", "example-plugin")
 rootProject.name = "json-factory"

@@ -1,7 +1,7 @@
 package io.github.cottonmc.jsonfactory.gui
 
 import io.github.cottonmc.jsonfactory.frontend.Frontend
-import io.github.cottonmc.jsonfactory.frontend.Generator
+import io.github.cottonmc.jsonfactory.frontend.ContentWriter
 import io.github.cottonmc.jsonfactory.frontend.MessageType
 import io.github.cottonmc.jsonfactory.gens.ContentGenerator
 import kotlinx.coroutines.Dispatchers
@@ -28,11 +28,11 @@ internal class Gui private constructor(gens: List<ContentGenerator>) : Frontend 
     private val idField = JXTextField("enter an id or comma-separated list of ids").apply {
         columns = 25
     }
-    private val generator = Generator(this, gens)
+    private val generator = ContentWriter(this, gens)
     private val generators = createGeneratorPanel()
     private val saveButton = JButton("Generate").apply {
         addActionListener {
-            generator.generateAll(idField.text)
+            generator.writeAll(idField.text)
         }
     }
     private val outputTextArea = JTextPane().apply {

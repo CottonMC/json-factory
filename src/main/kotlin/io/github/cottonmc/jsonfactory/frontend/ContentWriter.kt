@@ -6,7 +6,13 @@ import kotlinx.coroutines.*
 import java.io.File
 import java.nio.file.Files
 
-class Generator(private val frontend: Frontend, generators: List<ContentGenerator>) {
+/**
+ * A coroutine-based generation and writing backend used for [Frontend]s.
+ *
+ * @param frontend the frontend
+ * @param generators the selectable generators
+ */
+class ContentWriter(private val frontend: Frontend, generators: List<ContentGenerator>) {
     /**
      * A map of all generators to a boolean.
      * If `true`, the generator is selected.
@@ -14,9 +20,9 @@ class Generator(private val frontend: Frontend, generators: List<ContentGenerato
     val gens2Selections: MutableMap<ContentGenerator, Boolean> = generators.map { it to false }.toMap().toMutableMap()
 
     /**
-     * Generates files with all selected generators.
+     * Generates and writes files with all selected generators.
      */
-    fun generateAll(idText: String) = GlobalScope.launch {
+    fun writeAll(idText: String) = GlobalScope.launch {
         // TODO: L10n for the messages
         if (idText.isBlank()) {
             frontend.printMessage("The ID input field is empty.", MessageType.Warn)
@@ -40,7 +46,7 @@ class Generator(private val frontend: Frontend, generators: List<ContentGenerato
                     }
                 }
             }.flatMap { id ->
-                generate(id, selectedFile)
+                write(id, selectedFile)
             }.joinAll()
 
             frontend.printMessage("Finished generating.", MessageType.Important)
@@ -48,7 +54,7 @@ class Generator(private val frontend: Frontend, generators: List<ContentGenerato
         }
     }
 
-    private suspend fun generate(id: Identifier, resourceDir: File) = coroutineScope {
+    private suspend fun write(id: Identifier, resourceDir: File) = coroutineScope {
         gens2Selections.filter { (_, value) -> value }.keys.map { gen ->
             launch(Dispatchers.IO) {
                 val root = gen.resourceRoot.path

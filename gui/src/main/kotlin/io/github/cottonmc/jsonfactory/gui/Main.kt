@@ -14,7 +14,7 @@ fun main(args: Array<String>) {
 }
 
 private fun loadGens(classes: Array<String>): List<ContentGenerator> = sequence {
-    yieldAll(Gens.allGens)
+    yieldAll(Gens.ALL_GENS)
 
     val plugins = sequence {
         yieldAll(

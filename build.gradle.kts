@@ -48,13 +48,12 @@ publishing {
 dependencies {
     api(kotlin("stdlib-jdk8"))
     api("com.google.code.gson:gson:2.8.5")
-    api(kotlin("reflect")) // TODO: Remove dep on kotlin-reflect?
+    api(kotlin("reflect"))
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.2.0")
+
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.2.0")
     testImplementation("io.strikt:strikt-core:0.17.1")
     testRuntime("org.junit.jupiter:junit-jupiter-engine:5.2.0")
-
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.2.0")
-    implementation("com.vladsch.flexmark:flexmark:0.42.4")
 }
 
 tasks.withType<DokkaTask> {

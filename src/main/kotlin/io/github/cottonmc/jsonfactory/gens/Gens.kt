@@ -1,7 +1,7 @@
 package io.github.cottonmc.jsonfactory.gens
 
 import io.github.cottonmc.jsonfactory.data.Identifier
-import io.github.cottonmc.jsonfactory.gens.Gens.allGens
+import io.github.cottonmc.jsonfactory.gens.Gens.ALL_GENS
 import io.github.cottonmc.jsonfactory.gens.block.*
 import io.github.cottonmc.jsonfactory.gens.item.BasicItemModel
 import io.github.cottonmc.jsonfactory.gens.item.SuffixedItemModel
@@ -9,7 +9,7 @@ import io.github.cottonmc.jsonfactory.gens.item.SuffixedItemModel
 /**
  * Lists [ContentGenerator]s.
  *
- * The generator properties (apart from the contents of [allGens]) are mostly version-independent and
+ * The generator properties (apart from the contents of [ALL_GENS]) are mostly version-independent and
  * won't change as often as their classes.
  */
 object Gens {
@@ -109,9 +109,9 @@ object Gens {
         val slabLootTable: ContentGenerator = SlabLootTable
 
         /**
-         * A list of all slab generators.
+         * A set of all slab generators.
          */
-        val allSlabs = listOf(slabBlockModel, slabBlockState, slabItemModel, slabLootTable)
+        val ALL_SLABS = setOf(slabBlockModel, slabBlockState, slabItemModel, slabLootTable)
 
         // STAIRS
 
@@ -136,9 +136,9 @@ object Gens {
         val stairLootTable: ContentGenerator = SuffixedLootTable("Stair", "stairs", GeneratorInfo.STAIRS)
 
         /**
-         * A list of all stair generators.
+         * A set of all stair generators.
          */
-        val allStairs = listOf(stairBlockModel, stairBlockState, stairItemModel, stairLootTable)
+        val ALL_STAIRS = setOf(stairBlockModel, stairBlockState, stairItemModel, stairLootTable)
 
         // PRESSURE PLATES
 
@@ -165,10 +165,10 @@ object Gens {
             SuffixedLootTable("Pressure Plate", "pressure_plate", GeneratorInfo.PRESSURE_PLATES)
 
         /**
-         * A list of all pressure plate generators.
+         * A set of all pressure plate generators.
          */
-        val allPressurePlates =
-            listOf(pressurePlateBlockModel, pressurePlateBlockState, pressurePlateItemModel, pressurePlateLootTable)
+        val ALL_PRESSURE_PLATES =
+            setOf(pressurePlateBlockModel, pressurePlateBlockState, pressurePlateItemModel, pressurePlateLootTable)
 
         // BUTTONS
 
@@ -194,9 +194,9 @@ object Gens {
         val buttonLootTable: ContentGenerator = SuffixedLootTable("Button", "button", GeneratorInfo.BUTTONS)
 
         /**
-         * A list of all button generators.
+         * A set of all button generators.
          */
-        val allButtons = listOf(buttonBlockModel, buttonBlockState, buttonItemModel, buttonLootTable)
+        val ALL_BUTTONS = setOf(buttonBlockModel, buttonBlockState, buttonItemModel, buttonLootTable)
 
         // FENCES
 
@@ -222,9 +222,9 @@ object Gens {
         val fenceLootTable: ContentGenerator = SuffixedLootTable("Fence", "fence", GeneratorInfo.FENCES)
 
         /**
-         * A list of all fence generators.
+         * A set of all fence generators.
          */
-        val allFences = listOf(fenceBlockModel, fenceBlockState, fenceItemModel, fenceLootTable)
+        val ALL_FENCES = setOf(fenceBlockModel, fenceBlockState, fenceItemModel, fenceLootTable)
 
         // WALLS
 
@@ -250,9 +250,9 @@ object Gens {
         val wallLootTable: ContentGenerator = SuffixedLootTable("Wall", "wall", GeneratorInfo.WALLS)
 
         /**
-         * A list of all wall generators.
+         * A set of all wall generators.
          */
-        val allWalls = listOf(wallBlockModel, wallBlockState, wallItemModel, wallLootTable)
+        val ALL_WALLS = setOf(wallBlockModel, wallBlockState, wallItemModel, wallLootTable)
 
         // SIGNS
 
@@ -282,9 +282,9 @@ object Gens {
         val signLootTable: ContentGenerator = SuffixedLootTable("Sign", "sign", GeneratorInfo.SIGNS)
 
         /**
-         * A list of all sign generators.
+         * A set of all sign generators.
          */
-        val allSigns = listOf(signBlockModel, signBlockState, signItemModel, signLootTable)
+        val ALL_SIGNS = setOf(signBlockModel, signBlockState, signItemModel, signLootTable)
 
         // FENCE GATES
 
@@ -314,9 +314,9 @@ object Gens {
         )
 
         /**
-         * A list of all fence gate generators.
+         * A set of all fence gate generators.
          */
-        val allFenceGates = listOf(fenceGateBlockModel, fenceGateBlockState, fenceGateItemModel, fenceGateLootTable)
+        val ALL_FENCE_GATES = setOf(fenceGateBlockModel, fenceGateBlockState, fenceGateItemModel, fenceGateLootTable)
 
         // TRAPDOORS
 
@@ -342,9 +342,9 @@ object Gens {
         val trapdoorLootTable: ContentGenerator = SuffixedLootTable("Trapdoor", "trapdoor", GeneratorInfo.TRAPDOORS)
 
         /**
-         * A list of all trapdoor generators.
+         * A set of all trapdoor generators.
          */
-        val allTrapdoors = listOf(trapdoorBlockModel, trapdoorBlockState, trapdoorItemModel, trapdoorLootTable)
+        val ALL_TRAPDOORS = setOf(trapdoorBlockModel, trapdoorBlockState, trapdoorItemModel, trapdoorLootTable)
 
         // DOORS
 
@@ -374,9 +374,9 @@ object Gens {
         val doorLootTable: ContentGenerator = SuffixedLootTable("Door", "door", GeneratorInfo.DOORS)
 
         /**
-         * A list of all door generators.
+         * A set of all door generators.
          */
-        val allDoors = listOf(doorBlockModel, doorBlockState, doorItemModel, doorLootTable)
+        val ALL_DOORS = setOf(doorBlockModel, doorBlockState, doorItemModel, doorLootTable)
 
         // LADDERS
 
@@ -406,9 +406,9 @@ object Gens {
         val ladderLootTable: ContentGenerator = SuffixedLootTable("Ladder", "ladder", GeneratorInfo.LADDERS)
 
         /**
-         * A list of all ladder generators.
+         * A set of all ladder generators.
          */
-        val allLadders = listOf(ladderBlockModel, ladderBlockState, ladderItemModel, ladderLootTable)
+        val ALL_LADDERS = setOf(ladderBlockModel, ladderBlockState, ladderItemModel, ladderLootTable)
 
         // LEAVES
 
@@ -433,9 +433,9 @@ object Gens {
         val leafLootTable: ContentGenerator = LeafLootTable
 
         /**
-         * A list of all leaf generators.
+         * A set of all leaf generators.
          */
-        val allLeaves = listOf(leafBlockModel, leafBlockState, leafItemModel, leafLootTable)
+        val ALL_LEAVES = setOf(leafBlockModel, leafBlockState, leafItemModel, leafLootTable)
 
         // POTTED PLANTS
 
@@ -456,9 +456,9 @@ object Gens {
         val pottedPlantLootTable: ContentGenerator = PottedPlantLootTable
 
         /**
-         * A list of all potted plant generators.
+         * A set of all potted plant generators.
          */
-        val allPottedPlants = listOf(pottedPlantBlockModel, pottedPlantBlockState, pottedPlantLootTable)
+        val ALL_POTTED_PLANTS = setOf(pottedPlantBlockModel, pottedPlantBlockState, pottedPlantLootTable)
 
         // CHESTS
 
@@ -483,9 +483,9 @@ object Gens {
         val chestLootTable: ContentGenerator = ChestLootTable
 
         /**
-         * A list of all chest generators.
+         * A set of all chest generators.
          */
-        val allChests = listOf(chestBlockModel, chestBlockState, chestItemModel, chestLootTable)
+        val ALL_CHESTS = setOf(chestBlockModel, chestBlockState, chestItemModel, chestLootTable)
 
         // SCAFFOLDING
 
@@ -511,10 +511,10 @@ object Gens {
         val scaffoldingLootTable: ContentGenerator = ScaffoldingLootTable
 
         /**
-         * A list of all scaffolding generators.
+         * A set of all scaffolding generators.
          */
-        val allScaffolding =
-            listOf(scaffoldingBlockModel, scaffoldingBlockState, scaffoldingItemModel, scaffoldingLootTable)
+        val ALL_SCAFFOLDING =
+            setOf(scaffoldingBlockModel, scaffoldingBlockState, scaffoldingItemModel, scaffoldingLootTable)
 
         // BARRELS
 
@@ -539,9 +539,9 @@ object Gens {
         val barrelLootTable: ContentGenerator = BarrelLootTable
 
         /**
-         * A list of all barrel generators.
+         * A set of all barrel generators.
          */
-        val allBarrels = listOf(barrelBlockModel, barrelBlockState, barrelItemModel, barrelLootTable)
+        val ALL_BARRELS = setOf(barrelBlockModel, barrelBlockState, barrelItemModel, barrelLootTable)
 
         // CAMPFIRES
 
@@ -571,15 +571,15 @@ object Gens {
         val campfireLootTable: ContentGenerator = CampfireLootTable
 
         /**
-         * A list of all campfire generators.
+         * A set of all campfire generators.
          */
-        val allCampfires = listOf(campfireBlockModel, campfireBlockState, campfireItemModel, campfireLootTable)
+        val ALL_CAMPFIRES = setOf(campfireBlockModel, campfireBlockState, campfireItemModel, campfireLootTable)
     }
 
     /**
      * A list of all generators.
      */
-    val allGens = sequence {
+    val ALL_GENS = sequence {
         yield(basicBlockModel)
         yield(basicItemModel)
         yield(basicHandheldItemModel)
@@ -598,22 +598,22 @@ object Gens {
         yield(pillarBlockModel)
         yield(pillarBlockState)
 
-        yieldAll(Variants.allSlabs)
-        yieldAll(Variants.allStairs)
-        yieldAll(Variants.allPressurePlates)
-        yieldAll(Variants.allButtons)
-        yieldAll(Variants.allFences)
-        yieldAll(Variants.allWalls)
-        yieldAll(Variants.allSigns)
-        yieldAll(Variants.allFenceGates)
-        yieldAll(Variants.allTrapdoors)
-        yieldAll(Variants.allDoors)
-        yieldAll(Variants.allLadders)
-        yieldAll(Variants.allLeaves)
-        yieldAll(Variants.allPottedPlants)
-        yieldAll(Variants.allChests)
-        yieldAll(Variants.allScaffolding)
-        yieldAll(Variants.allBarrels)
-        yieldAll(Variants.allCampfires)
+        yieldAll(Variants.ALL_SLABS)
+        yieldAll(Variants.ALL_STAIRS)
+        yieldAll(Variants.ALL_PRESSURE_PLATES)
+        yieldAll(Variants.ALL_BUTTONS)
+        yieldAll(Variants.ALL_FENCES)
+        yieldAll(Variants.ALL_WALLS)
+        yieldAll(Variants.ALL_SIGNS)
+        yieldAll(Variants.ALL_FENCE_GATES)
+        yieldAll(Variants.ALL_TRAPDOORS)
+        yieldAll(Variants.ALL_DOORS)
+        yieldAll(Variants.ALL_LADDERS)
+        yieldAll(Variants.ALL_LEAVES)
+        yieldAll(Variants.ALL_POTTED_PLANTS)
+        yieldAll(Variants.ALL_CHESTS)
+        yieldAll(Variants.ALL_SCAFFOLDING)
+        yieldAll(Variants.ALL_BARRELS)
+        yieldAll(Variants.ALL_CAMPFIRES)
     }.toList()
 }

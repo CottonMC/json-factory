@@ -4,73 +4,72 @@ import io.github.cottonmc.jsonfactory.gens.ContentGenerator
 import io.github.cottonmc.jsonfactory.gens.Gens
 
 /**
- * an enum regrouping the settings, just so that we can read the builder a lot easier
- * */
+ * An enum containing generator groups for the builder.
+ */
 enum class BuilderSettings(val generators: Set<ContentGenerator>) {
-
-    /**
-     * basic blocks
-     * */
-    SLABS(setOf(*Gens.Variants.allSlabs.toTypedArray())),
-    BARREL(setOf(*Gens.Variants.allBarrels.toTypedArray())),
-    BUTTON(setOf(*Gens.Variants.allButtons.toTypedArray())),
-    CAMPFIRE(setOf(*Gens.Variants.allCampfires.toTypedArray())),
-    CHEST(setOf(*Gens.Variants.allChests.toTypedArray())),
-    DOOR(setOf(*Gens.Variants.allDoors.toTypedArray())),
-    FENCES(setOf(*Gens.Variants.allFenceGates.toTypedArray())),
-    FENCE_GATES(setOf(*Gens.Variants.allFences.toTypedArray())),
-    LADDERS(setOf(*Gens.Variants.allLadders.toTypedArray())),
-    LEAVES(setOf(*Gens.Variants.allLeaves.toTypedArray())),
-    POTTED_PLANT(setOf(*Gens.Variants.allPottedPlants.toTypedArray())),
-    PRESSURE_PLATE(setOf(*Gens.Variants.allPressurePlates.toTypedArray())),
-    SCAFFOLDING(setOf(*Gens.Variants.allScaffolding.toTypedArray())),
-    SIGNS(setOf(*Gens.Variants.allSigns.toTypedArray())),
-    STAIRS(setOf(*Gens.Variants.allStairs.toTypedArray())),
-    TRAPDOOR(setOf(*Gens.Variants.allTrapdoors.toTypedArray())),
-    WALL(setOf(*Gens.Variants.allWalls.toTypedArray())),
+    SLABS(Gens.Variants.ALL_SLABS),
+    BARREL(Gens.Variants.ALL_BARRELS),
+    BUTTON(Gens.Variants.ALL_BUTTONS),
+    CAMPFIRE(Gens.Variants.ALL_CAMPFIRES),
+    CHEST(Gens.Variants.ALL_CHESTS),
+    DOOR(Gens.Variants.ALL_DOORS),
+    FENCES(Gens.Variants.ALL_FENCE_GATES),
+    FENCE_GATES(Gens.Variants.ALL_FENCES),
+    LADDERS(Gens.Variants.ALL_LADDERS),
+    LEAVES(Gens.Variants.ALL_LEAVES),
+    POTTED_PLANT(Gens.Variants.ALL_POTTED_PLANTS),
+    PRESSURE_PLATE(Gens.Variants.ALL_PRESSURE_PLATES),
+    SCAFFOLDING(Gens.Variants.ALL_SCAFFOLDING),
+    SIGNS(Gens.Variants.ALL_SIGNS),
+    STAIRS(Gens.Variants.ALL_STAIRS),
+    TRAPDOOR(Gens.Variants.ALL_TRAPDOORS),
+    WALL(Gens.Variants.ALL_WALLS),
     PILLAR(setOf(Gens.pillarBlockModel, Gens.pillarBlockState, Gens.basicLootTable, Gens.basicBlockItemModel)),
 
     /**
-     * full fences, with gates
-     * */
-    FULL_FENCE(setOf(*Gens.Variants.allFenceGates.toTypedArray(),*Gens.Variants.allFences.toTypedArray())),
+     * All fence and fence gate generators.
+     */
+    FULL_FENCE(Gens.Variants.ALL_FENCE_GATES + Gens.Variants.ALL_FENCES),
+
     /**
-     * Everything that a stone type block can reasonable have in vanilla ideas
-     * */
+     * Everything that a stone type block can reasonable have in vanilla ideas.
+     */
     FULL_STONE(
-        SLABS.generators +
-        BUTTON.generators+
-        PRESSURE_PLATE.generators+
-        STAIRS.generators+
-        WALL.generators+
-        TRAPDOOR.generators),
+        SLABS.generators
+                + BUTTON.generators
+                + PRESSURE_PLATE.generators
+                + STAIRS.generators
+                + WALL.generators
+                + TRAPDOOR.generators
+    ),
+
     /**
-     * Everything that a wooden type block can reasonable have in vanilla ideas
+     * Everything that a wooden block can reasonable have in vanilla ideas.
      * */
     FULL_WOOD(
         SLABS.generators
-        +BUTTON.generators
-        +DOOR.generators
-        +FULL_FENCE.generators
-        +PRESSURE_PLATE.generators
-        +SIGNS.generators
-        +STAIRS.generators
-        +TRAPDOOR.generators
+                + BUTTON.generators
+                + DOOR.generators
+                + FULL_FENCE.generators
+                + PRESSURE_PLATE.generators
+                + SIGNS.generators
+                + STAIRS.generators
+                + TRAPDOOR.generators
     ),
+
     /**
-     * Everything that a block type could reasonable have, if it is not a tile entities
-     * */
+     * Everything that a block type could reasonable have, if it is not a block entity.
+     */
     FULL_NO_BLOCK_ENTITY_GENERIC(
         SLABS.generators
-        +BUTTON.generators
-        +DOOR.generators
-        +FULL_FENCE.generators
-        +LADDERS.generators
-        +PRESSURE_PLATE.generators
-        +SIGNS.generators
-        +STAIRS.generators
-        +WALL.generators
-        +TRAPDOOR.generators
-        ),
-
+                + BUTTON.generators
+                + DOOR.generators
+                + FULL_FENCE.generators
+                + LADDERS.generators
+                + PRESSURE_PLATE.generators
+                + SIGNS.generators
+                + STAIRS.generators
+                + WALL.generators
+                + TRAPDOOR.generators
+    ),
 }
