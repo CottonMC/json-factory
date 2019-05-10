@@ -79,8 +79,9 @@ class JsonFactoryBuilder : Frontend {
      * Sets the target folder, where we should generate into.
      */
     fun setTarget(folder: File): JsonFactoryBuilder {
-        if (!folder.isDirectory)
-            throw IllegalStateException("$folder is not a directory!")
+        require(folder.isDirectory) {
+            "$folder is not a directory!"
+        }
 
         this.folder = folder
         return this
