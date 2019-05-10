@@ -60,7 +60,7 @@ enum class BuilderSettings(val generators: Set<ContentGenerator>) {
     /**
      * Everything that a block type could reasonable have, if it is not a tile entities
      * */
-    FULL_NO_TILE_GENERIC(
+    FULL_NO_BLOCK_ENTITY_GENERIC(
         SLABS.generators
         +BUTTON.generators
         +DOOR.generators
