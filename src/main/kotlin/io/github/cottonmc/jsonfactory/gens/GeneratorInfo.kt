@@ -1,7 +1,7 @@
 package io.github.cottonmc.jsonfactory.gens
 
 /**
- * Contains the [category] and [subcategory] of a [AbstractContentGenerator].
+ * Contains the [category] and [subcategory] of a [ContentGenerator].
  *
  * The [subcategory] is optional.
  *
