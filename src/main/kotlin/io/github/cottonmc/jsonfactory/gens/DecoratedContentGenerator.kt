@@ -13,6 +13,6 @@ class DecoratedContentGenerator(
 
     override fun generate(id: Identifier): List<Output> {
         val list = superGenerator.generate(id)
-        return decorator(id,list)
+        return decorator(id, list)
     }
 }
