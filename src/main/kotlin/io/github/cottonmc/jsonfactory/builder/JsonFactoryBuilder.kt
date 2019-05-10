@@ -14,10 +14,10 @@ import java.io.File
 class JsonFactoryBuilder : Frontend {
     override fun printMessage(msg: String, type: MessageType) {
         when (type) {
-            MessageType.Error -> error(msg)
-            MessageType.Important -> println(msg)
-            MessageType.Warn -> println(msg)
-            MessageType.Default -> println(msg)
+            MessageType.Error -> System.err.println("ERROR: $msg")
+            MessageType.Important -> println("IMPORTANT: $msg")
+            MessageType.Warn -> println("WARN: $msg")
+            MessageType.Default -> println("DEFAULT: $msg")
         }
     }
 
