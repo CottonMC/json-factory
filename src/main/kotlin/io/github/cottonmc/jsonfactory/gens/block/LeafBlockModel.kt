@@ -1,12 +1,12 @@
 package io.github.cottonmc.jsonfactory.gens.block
 
 import io.github.cottonmc.jsonfactory.data.Identifier
-import io.github.cottonmc.jsonfactory.gens.ContentGenerator
+import io.github.cottonmc.jsonfactory.gens.AbstractContentGenerator
 import io.github.cottonmc.jsonfactory.gens.GeneratorInfo
 import io.github.cottonmc.jsonfactory.output.model.Model
 import io.github.cottonmc.jsonfactory.output.suffixed
 
-internal object LeafBlockModel : ContentGenerator("Leaf Block Model", "models/block", GeneratorInfo.LEAVES) {
+internal object LeafBlockModel : AbstractContentGenerator("Leaf Block Model", "models/block", GeneratorInfo.LEAVES) {
     override fun generate(id: Identifier) = listOf(
         Model(
             parent = Identifier.mc("block/leaves"),

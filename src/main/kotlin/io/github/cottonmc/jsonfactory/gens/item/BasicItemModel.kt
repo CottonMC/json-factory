@@ -1,11 +1,11 @@
 package io.github.cottonmc.jsonfactory.gens.item
 
 import io.github.cottonmc.jsonfactory.data.Identifier
-import io.github.cottonmc.jsonfactory.gens.ContentGenerator
+import io.github.cottonmc.jsonfactory.gens.AbstractContentGenerator
 import io.github.cottonmc.jsonfactory.gens.GeneratorInfo
 import io.github.cottonmc.jsonfactory.output.model.Model
 
-class BasicItemModel(val parent: Identifier, suffix: String = "") : ContentGenerator(
+class BasicItemModel(val parent: Identifier, suffix: String = "") : AbstractContentGenerator(
     "Basic Item Model$suffix", "models/item",
     GeneratorInfo.ITEM
 ) {

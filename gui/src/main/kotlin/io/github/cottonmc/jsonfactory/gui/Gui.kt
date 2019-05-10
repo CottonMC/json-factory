@@ -4,7 +4,6 @@ import io.github.cottonmc.jsonfactory.frontend.Frontend
 import io.github.cottonmc.jsonfactory.frontend.Generator
 import io.github.cottonmc.jsonfactory.frontend.MessageType
 import io.github.cottonmc.jsonfactory.gens.ContentGenerator
-import io.github.cottonmc.jsonfactory.gens.GeneratorInfo
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.swing.Swing
 import kotlinx.coroutines.withContext

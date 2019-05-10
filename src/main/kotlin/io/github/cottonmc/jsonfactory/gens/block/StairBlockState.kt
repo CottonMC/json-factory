@@ -2,12 +2,12 @@ package io.github.cottonmc.jsonfactory.gens.block
 
 import io.github.cottonmc.jsonfactory.data.BlockStateProperty
 import io.github.cottonmc.jsonfactory.data.Identifier
-import io.github.cottonmc.jsonfactory.gens.ContentGenerator
+import io.github.cottonmc.jsonfactory.gens.AbstractContentGenerator
 import io.github.cottonmc.jsonfactory.gens.GeneratorInfo
 import io.github.cottonmc.jsonfactory.output.model.ModelBlockState
 import io.github.cottonmc.jsonfactory.output.suffixed
 
-internal object StairBlockState : ContentGenerator(
+internal object StairBlockState : AbstractContentGenerator(
     "Stair Block State", "blockstates",
     GeneratorInfo.STAIRS
 ) {

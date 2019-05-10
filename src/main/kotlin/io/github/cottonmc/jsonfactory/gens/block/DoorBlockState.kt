@@ -2,12 +2,12 @@ package io.github.cottonmc.jsonfactory.gens.block
 
 import io.github.cottonmc.jsonfactory.data.BlockStateProperty
 import io.github.cottonmc.jsonfactory.data.Identifier
-import io.github.cottonmc.jsonfactory.gens.ContentGenerator
+import io.github.cottonmc.jsonfactory.gens.AbstractContentGenerator
 import io.github.cottonmc.jsonfactory.gens.GeneratorInfo
 import io.github.cottonmc.jsonfactory.output.model.ModelBlockState
 import io.github.cottonmc.jsonfactory.output.suffixed
 
-internal object DoorBlockState : ContentGenerator("Door Block State", "blockstates", GeneratorInfo.DOORS) {
+internal object DoorBlockState : AbstractContentGenerator("Door Block State", "blockstates", GeneratorInfo.DOORS) {
     private val properties = setOf(
         /* facing */ BlockStateProperty.horizontalFacing,
         /* half   */ BlockStateProperty.halfUL,

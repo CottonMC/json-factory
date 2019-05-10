@@ -1,13 +1,13 @@
 package io.github.cottonmc.jsonfactory.gens.block
 
 import io.github.cottonmc.jsonfactory.data.Identifier
-import io.github.cottonmc.jsonfactory.gens.ContentGenerator
+import io.github.cottonmc.jsonfactory.gens.AbstractContentGenerator
 import io.github.cottonmc.jsonfactory.gens.GeneratorInfo
 import io.github.cottonmc.jsonfactory.output.loot.*
 import io.github.cottonmc.jsonfactory.output.loot.Function
 import io.github.cottonmc.jsonfactory.output.suffixed
 
-internal object SlabLootTable : ContentGenerator(
+internal object SlabLootTable : AbstractContentGenerator(
     "Slab Loot Table", "loot_tables/blocks",
     GeneratorInfo.SLABS, resourceRoot = ResourceRoot.Data
 ) {
