@@ -7,12 +7,12 @@ import io.github.cottonmc.jsonfactory.output.Output
  * Wrapper class, that can be used to extend the existing generators, without modifying them.
  * */
 class DecoratedContentGenerator(
-    private val superGenerator: ContentGenerator,
+    private val rootGenerator: ContentGenerator,
     private val decorator: (Identifier, List<Output>) -> List<Output>
-) : ContentGenerator by superGenerator {
+) : ContentGenerator by rootGenerator {
 
     override fun generate(id: Identifier): List<Output> {
-        val list = superGenerator.generate(id)
+        val list = rootGenerator.generate(id)
         return decorator(id, list)
     }
 }
