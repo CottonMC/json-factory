@@ -1,9 +1,12 @@
+import org.ajoberstar.grgit.Grgit
+
 plugins {
     java
     kotlin("jvm")
     application
     id("com.jfrog.artifactory")
     `maven-publish`
+    id("org.ajoberstar.grgit") version "3.1.1"
 }
 
 base {
@@ -26,6 +29,7 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.2.0")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-swing:1.2.0")
     implementation("com.vladsch.flexmark:flexmark:0.42.4")
+    implementation("info.picocli:picocli:3.9.6")
 }
 
 application {
@@ -46,5 +50,18 @@ publishing {
             artifact(tasks["distZip"])
             artifact(tasks["sourcesJar"])
         }
+    }
+}
+
+fun getCommitHash(): String = (ext["grgit"] as Grgit?)?.let { grgit ->
+    grgit.log(mapOf("paths" to listOf("gui"), "maxCommits" to 1))[0].id.substring(0, 8)
+} ?: "unavailable"
+
+tasks.getByName<ProcessResources>("processResources") {
+    inputs.property("version", version)
+    val commitHash = getCommitHash()
+    inputs.property("commitHash", commitHash)
+    filesMatching("json-factory/version-info.properties") {
+        expand("version" to version, "commitHash" to commitHash)
     }
 }
