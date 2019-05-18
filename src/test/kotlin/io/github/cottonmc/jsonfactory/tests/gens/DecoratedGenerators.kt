@@ -12,7 +12,7 @@ import strikt.assertions.all
 
 object DecoratedGenerators : Spek({
     Feature("Decorated generators") {
-        Scenario("generating a decorated block model") {
+        Scenario("decorating a block model with a prefix") {
             val id = Identifier("minecraft", "gravel")
             lateinit var outputs: List<Output>
 
@@ -22,10 +22,10 @@ object DecoratedGenerators : Spek({
                 }.generate(id)
             }
 
-            Then("outputs should be decorated") {
+            Then("outputs should have the prefix") {
                 expectThat(outputs)
                     .all {
-                        assertThat("output should be decorated") {
+                        assertThat("output should have the prefix") {
                             it.nameWrapper.prefix == "super"
                         }
                     }
