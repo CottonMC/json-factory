@@ -12,21 +12,16 @@ import io.github.cottonmc.jsonfactory.output.Output
  * @property extension the file extension (without the dot)
  * @property resourceRoot the resource root
  */
-abstract class ContentGenerator(
-    val id: String,
-    val path: String,
-    val info: GeneratorInfo,
-    val extension: String = "json",
-    val resourceRoot: ResourceRoot = ResourceRoot.Assets
-) {
+interface ContentGenerator {
+    val id: String
+    val path: String
+    val info: GeneratorInfo
+    val extension: String
+    // TODO: Move ResourceRoot
+    val resourceRoot: AbstractContentGenerator.ResourceRoot
+
     /**
-     * Generates Outputs from an [id].
+     * Generates [Output]s from an [id].
      */
-    abstract fun generate(id: Identifier): List<Output>
-
-    override fun toString() = id
-
-    enum class ResourceRoot(val path: String) {
-        Assets("assets"), Data("data")
-    }
+    fun generate(id: Identifier): List<Output>
 }

@@ -25,6 +25,15 @@ Block content generators
 # Package io.github.cottonmc.jsonfactory.gens.item
 Item content generators
 
+# Package io.github.cottonmc.jsonfactory.builder
+File generation with a builder
+
+# Package io.github.cottonmc.jsonfactory.frontend
+Frontend API for file generation
+
+# Package io.github.cottonmc.jsonfactory.plugin
+Plugin API
+
 # Package io.github.cottonmc.jsonfactory.gens
 Contains the content generators.
 

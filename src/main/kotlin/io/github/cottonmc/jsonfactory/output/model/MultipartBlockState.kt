@@ -16,9 +16,21 @@ data class MultipartBlockState(val multipart: List<Multipart>) : Json {
         }
     }
 
-    data class When(val state: String, val value: String) : Json.ByProperties {
+    data class When(val states: Map<String, String>, val or: List<When> = emptyList()) : Json.ByProperties {
+        constructor(state: String, value: String) : this(mapOf(state to value))
+
+        init {
+            if (states.isNotEmpty() && or.isNotEmpty()) {
+                throw IllegalArgumentException("Cannot have both states and OR")
+            }
+        }
+
         override val properties = createProperties {
-            +Property(state, value)
+            for ((state, value) in states) {
+                +Property(state, value)
+            }
+
+            +Property("OR", or, Property.Mode.RemoveIfEmpty)
         }
     }
 }

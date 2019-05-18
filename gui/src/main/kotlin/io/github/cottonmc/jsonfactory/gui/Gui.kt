@@ -1,10 +1,17 @@
 package io.github.cottonmc.jsonfactory.gui
 
-import io.github.cottonmc.jsonfactory.gens.GeneratorInfo
+import io.github.cottonmc.jsonfactory.frontend.Frontend
+import io.github.cottonmc.jsonfactory.frontend.ContentWriter
+import io.github.cottonmc.jsonfactory.frontend.MessageType
+import io.github.cottonmc.jsonfactory.gens.ContentGenerator
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.swing.Swing
+import kotlinx.coroutines.withContext
 import net.miginfocom.swing.MigLayout
 import org.jdesktop.swingx.*
 import org.jdesktop.swingx.hyperlink.HyperlinkAction
 import java.awt.*
+import java.io.File
 import java.net.URI
 import javax.imageio.ImageIO
 import javax.swing.*
@@ -13,7 +20,7 @@ import javax.swing.text.DefaultCaret
 import javax.swing.text.SimpleAttributeSet
 import javax.swing.text.StyleConstants
 
-internal class Gui private constructor() {
+internal class Gui private constructor(gens: List<ContentGenerator>) : Frontend {
     internal val frame = JFrame()
     internal val fileChooser = JFileChooser().apply {
         fileSelectionMode = JFileChooser.DIRECTORIES_ONLY
@@ -21,11 +28,11 @@ internal class Gui private constructor() {
     private val idField = JXTextField("enter an id or comma-separated list of ids").apply {
         columns = 25
     }
-    private val generator = Generator(this)
+    private val generator = ContentWriter(this, gens)
     private val generators = createGeneratorPanel()
     private val saveButton = JButton("Generate").apply {
         addActionListener {
-            generator.generateAll(idField.text)
+            generator.writeAll(idField.text)
         }
     }
     private val outputTextArea = JTextPane().apply {
@@ -63,13 +70,6 @@ internal class Gui private constructor() {
                         }
                     })
                 }
-
-                add(JCheckBoxMenuItem("Force System Window Decorations").apply {
-                    isSelected = Settings.forceSystemWindowDecorations
-                    addActionListener {
-                        Settings.forceSystemWindowDecorations = isSelected
-                    }
-                })
             })
         })
 
@@ -127,7 +127,7 @@ internal class Gui private constructor() {
         val pane = JTabbedPane(SwingConstants.TOP)
         val gens = generator.gens2Selections.keys
 
-        for (category in GeneratorInfo.Categories.categories) {
+        for (category in gens.map { it.info.category }.distinct()) {
             pane.addTab(category.displayName, JFScrollPane(JPanel(MigLayout()).apply {
                 category.description?.let {
                     add(JLabel(Markdown.toHtml(it)), "wrap")
@@ -161,14 +161,14 @@ internal class Gui private constructor() {
         return pane
     }
 
-    internal fun printMessage(prefix: String, msg: String, prefixAttributes: AttributeSet = defaultAttributes) {
+    internal fun printMessage(prefix: String, msg: String, prefixAttributes: AttributeSet = defaultAttributes, mainAttributes: AttributeSet? = null) {
         val doc = outputTextArea.styledDocument
 
         if (prefix.isNotEmpty()) {
             doc.insertString(doc.length, prefix, prefixAttributes)
             doc.insertString(doc.length, " ", null)
         }
-        doc.insertString(doc.length, "$msg\n", null)
+        doc.insertString(doc.length, "$msg\n", mainAttributes)
         outputTextArea.repaint()
     }
 
@@ -195,6 +195,48 @@ internal class Gui private constructor() {
         isVisible = true
         val screenSize = Toolkit.getDefaultToolkit().screenSize
         setLocation(screenSize.width / 2 - width / 2, screenSize.height / 2 - height / 2)
+    }
+
+    override fun printMessage(msg: String, type: MessageType) {
+        val prefix = when (type) {
+            MessageType.Warn -> "Note:"
+            else -> ""
+        }
+
+        val prefixAttributes = when (type) {
+            MessageType.Warn -> noteAttributes
+            else -> defaultAttributes
+        }
+
+        printMessage(prefix, msg, prefixAttributes, mainAttributes = when (type) {
+            MessageType.Error -> errorAttributes
+            MessageType.Important -> boldAttributes
+            else -> null
+        })
+    }
+
+    override fun printSeparator() = printMessage("-".repeat(25))
+
+    override fun onFinishedGenerating() {
+        if (Settings.playFinishedSound) {
+            Sounds.finished.start()
+        }
+    }
+
+    override suspend fun shouldOverwriteFile(file: File): Boolean = withContext(Dispatchers.Swing) {
+        Sounds.confirm.start()
+        val confirm = JOptionPane.showConfirmDialog(
+            frame,
+            "Do you want to overwrite the existing file $file?"
+        )
+
+        confirm == JOptionPane.YES_OPTION
+    }
+
+    override suspend fun selectOutputDirectory(): File? = withContext(Dispatchers.Swing) {
+        if (fileChooser.showSaveDialog(frame) == JFileChooser.APPROVE_OPTION) {
+            fileChooser.selectedFile
+        } else null
     }
 
     companion object {
@@ -225,8 +267,8 @@ internal class Gui private constructor() {
         private fun readImage(name: String) =
             ImageIO.read(Gui::class.java.getResourceAsStream("/json-factory/$name.png"))
 
-        fun show() = SwingUtilities.invokeAndWait {
-            Gui().apply {
+        fun createAndShow(gens: List<ContentGenerator>) = SwingUtilities.invokeAndWait {
+            Gui(gens).apply {
                 show()
                 if (Settings.showTipsOnStartup) {
                     Tips.show(frame, isStartup = true)

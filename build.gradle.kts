@@ -11,7 +11,7 @@ plugins {
 
 allprojects {
     group = "io.github.cottonmc"
-    version = "0.4.1"
+    version = "0.5.0-SNAPSHOT"
 
     repositories {
         jcenter()
@@ -48,10 +48,14 @@ publishing {
 dependencies {
     api(kotlin("stdlib-jdk8"))
     api("com.google.code.gson:gson:2.8.5")
-    api(kotlin("reflect")) // TODO: Remove dep on kotlin-reflect?
+    api(kotlin("reflect"))
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.2.0")
+
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.2.0")
     testImplementation("io.strikt:strikt-core:0.17.1")
-    testRuntime("org.junit.jupiter:junit-jupiter-engine:5.2.0")
+    testImplementation("org.spekframework.spek2:spek-dsl-jvm:2.0.4")
+    testRuntimeOnly("org.spekframework.spek2:spek-runner-junit5:2.0.4")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.2.0")
 }
 
 tasks.withType<DokkaTask> {
@@ -61,6 +65,13 @@ tasks.withType<DokkaTask> {
 }
 
 tasks.withType<Test> {
-    useJUnitPlatform()
+    useJUnitPlatform {
+        includeEngines("spek2")
+    }
 }
 
+tasks.withType<KotlinCompile> {
+    kotlinOptions {
+        freeCompilerArgs += "-Xuse-experimental=kotlin.Experimental"
+    }
+}

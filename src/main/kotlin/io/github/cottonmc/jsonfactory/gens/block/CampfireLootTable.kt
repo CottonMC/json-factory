@@ -1,13 +1,13 @@
 package io.github.cottonmc.jsonfactory.gens.block
 
 import io.github.cottonmc.jsonfactory.data.Identifier
-import io.github.cottonmc.jsonfactory.gens.ContentGenerator
+import io.github.cottonmc.jsonfactory.gens.AbstractContentGenerator
 import io.github.cottonmc.jsonfactory.gens.GeneratorInfo
 import io.github.cottonmc.jsonfactory.output.loot.*
 import io.github.cottonmc.jsonfactory.output.loot.Function
 import io.github.cottonmc.jsonfactory.output.suffixed
 
-internal object CampfireLootTable : ContentGenerator(
+internal object CampfireLootTable : AbstractContentGenerator(
     "campfires.loot_table",
     "loot_tables/blocks",
     GeneratorInfo.CAMPFIRES,

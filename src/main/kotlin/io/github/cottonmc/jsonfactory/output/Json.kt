@@ -10,7 +10,10 @@ import java.io.OutputStream
 interface Json : Output {
     override fun writeToFile(file: File) = file.writeText(toJsonString())
     override fun writeToStream(stream: OutputStream) =
-        stream.bufferedWriter().write(toJsonString())
+        stream.bufferedWriter().use {
+            it.write(toJsonString())
+            it.flush()
+        }
 
     /**
      * Converts this output to a JSON string.

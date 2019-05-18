@@ -29,20 +29,10 @@ object Settings {
             save()
         }
 
-    var forceSystemWindowDecorations: Boolean = false
-        set(value) {
-            field = value
-            if (theme.providesWindowDecorations) {
-                refreshTheme(theme, null, forceRefreshDecorations = true)
-            }
-            save()
-        }
-
     var theme: Theme = Theme.DEFAULT
         set(value) {
-            val old = field
             field = value
-            refreshTheme(value, old)
+            refreshTheme(value)
             save()
         }
 
@@ -51,14 +41,13 @@ object Settings {
             load()
         }
         save()
-        refreshTheme(theme, null)
+        refreshTheme(theme)
     }
 
     private fun load() {
         try {
             val props = Properties()
             props.load(Files.newInputStream(LOCATION))
-            forceSystemWindowDecorations = props["force-system-window-decorations"].toString().toBoolean()
             playFinishedSound = props["play-finished-sound"].toString().toBoolean()
             showTipsOnStartup = props["show-tips-on-startup"].toString().toBoolean()
             theme =
@@ -91,20 +80,12 @@ object Settings {
 
     private fun createProperties(): Properties =
         Properties().apply {
-            put("force-system-window-decorations", forceSystemWindowDecorations.toString())
             put("play-finished-sound", playFinishedSound.toString())
             put("show-tips-on-startup", showTipsOnStartup.toString())
             put("theme", theme.name)
         }
 
-    private fun refreshTheme(theme: Theme, oldTheme: Theme?, forceRefreshDecorations: Boolean = false) {
-        fun providesWindowDecorations(theme: Theme) =
-            !forceSystemWindowDecorations && theme.providesWindowDecorations
-
-        val themeWindowDecorations = providesWindowDecorations(theme)
-        val shouldRefreshDecorations = forceRefreshDecorations ||
-                (oldTheme != null && providesWindowDecorations(theme) != providesWindowDecorations(oldTheme))
-
+    private fun refreshTheme(theme: Theme) {
         UIManager.setLookAndFeel(
             when (theme) {
                 Theme.Native -> UIManager.getSystemLookAndFeelClassName()
@@ -134,25 +115,9 @@ object Settings {
                 Theme.SolarizedDark -> SolarizedSkin.DarkLAF::class.java.name
             }
         )
-        JFrame.setDefaultLookAndFeelDecorated(themeWindowDecorations)
 
         for (window in Window.getWindows()) {
             SwingUtilities.updateComponentTreeUI(window)
-            if (window is JFrame && shouldRefreshDecorations) {
-                SwingUtilities.invokeLater {
-                    // this refreshes the window decoration type (native <=> LaF)
-                    window.dispose()
-                    if (!themeWindowDecorations) {
-                        // prevents a crash
-                        window.shape = null
-                    }
-                    window.isUndecorated = themeWindowDecorations
-                    window.rootPane.windowDecorationStyle =
-                        if (themeWindowDecorations) JRootPane.FRAME
-                        else JRootPane.NONE
-                    window.isVisible = true
-                }
-            }
         }
     }
 
@@ -160,8 +125,8 @@ object Settings {
         Light, Dark
     }
 
-    enum class Theme(val group: ThemeGroup = ThemeGroup.Light, val providesWindowDecorations: Boolean = true) {
-        Native(providesWindowDecorations = false),
+    enum class Theme(val group: ThemeGroup = ThemeGroup.Light) {
+        Native,
         Business,
         BusinessBlackSteel,
         BusinessBlueSteel,

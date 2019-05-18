@@ -1,12 +1,12 @@
 package io.github.cottonmc.jsonfactory.gens.block
 
 import io.github.cottonmc.jsonfactory.data.Identifier
-import io.github.cottonmc.jsonfactory.gens.ContentGenerator
+import io.github.cottonmc.jsonfactory.gens.AbstractContentGenerator
 import io.github.cottonmc.jsonfactory.gens.GeneratorInfo
 import io.github.cottonmc.jsonfactory.output.model.Model
 
 class OreBlockModel(type: String, private val base: Identifier) :
-    ContentGenerator(
+    AbstractContentGenerator(
         // TODO: Parens
         "ores.block_model.$type ($type)", "models/block",
         GeneratorInfo.ORES
