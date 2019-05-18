@@ -6,14 +6,14 @@ import io.github.cottonmc.jsonfactory.output.Output
 /**
  * A base class for [ContentGenerator]s, that defines its properties in the constructor.
  *
- * @property displayName the display name of this generator
+ * @property id the unique identifier of this generator
  * @property path the output directory
  * @property info the generator info
  * @property extension the file extension (without the dot)
  * @property resourceRoot the resource root
  */
 abstract class AbstractContentGenerator(
-    override val displayName: String,
+    override val id: String,
     override val path: String,
     override val info: GeneratorInfo,
     override val extension: String = "json",
@@ -21,7 +21,7 @@ abstract class AbstractContentGenerator(
 ) : ContentGenerator {
     abstract override fun generate(id: Identifier): List<Output>
 
-    override fun toString() = displayName
+    override fun toString() = id
 
     enum class ResourceRoot(val path: String) {
         Assets("assets"), Data("data")
