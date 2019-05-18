@@ -7,7 +7,7 @@ import io.github.cottonmc.jsonfactory.output.model.Model
 import io.github.cottonmc.jsonfactory.output.suffixed
 
 internal object FenceGateBlockModel : AbstractContentGenerator(
-    "fence_gates.block_model", "models/block",
+    "fence_gate.block_model", "models/block",
     GeneratorInfo.FENCE_GATES
 ) {
     override fun generate(id: Identifier) = listOf(

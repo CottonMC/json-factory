@@ -6,9 +6,8 @@ import io.github.cottonmc.jsonfactory.gens.AbstractContentGenerator
 import io.github.cottonmc.jsonfactory.gens.GeneratorInfo
 import io.github.cottonmc.jsonfactory.output.model.Model
 
-internal object BaseOreBlockModel : AbstractContentGenerator(
-    // TODO Desc
-    "ores.template (use the ID namespace:ore_template)", "models/block",
+internal object OreTemplateBlockModel : AbstractContentGenerator(
+    "ore.template", "models/block",
     GeneratorInfo.ORES
 ) {
     override fun generate(id: Identifier) = listOf(

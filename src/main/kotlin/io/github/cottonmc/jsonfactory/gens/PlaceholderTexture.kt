@@ -7,7 +7,7 @@ import java.awt.image.BufferedImage
 import java.util.concurrent.ThreadLocalRandom
 
 class PlaceholderTexture(info: GeneratorInfo) : AbstractContentGenerator(
-    "${info.category.id}.placeholder_texture", "textures/${info.category.placeholderTexturePath}", info, extension = "png"
+    "placeholder_texture.${info.category.id}", "textures/${info.category.placeholderTexturePath}", info, extension = "png"
 ) {
     init {
         require(info.category.placeholderTexturePath != null) {

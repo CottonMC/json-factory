@@ -1,4 +1,4 @@
-package io.github.cottonmc.jsonfactory.gui
+package io.github.cottonmc.jsonfactory.gui.util
 
 import com.vladsch.flexmark.html.HtmlRenderer
 import com.vladsch.flexmark.parser.Parser

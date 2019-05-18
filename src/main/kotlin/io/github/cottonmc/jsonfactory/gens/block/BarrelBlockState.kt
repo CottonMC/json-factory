@@ -8,7 +8,7 @@ import io.github.cottonmc.jsonfactory.output.model.ModelBlockState
 import io.github.cottonmc.jsonfactory.output.suffixed
 
 internal object BarrelBlockState :
-    AbstractContentGenerator("barrels.block_state", "blockstates", GeneratorInfo.BARRELS) {
+    AbstractContentGenerator("barrel.block_state", "blockstates", GeneratorInfo.BARRELS) {
     override fun generate(id: Identifier) = listOf(
         ModelBlockState.create(id, setOf(BlockStateProperty.facing, BlockStateProperty.open)) { values, variant ->
             val x = getXRotation(values["facing"]!!).let {

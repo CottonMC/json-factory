@@ -8,7 +8,7 @@ import io.github.cottonmc.jsonfactory.output.loot.Function
 import io.github.cottonmc.jsonfactory.output.suffixed
 
 internal object CampfireLootTable : AbstractContentGenerator(
-    "campfires.loot_table",
+    "campfire.loot_table",
     "loot_tables/blocks",
     GeneratorInfo.CAMPFIRES,
     resourceRoot = ResourceRoot.Data

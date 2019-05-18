@@ -6,7 +6,7 @@ import io.github.cottonmc.jsonfactory.gens.GeneratorInfo
 import io.github.cottonmc.jsonfactory.output.model.Model
 import io.github.cottonmc.jsonfactory.output.suffixed
 
-internal object WallBlockModel : AbstractContentGenerator("walls.block_model", "models/block", GeneratorInfo.WALLS) {
+internal object WallBlockModel : AbstractContentGenerator("wall.block_model", "models/block", GeneratorInfo.WALLS) {
     override fun generate(id: Identifier) = listOf(
         Model(
             parent = Identifier.mc("block/template_wall_post"),

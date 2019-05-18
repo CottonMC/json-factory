@@ -4,7 +4,7 @@ import io.github.cottonmc.jsonfactory.data.Identifier
 import io.github.cottonmc.jsonfactory.output.Output
 
 /**
- * Wrapper class, that can be used to extend the existing generators, without modifying them.
+ * Wrapper class, that can be used to extend an existing [root generator][rootGenerator], without modifying them.
  *
  * @param rootGenerator the base generator that will be decorated
  * @param decorator the function used to modify the outputs of the root generator

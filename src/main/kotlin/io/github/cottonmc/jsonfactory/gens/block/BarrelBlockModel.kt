@@ -7,7 +7,7 @@ import io.github.cottonmc.jsonfactory.output.model.Model
 import io.github.cottonmc.jsonfactory.output.suffixed
 
 internal object BarrelBlockModel :
-    AbstractContentGenerator("barrels.block_model", "models/block", GeneratorInfo.BARRELS) {
+    AbstractContentGenerator("barrel.block_model", "models/block", GeneratorInfo.BARRELS) {
     override fun generate(id: Identifier) = listOf(
         Model(
             parent = Identifier.mc("block/cube_bottom_top"),

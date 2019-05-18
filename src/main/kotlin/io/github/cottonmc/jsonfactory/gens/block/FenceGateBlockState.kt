@@ -8,7 +8,7 @@ import io.github.cottonmc.jsonfactory.output.model.ModelBlockState
 import io.github.cottonmc.jsonfactory.output.suffixed
 
 internal object FenceGateBlockState :
-    AbstractContentGenerator("fence_gates.block_state", "blockstates", GeneratorInfo.FENCE_GATES) {
+    AbstractContentGenerator("fence_gate.block_state", "blockstates", GeneratorInfo.FENCE_GATES) {
     override fun generate(id: Identifier) = listOf(
         ModelBlockState.create(
             id,

@@ -10,7 +10,7 @@ import io.github.cottonmc.jsonfactory.output.model.ModelBlockState
 import io.github.cottonmc.jsonfactory.output.suffixed
 
 internal object ButtonBlockState :
-    AbstractContentGenerator("buttons.block_state", "blockstates", GeneratorInfo.BUTTONS) {
+    AbstractContentGenerator("button.block_state", "blockstates", GeneratorInfo.BUTTONS) {
     private fun getXRotation(face: String) = when (face) {
         "wall" -> 90
         "ceiling" -> 180

@@ -8,7 +8,7 @@ import io.github.cottonmc.jsonfactory.output.model.ModelBlockState
 import io.github.cottonmc.jsonfactory.output.suffixed
 
 internal object LadderBlockState :
-    AbstractContentGenerator("ladders.block_state", "blockstates", GeneratorInfo.LADDERS) {
+    AbstractContentGenerator("ladder.block_state", "blockstates", GeneratorInfo.LADDERS) {
     private fun getYRotation(facing: String) = when (facing) {
         "east" -> 90
         "south" -> 180

@@ -7,7 +7,7 @@ import io.github.cottonmc.jsonfactory.output.model.Model
 import io.github.cottonmc.jsonfactory.output.suffixed
 
 internal object PressurePlateBlockModel : AbstractContentGenerator(
-    "pressure_plates.block_model", "models/block",
+    "pressure_plate.block_model", "models/block",
     GeneratorInfo.PRESSURE_PLATES
 ) {
     override fun generate(id: Identifier) = listOf(

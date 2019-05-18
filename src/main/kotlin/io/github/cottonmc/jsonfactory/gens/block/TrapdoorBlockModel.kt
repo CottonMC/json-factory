@@ -7,7 +7,7 @@ import io.github.cottonmc.jsonfactory.output.model.Model
 import io.github.cottonmc.jsonfactory.output.suffixed
 
 internal object TrapdoorBlockModel :
-    AbstractContentGenerator("trapdoors.block_model", "models/block", GeneratorInfo.TRAPDOORS) {
+    AbstractContentGenerator("trapdoor.block_model", "models/block", GeneratorInfo.TRAPDOORS) {
     override fun generate(id: Identifier) = listOf(
         Model(
             parent = Identifier.mc("block/template_orientable_trapdoor_bottom"),

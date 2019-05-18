@@ -8,7 +8,7 @@ import io.github.cottonmc.jsonfactory.output.loot.Function
 import io.github.cottonmc.jsonfactory.output.suffixed
 
 internal object SlabLootTable : AbstractContentGenerator(
-    "slabs.loot_table", "loot_tables/blocks",
+    "slab.loot_table", "loot_tables/blocks",
     GeneratorInfo.SLABS, resourceRoot = ResourceRoot.Data
 ) {
     override fun generate(id: Identifier) = listOf(

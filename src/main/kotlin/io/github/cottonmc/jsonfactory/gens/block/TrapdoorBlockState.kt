@@ -8,7 +8,7 @@ import io.github.cottonmc.jsonfactory.output.model.ModelBlockState
 import io.github.cottonmc.jsonfactory.output.suffixed
 
 internal object TrapdoorBlockState :
-    AbstractContentGenerator("trapdoors.block_state", "blockstates", GeneratorInfo.TRAPDOORS) {
+    AbstractContentGenerator("trapdoor.block_state", "blockstates", GeneratorInfo.TRAPDOORS) {
     override fun generate(id: Identifier) = listOf(
         ModelBlockState.create(
             id,

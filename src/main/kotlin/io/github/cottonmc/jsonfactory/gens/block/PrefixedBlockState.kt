@@ -9,8 +9,8 @@ import io.github.cottonmc.jsonfactory.output.prefixed
 /**
  * @since 0.4.0
  */
-class PrefixedBlockState(private val type: String, info: GeneratorInfo) :
-    AbstractContentGenerator("$type.block_state", "blockstates", info) {
+class PrefixedBlockState(private val type: String, info: GeneratorInfo, l10nPrefix: String = type) :
+    AbstractContentGenerator("$l10nPrefix.block_state", "blockstates", info) {
     override fun generate(id: Identifier) = listOf(
         ModelBlockState(
             mapOf(

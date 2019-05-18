@@ -7,7 +7,7 @@ import io.github.cottonmc.jsonfactory.output.model.Model
 import io.github.cottonmc.jsonfactory.output.suffixed
 
 internal object CampfireBlockModel :
-    AbstractContentGenerator("campfires.block_model", "models/block", GeneratorInfo.CAMPFIRES) {
+    AbstractContentGenerator("campfire.block_model", "models/block", GeneratorInfo.CAMPFIRES) {
     override fun generate(id: Identifier) = listOf(
         Model(
             parent = Identifier.mc("block/campfire_off"),

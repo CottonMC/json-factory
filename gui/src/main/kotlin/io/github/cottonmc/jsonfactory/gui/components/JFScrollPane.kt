@@ -1,4 +1,4 @@
-package io.github.cottonmc.jsonfactory.gui
+package io.github.cottonmc.jsonfactory.gui.components
 
 import java.awt.Component
 import javax.swing.JScrollPane

@@ -2,8 +2,14 @@ package io.github.cottonmc.jsonfactory.gui
 
 import io.github.cottonmc.jsonfactory.frontend.Frontend
 import io.github.cottonmc.jsonfactory.frontend.ContentWriter
+import io.github.cottonmc.jsonfactory.frontend.I18n
 import io.github.cottonmc.jsonfactory.frontend.MessageType
 import io.github.cottonmc.jsonfactory.gens.ContentGenerator
+import io.github.cottonmc.jsonfactory.gui.components.JFCheckBox
+import io.github.cottonmc.jsonfactory.gui.components.JFLabel
+import io.github.cottonmc.jsonfactory.gui.components.JFScrollPane
+import io.github.cottonmc.jsonfactory.gui.components.JFTitledSeparator
+import io.github.cottonmc.jsonfactory.gui.util.Markdown
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.swing.Swing
 import kotlinx.coroutines.withContext
@@ -28,11 +34,11 @@ internal class Gui private constructor(gens: List<ContentGenerator>) : Frontend 
     private val idField = JXTextField("enter an id or comma-separated list of ids").apply {
         columns = 25
     }
-    private val generator = ContentWriter(this, gens)
+    private val contentWriter = ContentWriter(this, gens)
     private val generators = createGeneratorPanel()
     private val saveButton = JButton("Generate").apply {
         addActionListener {
-            generator.writeAll(idField.text)
+            contentWriter.writeAll(idField.text)
         }
     }
     private val outputTextArea = JTextPane().apply {
@@ -125,37 +131,40 @@ internal class Gui private constructor(gens: List<ContentGenerator>) : Frontend 
 
     private fun createGeneratorPanel(): JTabbedPane {
         val pane = JTabbedPane(SwingConstants.TOP)
-        val gens = generator.gens2Selections.keys
+        val gens = contentWriter.gens2Selections.keys
 
-        for (category in gens.map { it.info.category }.distinct()) {
-            pane.addTab(category.displayName, JFScrollPane(JPanel(MigLayout()).apply {
-                category.description?.let {
-                    add(JLabel(Markdown.toHtml(it)), "wrap")
+        for ((i, category) in gens.map { it.info.category }.distinct().withIndex()) {
+            pane.addTab("", JFScrollPane(JPanel(MigLayout()).apply {
+                val descKey = getDescriptionKey(category.id)
+                I18N.getOptional(descKey)?.let {
+                    add(JFLabel(descKey) { Markdown.toHtml("*$it*") }, "wrap")
                 }
 
                 val categoryGens = gens.filter { it.info.category == category }
 
                 val subcategories = categoryGens.map { it.info.subcategory }.distinct().sortedBy {
-                    it?.displayName ?: "A" // Weird hack to sort nulls first
+                    it?.let { _ -> I18N[it.id] } ?: "A" // Weird hack to sort nulls first
                 }
 
                 for (subcategory in subcategories) {
                     if (subcategory != null) {
-                        add(JXTitledSeparator("<html><b>${subcategory.displayName}</b>"), "wrap")
-                        subcategory.description?.let {
-                            add(JLabel(Markdown.toHtml("*$it*")), "wrap")
+                        add(JFTitledSeparator(subcategory.id) { "<html><b>$it</b>" }, "wrap")
+                        I18N.getOptional(getDescriptionKey(subcategory.id))?.let {
+                            add(JFLabel(getDescriptionKey(subcategory.id)) { "<html><i>$it</i>" }, "wrap")
                         }
                     }
 
                     for (gen in categoryGens.filter { it.info.subcategory == subcategory }) {
-                        add(JCheckBox(gen.id, false).apply {
+                        add(JFCheckBox(gen.id, false).apply {
                             addActionListener {
-                                generator.gens2Selections[gen] = isSelected
+                                contentWriter.gens2Selections[gen] = isSelected
                             }
                         }, "wrap")
                     }
                 }
             }))
+
+            pane.setTabComponentAt(i, JFLabel(category.id))
         }
 
         return pane
@@ -240,6 +249,8 @@ internal class Gui private constructor(gens: List<ContentGenerator>) : Frontend 
     }
 
     companion object {
+        val I18N = I18n()
+
         internal val defaultAttributes = SimpleAttributeSet().apply {
             StyleConstants.setForeground(this, Color(0x2E9DFF))
         }
@@ -275,5 +286,7 @@ internal class Gui private constructor(gens: List<ContentGenerator>) : Frontend 
                 }
             }
         }
+
+        fun getDescriptionKey(l10nKey: String) = "$l10nKey.description"
     }
 }

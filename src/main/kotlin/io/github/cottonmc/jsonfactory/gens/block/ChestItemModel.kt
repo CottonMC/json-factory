@@ -6,7 +6,7 @@ import io.github.cottonmc.jsonfactory.gens.GeneratorInfo
 import io.github.cottonmc.jsonfactory.output.model.Model
 import io.github.cottonmc.jsonfactory.output.suffixed
 
-internal object ChestItemModel : AbstractContentGenerator("chests.item_model", "models/item", GeneratorInfo.CHESTS) {
+internal object ChestItemModel : AbstractContentGenerator("chest.item_model", "models/item", GeneratorInfo.CHESTS) {
     override fun generate(id: Identifier) = listOf(
         Model(
             parent = Identifier.mc("builtin/entity"),

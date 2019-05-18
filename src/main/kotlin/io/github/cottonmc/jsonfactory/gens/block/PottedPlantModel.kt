@@ -7,7 +7,7 @@ import io.github.cottonmc.jsonfactory.output.model.Model
 import io.github.cottonmc.jsonfactory.output.prefixed
 
 object PottedPlantModel : AbstractContentGenerator(
-    "potted_plants.block_model", "models/block",
+    "potted_plant.block_model", "models/block",
     GeneratorInfo.POTTED_PLANTS
 ) {
     override fun generate(id: Identifier) = listOf(

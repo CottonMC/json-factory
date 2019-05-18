@@ -31,8 +31,8 @@ data class GeneratorInfo(val category: Category, val subcategory: Subcategory? =
         override val id: String, override val placeholderTexturePath: String,
         val description: String? = null
     ) : Category {
-        Block("Block", "block"), Item("Item", "item"),
-        BlockVariants("Block Variants", "block", "Suffixes will be added to the output files' names.");
+        Block("categories.block", "block"), Item("categories.item", "item"),
+        BlockVariants("categories.block_variants", "block", "Suffixes will be added to the output files' names.");
     }
 
     /**
@@ -46,7 +46,7 @@ data class GeneratorInfo(val category: Category, val subcategory: Subcategory? =
         val id: String
     }
 
-    enum class Subcategories(override val id: String, val description: String? = null) : Subcategory {
+    enum class Subcategories(_id: String, val description: String? = null) : Subcategory {
         Ores("ores", description = "Note: The child ore models assume that the template is named `modid:ore_template`."),
         Pillars("pillars"),
         Slabs("slabs"),
@@ -67,6 +67,8 @@ data class GeneratorInfo(val category: Category, val subcategory: Subcategory? =
         Campfires("campfires"),
         Barrels("barrels"),
         Saplings("saplings");
+
+        override val id = "subcategories.$_id"
     }
 
     companion object {
