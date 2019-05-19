@@ -20,7 +20,7 @@ class JsonFactoryBuilder : Frontend {
     private val i18n = I18n()
 
     override fun printMessage(msg: String, type: MessageType, vararg messageParameters: Any?) {
-        val translated = i18n.get(msg, *messageParameters)
+        val translated = i18n(msg, messageParameters)
         when (type) {
             MessageType.Error -> System.err.println("ERROR: $translated")
             MessageType.Important -> println("IMPORTANT: $translated")

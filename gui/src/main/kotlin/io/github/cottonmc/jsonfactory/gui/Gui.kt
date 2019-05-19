@@ -141,7 +141,7 @@ internal class Gui private constructor(gens: List<ContentGenerator>) : Frontend 
                 val categoryGens = gens.filter { it.info.category == category }
 
                 val subcategories = categoryGens.map { it.info.subcategory }.distinct().sortedBy {
-                    it?.let { _ -> I18n[it.id] } ?: "A" // Weird hack to sort nulls first
+                    it?.let { _ -> I18n(it.id) } ?: "A" // Weird hack to sort nulls first
                 }
 
                 for (subcategory in subcategories) {
@@ -180,7 +180,7 @@ internal class Gui private constructor(gens: List<ContentGenerator>) : Frontend 
     }
 
     private fun showAboutDialog() = JXDialog(frame, JPanel(BorderLayout()).apply {
-        name = I18n["gui.about.title"]
+        name = I18n("gui.about.title")
 
         add(JPanel().apply {
             layout = BoxLayout(this, BoxLayout.Y_AXIS)
@@ -206,7 +206,7 @@ internal class Gui private constructor(gens: List<ContentGenerator>) : Frontend 
 
     override fun printMessage(msg: String, type: MessageType, vararg messageParameters: Any?) {
         val prefix = when (type) {
-            MessageType.Warn -> I18n["gui.message.note"]
+            MessageType.Warn -> I18n("gui.message.note")
             else -> ""
         }
 
@@ -215,7 +215,7 @@ internal class Gui private constructor(gens: List<ContentGenerator>) : Frontend 
             else -> defaultAttributes
         }
 
-        printMessage(prefix, I18n.get(msg, *messageParameters), prefixAttributes, mainAttributes = when (type) {
+        printMessage(prefix, I18n(msg, *messageParameters), prefixAttributes, mainAttributes = when (type) {
             MessageType.Error -> errorAttributes
             MessageType.Important -> boldAttributes
             else -> null
@@ -234,7 +234,7 @@ internal class Gui private constructor(gens: List<ContentGenerator>) : Frontend 
         Sounds.confirm.start()
         val confirm = JOptionPane.showConfirmDialog(
             frame,
-            I18n["gui.message.confirm_overwrite", file]
+            I18n("gui.message.confirm_overwrite", file)
         )
 
         confirm == JOptionPane.YES_OPTION

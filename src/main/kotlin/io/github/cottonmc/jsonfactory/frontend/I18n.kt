@@ -41,9 +41,11 @@ class I18n(private val bundleName: String = DEFAULT_BUNDLE, locale: Locale = Loc
      * Gets a localized string with the [key] and formats it with the [parameters].
      * Returns the [key] if the string is not found.
      */
+    // The reason for not using get here is KT-20113; the spread operator
+    // doesn't work when combined with the indexing operator
     @JvmName("getSpread")
     @Suppress("NOTHING_TO_INLINE")
-    inline operator fun get(key: String, parameters: Array<Any?>): String = get(key, *parameters)
+    inline operator fun invoke(key: String, parameters: Array<out Any?>): String = get(key, *parameters)
 
     /**
      * Gets a localized string with the [key] and the [parameters].
