@@ -9,10 +9,12 @@ import io.github.cottonmc.jsonfactory.frontend.ContentWriter
 import io.github.cottonmc.jsonfactory.gens.Gens
 import kotlinx.coroutines.runBlocking
 import picocli.CommandLine
+import java.nio.file.Files
 import java.nio.file.Path
 import java.nio.file.Paths
 import java.util.Properties
 import java.util.concurrent.Callable
+import kotlin.system.exitProcess
 
 @CommandLine.Command(
     name = "json-factory-cli",
@@ -20,7 +22,7 @@ import java.util.concurrent.Callable
     versionProvider = Main.VersionProvider::class,
     resourceBundle = "json-factory.i18n.I18n-cli"
 )
-object Main : Callable<Unit> {
+private object Main : Callable<Unit> {
     @CommandLine.Option(names = ["-G", "--generators"], required = true, arity = "1..*", descriptionKey = "cli.option.generators")
     lateinit var generators: List<String>
         private set
@@ -33,8 +35,16 @@ object Main : Callable<Unit> {
     var outputDirectory: Path = Paths.get(".")
 
     override fun call() = runBlocking {
+        val cli = Cli(outputDirectory)
+
+        // TODO: i18n for messages
+        if (!Files.isDirectory(outputDirectory)) {
+            System.err.println("Provided output path $outputDirectory is not a directory!")
+            exitProcess(1)
+        }
+
         Identifiers.convertToIds(identifiers).flatMap {
-            Right(ContentWriter(Cli(outputDirectory), generators.map { genId ->
+            Right(ContentWriter(cli, generators.map { genId ->
                 Gens.ALL_GENS.find { gen ->
                     genId == gen.id
                 } ?: run {
@@ -51,7 +61,7 @@ object Main : Callable<Unit> {
         override fun getVersion(): Array<String> {
             val properties = Properties()
             properties.load(VersionProvider::class.java.getResourceAsStream("/json-factory/version-info.properties"))
-            return arrayOf("JSON Factory GUI " + properties["version"] + " (git commit ${properties["commit-hash"]})")
+            return arrayOf("JSON Factory CLI " + properties["version"] + " (git commit ${properties["commit-hash"]})")
         }
     }
 }

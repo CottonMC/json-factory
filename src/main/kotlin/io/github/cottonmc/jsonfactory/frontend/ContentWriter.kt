@@ -18,13 +18,17 @@ class ContentWriter(private val frontend: Frontend, private val generators: Iter
      */
     fun writeAll(ids: List<Identifier>) = GlobalScope.launch {
         // TODO: L10n for the messages
-        frontend.selectOutputDirectory()?.let { selectedFile ->
+        frontend.selectOutputDirectory()?.let { outputDir ->
+            check(Files.isDirectory(outputDir)) {
+                "Output path must be a directory!"
+            }
+
             frontend.printSeparator()
             frontend.printMessage("Started generating.", MessageType.Important)
-            frontend.printMessage("In $selectedFile")
+            frontend.printMessage("In $outputDir")
 
             ids.flatMap { id ->
-                write(id, selectedFile)
+                write(id, outputDir)
             }.joinAll()
 
             frontend.printMessage("Finished generating.", MessageType.Important)
@@ -57,7 +61,7 @@ class ContentWriter(private val frontend: Frontend, private val generators: Iter
                     Files.createDirectories(path.parent)
                     value.writeToStream(Files.newOutputStream(path))
 
-                    frontend.printMessage("Generated " + path.relativize(resourceDir))
+                    frontend.printMessage("Generated " + resourceDir.relativize(path))
                 }
             }
         }
