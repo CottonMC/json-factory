@@ -95,6 +95,6 @@ class JsonFactoryBuilder : Frontend {
      * Writes all of the required resources.
      */
     fun generate() {
-        ContentWriter(this, generators).writeAll(identifiers.joinToString(separator = ","))
+        ContentWriter(this, generators).writeAll(identifiers)
     }
 }

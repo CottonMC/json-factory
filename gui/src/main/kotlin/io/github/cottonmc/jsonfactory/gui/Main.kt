@@ -5,10 +5,9 @@ import io.github.cottonmc.jsonfactory.gens.Gens
 import io.github.cottonmc.jsonfactory.plugin.*
 import picocli.CommandLine
 import java.io.File
-import java.util.Properties
 import kotlin.reflect.KClass
 
-@CommandLine.Command(name = "json-factory-gui", mixinStandardHelpOptions = true, versionProvider = Main.VersionProvider::class)
+@CommandLine.Command(name = "json-factory-gui", mixinStandardHelpOptions = true, versionProvider = VersionProvider::class)
 private object Main : Runnable {
     @CommandLine.Option(names = ["-p", "--plugin-classes"], description = ["list of plugin classes that will be loaded from the classpath"])
     var pluginClasses: Array<String> = emptyArray()
@@ -17,14 +16,6 @@ private object Main : Runnable {
         Settings.init()
         // TODO: Show a splash screen or something during plugin loading
         Gui.createAndShow(loadGens(pluginClasses))
-    }
-
-    internal class VersionProvider : CommandLine.IVersionProvider {
-        override fun getVersion(): Array<String> {
-            val properties = Properties()
-            properties.load(VersionProvider::class.java.getResourceAsStream("/json-factory/version-info.properties"))
-            return arrayOf("JSON Factory GUI " + properties["version"] + " (git commit ${properties["commit-hash"]})")
-        }
     }
 }
 

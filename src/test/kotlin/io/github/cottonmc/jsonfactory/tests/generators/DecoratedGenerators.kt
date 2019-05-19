@@ -1,4 +1,4 @@
-package io.github.cottonmc.jsonfactory.tests.gens
+package io.github.cottonmc.jsonfactory.tests.generators
 
 import io.github.cottonmc.jsonfactory.data.Identifier
 import io.github.cottonmc.jsonfactory.gens.DecoratedContentGenerator

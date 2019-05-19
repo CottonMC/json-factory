@@ -22,13 +22,13 @@ class ContentWriter(private val frontend: Frontend, generators: List<ContentGene
     /**
      * Generates and writes files with all selected generators.
      */
-    fun writeAll(idText: String) = GlobalScope.launch {
+    fun writeAll(ids: List<Identifier>) = GlobalScope.launch {
         // TODO: L10n for the messages
-        if (idText.isBlank()) {
+        /*if (idText.isBlank()) {
             frontend.printMessage("The ID input field is empty.", MessageType.Warn)
             return@launch
 
-        } else if (gens2Selections.none { (_, value) -> value }) {
+        } else */if (gens2Selections.none { (_, value) -> value }) {
             frontend.printMessage("No generators selected.", MessageType.Warn)
             return@launch
         }
@@ -38,14 +38,14 @@ class ContentWriter(private val frontend: Frontend, generators: List<ContentGene
             frontend.printMessage("Started generating.", MessageType.Important)
             frontend.printMessage("In $selectedFile")
 
-            val split = idText.split(',').map(String::trim)
+            /*val split = idText.split(',').map(String::trim)
             split.mapNotNull { idText ->
                 Identifier.orNull(idText).also { id ->
                     if (id == null) {
                         frontend.printMessage("Invalid ID: $idText", MessageType.Error)
                     }
                 }
-            }.flatMap { id ->
+            }*/ids.flatMap { id ->
                 write(id, selectedFile)
             }.joinAll()
 

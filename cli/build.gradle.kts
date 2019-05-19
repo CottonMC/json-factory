@@ -10,7 +10,7 @@ plugins {
 }
 
 base {
-    archivesBaseName = "json-factory-gui"
+    archivesBaseName = "json-factory-cli"
 }
 
 repositories {
@@ -20,37 +20,33 @@ repositories {
 
 dependencies {
     implementation(project(":"))
-    implementation("com.miglayout:miglayout-swing:5.2")
-    implementation("com.github.insubstantial:substance:7.3")
-    implementation("com.github.insubstantial:substance-swingx:7.3") {
-        exclude(group = "org.swinglabs.swingx")
-    }
-    implementation("org.swinglabs.swingx:swingx-all:1.6.5-1")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.2.0")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-swing:1.2.0")
-    implementation("com.vladsch.flexmark:flexmark:0.42.4")
     implementation("info.picocli:picocli:3.9.6")
 
     val arrow = "0.9.0"
     fun arrow(module: String) = "io.arrow-kt:arrow-$module:$arrow"
 
     implementation(arrow("core-data"))
+//    implementation(arrow("core-extensions"))
+//    implementation(arrow("typeclasses"))
 }
 
+val mainClass = "io.github.cottonmc.jsonfactory.cli.MainKt"
+
 application {
-    mainClassName = "io.github.cottonmc.jsonfactory.gui.MainKt"
+    mainClassName = mainClass
 }
 
 tasks.withType<Jar> {
     manifest {
-        attributes["Main-Class"] = "io.github.cottonmc.jsonfactory.gui.MainKt"
+        attributes["Main-Class"] = mainClass
     }
 }
 
 publishing {
     publications {
         create<MavenPublication>("maven") {
-            artifactId = "json-factory-gui"
+            artifactId = "json-factory-cli"
             from(components["java"])
             artifact(tasks["distZip"])
             artifact(tasks["sourcesJar"])

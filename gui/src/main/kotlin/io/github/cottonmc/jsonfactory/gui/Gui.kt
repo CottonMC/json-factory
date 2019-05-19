@@ -6,6 +6,7 @@ import io.github.cottonmc.jsonfactory.frontend.MessageType
 import io.github.cottonmc.jsonfactory.gens.ContentGenerator
 import io.github.cottonmc.jsonfactory.gui.components.*
 import io.github.cottonmc.jsonfactory.gui.util.I18n
+import io.github.cottonmc.jsonfactory.gui.util.IdentifierParser
 import io.github.cottonmc.jsonfactory.gui.util.Markdown
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.swing.Swing
@@ -35,7 +36,7 @@ internal class Gui private constructor(gens: List<ContentGenerator>) : Frontend 
     private val generators = createGeneratorPanel()
     private val saveButton = JFButton("gui.generation_panel.generate").apply {
         addActionListener {
-            contentWriter.writeAll(idField.text)
+            IdentifierParser.getIds(idField.text).fold({ printMessage(it, MessageType.Warn) }, contentWriter::writeAll)
         }
     }
     private val outputTextArea = JTextPane().apply {
@@ -184,7 +185,9 @@ internal class Gui private constructor(gens: List<ContentGenerator>) : Frontend 
 
         add(JPanel().apply {
             layout = BoxLayout(this, BoxLayout.Y_AXIS)
-            add(JFLabel("gui.about.title") { "<html><b>$it</b>" })
+            VersionProvider().version.forEach {
+                add(JLabel("<html><b>$it</b>"))
+            }
             add(JFLabel("gui.about.0"))
             add(JFLabel("gui.about.1"))
             add(
