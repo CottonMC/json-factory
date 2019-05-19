@@ -30,11 +30,6 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-swing:1.2.0")
     implementation("com.vladsch.flexmark:flexmark:0.42.4")
     implementation("info.picocli:picocli:3.9.6")
-
-    val arrow = "0.9.0"
-    fun arrow(module: String) = "io.arrow-kt:arrow-$module:$arrow"
-
-    implementation(arrow("core-data"))
 }
 
 application {

@@ -3,8 +3,8 @@ package io.github.cottonmc.jsonfactory.cli
 import arrow.core.Left
 import arrow.core.Right
 import arrow.core.flatMap
-import io.github.cottonmc.jsonfactory.cli.util.IdentifierParser
 import io.github.cottonmc.jsonfactory.data.Identifier
+import io.github.cottonmc.jsonfactory.data.Identifiers
 import io.github.cottonmc.jsonfactory.frontend.ContentWriter
 import io.github.cottonmc.jsonfactory.gens.Gens
 import kotlinx.coroutines.runBlocking
@@ -33,14 +33,14 @@ object Main : Callable<Unit> {
     var outputDirectory: Path = Paths.get(".")
 
     override fun call() = runBlocking {
-        IdentifierParser.convertToIds(identifiers).flatMap {
+        Identifiers.convertToIds(identifiers).flatMap {
             Right(ContentWriter(Cli(outputDirectory), generators.map { genId ->
                 Gens.ALL_GENS.find { gen ->
                     genId == gen.id
                 } ?: run {
                     return@flatMap Left("Unknown generator: $genId")
                 }
-            }).withAllEnabled().writeAll(it))
+            }).writeAll(it))
         }.fold(
             ifLeft = { System.err.println(it) },
             ifRight = { it.join() }

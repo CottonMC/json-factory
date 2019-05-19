@@ -3,11 +3,13 @@ package io.github.cottonmc.jsonfactory.builder
 import io.github.cottonmc.jsonfactory.data.Identifier
 import io.github.cottonmc.jsonfactory.frontend.Frontend
 import io.github.cottonmc.jsonfactory.frontend.ContentWriter
-import io.github.cottonmc.jsonfactory.frontend.I18n
 import io.github.cottonmc.jsonfactory.frontend.MessageType
+import io.github.cottonmc.jsonfactory.frontend.i18n.invoke
+import io.github.cottonmc.jsonfactory.frontend.i18n.ResourceBundleI18n
 import io.github.cottonmc.jsonfactory.gens.AbstractContentGenerator
 import io.github.cottonmc.jsonfactory.gens.ContentGenerator
 import java.io.File
+import java.nio.file.Path
 
 /**
  * Builder class, as an API frontend.
@@ -17,7 +19,7 @@ class JsonFactoryBuilder : Frontend {
     private val generators = ArrayList<ContentGenerator>()
     private val identifiers = ArrayList<Identifier>()
     private var addCallback: (ContentGenerator) -> ContentGenerator = { it }
-    private val i18n = I18n()
+    private val i18n = ResourceBundleI18n.createBackendI18n()
 
     override fun printMessage(msg: String, type: MessageType, vararg messageParameters: Any?) {
         val translated = i18n(msg, messageParameters)
@@ -38,12 +40,12 @@ class JsonFactoryBuilder : Frontend {
         printMessage("Generation finished.", MessageType.Default)
     }
 
-    override suspend fun shouldOverwriteFile(file: File): Boolean {
+    override suspend fun shouldOverwriteFile(path: Path): Boolean {
         return false
     }
 
-    override suspend fun selectOutputDirectory(): File? {
-        return folder
+    override suspend fun selectOutputDirectory(): Path? {
+        return folder.toPath()
     }
 
     /**

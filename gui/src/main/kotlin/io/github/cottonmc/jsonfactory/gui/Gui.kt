@@ -1,12 +1,13 @@
 package io.github.cottonmc.jsonfactory.gui
 
+import io.github.cottonmc.jsonfactory.data.Identifiers
 import io.github.cottonmc.jsonfactory.frontend.Frontend
 import io.github.cottonmc.jsonfactory.frontend.ContentWriter
 import io.github.cottonmc.jsonfactory.frontend.MessageType
+import io.github.cottonmc.jsonfactory.frontend.i18n.invoke
 import io.github.cottonmc.jsonfactory.gens.ContentGenerator
 import io.github.cottonmc.jsonfactory.gui.components.*
 import io.github.cottonmc.jsonfactory.gui.util.I18n
-import io.github.cottonmc.jsonfactory.gui.util.IdentifierParser
 import io.github.cottonmc.jsonfactory.gui.util.Markdown
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.swing.Swing
@@ -15,8 +16,8 @@ import net.miginfocom.swing.MigLayout
 import org.jdesktop.swingx.*
 import org.jdesktop.swingx.hyperlink.HyperlinkAction
 import java.awt.*
-import java.io.File
 import java.net.URI
+import java.nio.file.Path
 import javax.imageio.ImageIO
 import javax.swing.*
 import javax.swing.text.AttributeSet
@@ -32,11 +33,18 @@ internal class Gui private constructor(gens: List<ContentGenerator>) : Frontend 
     private val idField = JFTextField("gui.generation_panel.id.prompt").apply {
         columns = 25
     }
-    private val contentWriter = ContentWriter(this, gens)
+    /**
+     * A map of all generators to a boolean.
+     * If `true`, the generator is selected.
+     */
+    private val gens2Selections: MutableMap<ContentGenerator, Boolean> = gens.map { it to false }.toMap().toMutableMap()
     private val generators = createGeneratorPanel()
     private val saveButton = JFButton("gui.generation_panel.generate").apply {
         addActionListener {
-            IdentifierParser.getIds(idField.text).fold({ printMessage(it, MessageType.Warn) }, contentWriter::writeAll)
+            Identifiers.convertToIds(idField.text).fold(
+                { printMessage(it, MessageType.Warn) },
+                ContentWriter(this@Gui, gens2Selections.filterValues { it }.keys)::writeAll
+            )
         }
     }
     private val outputTextArea = JTextPane().apply {
@@ -130,7 +138,7 @@ internal class Gui private constructor(gens: List<ContentGenerator>) : Frontend 
 
     private fun createGeneratorPanel(): JTabbedPane {
         val pane = JTabbedPane(SwingConstants.TOP)
-        val gens = contentWriter.gens2Selections.keys
+        val gens = gens2Selections.keys
 
         for ((i, category) in gens.map { it.info.category }.distinct().withIndex()) {
             pane.addTab("", JFScrollPane(JPanel(MigLayout()).apply {
@@ -142,7 +150,7 @@ internal class Gui private constructor(gens: List<ContentGenerator>) : Frontend 
                 val categoryGens = gens.filter { it.info.category == category }
 
                 val subcategories = categoryGens.map { it.info.subcategory }.distinct().sortedBy {
-                    it?.let { _ -> I18n(it.id) } ?: "A" // Weird hack to sort nulls first
+                    it?.let { _ -> I18n[it.id] } ?: "A" // Weird hack to sort nulls first
                 }
 
                 for (subcategory in subcategories) {
@@ -156,7 +164,7 @@ internal class Gui private constructor(gens: List<ContentGenerator>) : Frontend 
                     for (gen in categoryGens.filter { it.info.subcategory == subcategory }) {
                         add(JFCheckBox(gen.id, false).apply {
                             addActionListener {
-                                contentWriter.gens2Selections[gen] = isSelected
+                                gens2Selections[gen] = isSelected
                             }
                         }, "wrap")
                     }
@@ -181,7 +189,7 @@ internal class Gui private constructor(gens: List<ContentGenerator>) : Frontend 
     }
 
     private fun showAboutDialog() = JXDialog(frame, JPanel(BorderLayout()).apply {
-        name = I18n("gui.about.title")
+        name = I18n["gui.about.title"]
 
         add(JPanel().apply {
             layout = BoxLayout(this, BoxLayout.Y_AXIS)
@@ -209,7 +217,7 @@ internal class Gui private constructor(gens: List<ContentGenerator>) : Frontend 
 
     override fun printMessage(msg: String, type: MessageType, vararg messageParameters: Any?) {
         val prefix = when (type) {
-            MessageType.Warn -> I18n("gui.message.note")
+            MessageType.Warn -> I18n["gui.message.note"]
             else -> ""
         }
 
@@ -218,7 +226,7 @@ internal class Gui private constructor(gens: List<ContentGenerator>) : Frontend 
             else -> defaultAttributes
         }
 
-        printMessage(prefix, I18n(msg, *messageParameters), prefixAttributes, mainAttributes = when (type) {
+        printMessage(prefix, I18n(msg, messageParameters), prefixAttributes, mainAttributes = when (type) {
             MessageType.Error -> errorAttributes
             MessageType.Important -> boldAttributes
             else -> null
@@ -233,19 +241,19 @@ internal class Gui private constructor(gens: List<ContentGenerator>) : Frontend 
         }
     }
 
-    override suspend fun shouldOverwriteFile(file: File): Boolean = withContext(Dispatchers.Swing) {
+    override suspend fun shouldOverwriteFile(path: Path): Boolean = withContext(Dispatchers.Swing) {
         Sounds.confirm.start()
         val confirm = JOptionPane.showConfirmDialog(
             frame,
-            I18n("gui.message.confirm_overwrite", file)
+            I18n["gui.message.confirm_overwrite", path]
         )
 
         confirm == JOptionPane.YES_OPTION
     }
 
-    override suspend fun selectOutputDirectory(): File? = withContext(Dispatchers.Swing) {
+    override suspend fun selectOutputDirectory(): Path? = withContext(Dispatchers.Swing) {
         if (fileChooser.showSaveDialog(frame) == JFileChooser.APPROVE_OPTION) {
-            fileChooser.selectedFile
+            fileChooser.selectedFile.toPath()
         } else null
     }
 

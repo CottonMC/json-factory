@@ -2,7 +2,6 @@ package io.github.cottonmc.jsonfactory.cli
 
 import io.github.cottonmc.jsonfactory.frontend.Frontend
 import io.github.cottonmc.jsonfactory.frontend.MessageType
-import java.io.File
 import java.nio.file.Path
 
 class Cli(val outputDirectory: Path) : Frontend {
@@ -14,6 +13,6 @@ class Cli(val outputDirectory: Path) : Frontend {
 
     override fun printSeparator() = println("-".repeat(25))
     override fun onFinishedGenerating() {}
-    override suspend fun shouldOverwriteFile(file: File) = false
-    override suspend fun selectOutputDirectory(): File = outputDirectory.toFile()
+    override suspend fun shouldOverwriteFile(path: Path) = false
+    override suspend fun selectOutputDirectory(): Path = outputDirectory
 }

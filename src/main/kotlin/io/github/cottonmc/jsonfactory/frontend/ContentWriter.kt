@@ -3,49 +3,27 @@ package io.github.cottonmc.jsonfactory.frontend
 import io.github.cottonmc.jsonfactory.data.Identifier
 import io.github.cottonmc.jsonfactory.gens.ContentGenerator
 import kotlinx.coroutines.*
-import java.io.File
 import java.nio.file.Files
+import java.nio.file.Path
 
 /**
  * A coroutine-based generation and writing backend used for [Frontend]s.
  *
  * @param frontend the frontend
- * @param generators the selectable generators
+ * @param generators the used generators
  */
-class ContentWriter(private val frontend: Frontend, generators: List<ContentGenerator>) {
-    /**
-     * A map of all generators to a boolean.
-     * If `true`, the generator is selected.
-     */
-    val gens2Selections: MutableMap<ContentGenerator, Boolean> = generators.map { it to false }.toMap().toMutableMap()
-
+class ContentWriter(private val frontend: Frontend, private val generators: Iterable<ContentGenerator>) {
     /**
      * Generates and writes files with all selected generators.
      */
     fun writeAll(ids: List<Identifier>) = GlobalScope.launch {
         // TODO: L10n for the messages
-        /*if (idText.isBlank()) {
-            frontend.printMessage("The ID input field is empty.", MessageType.Warn)
-            return@launch
-
-        } else */if (gens2Selections.none { (_, value) -> value }) {
-            frontend.printMessage("No generators selected.", MessageType.Warn)
-            return@launch
-        }
-
         frontend.selectOutputDirectory()?.let { selectedFile ->
             frontend.printSeparator()
             frontend.printMessage("Started generating.", MessageType.Important)
             frontend.printMessage("In $selectedFile")
 
-            /*val split = idText.split(',').map(String::trim)
-            split.mapNotNull { idText ->
-                Identifier.orNull(idText).also { id ->
-                    if (id == null) {
-                        frontend.printMessage("Invalid ID: $idText", MessageType.Error)
-                    }
-                }
-            }*/ids.flatMap { id ->
+            ids.flatMap { id ->
                 write(id, selectedFile)
             }.joinAll()
 
@@ -54,11 +32,11 @@ class ContentWriter(private val frontend: Frontend, generators: List<ContentGene
         }
     }
 
-    private suspend fun write(id: Identifier, resourceDir: File) = coroutineScope {
-        gens2Selections.filter { (_, value) -> value }.keys.map { gen ->
+    private suspend fun write(id: Identifier, resourceDir: Path) = coroutineScope {
+        generators.map { gen ->
             launch(Dispatchers.IO) {
                 val root = gen.resourceRoot.path
-                val sep = File.separatorChar
+                val sep = resourceDir.fileSystem.separator
                 val namespace = id.namespace
                 val directory = gen.path
                 val fileName = id.path
@@ -68,18 +46,18 @@ class ContentWriter(private val frontend: Frontend, generators: List<ContentGene
                 for (value in generated) {
                     val name = value.nameWrapper.applyTo(fileName)
 
-                    val file = resourceDir.resolve(
+                    val path = resourceDir.resolve(
                         "$root$sep$namespace$sep$directory$sep$name.$extension"
                     )
 
-                    if (file.exists() && !frontend.shouldOverwriteFile(file)) {
+                    if (Files.exists(path) && !frontend.shouldOverwriteFile(path)) {
                         return@launch
                     }
 
-                    Files.createDirectories(file.parentFile.toPath())
-                    value.writeToFile(file)
+                    Files.createDirectories(path.parent)
+                    value.writeToStream(Files.newOutputStream(path))
 
-                    frontend.printMessage("Generated " + file.toRelativeString(resourceDir))
+                    frontend.printMessage("Generated " + path.relativize(resourceDir))
                 }
             }
         }
