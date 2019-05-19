@@ -3,6 +3,7 @@ package io.github.cottonmc.jsonfactory.builder
 import io.github.cottonmc.jsonfactory.data.Identifier
 import io.github.cottonmc.jsonfactory.frontend.Frontend
 import io.github.cottonmc.jsonfactory.frontend.ContentWriter
+import io.github.cottonmc.jsonfactory.frontend.I18n
 import io.github.cottonmc.jsonfactory.frontend.MessageType
 import io.github.cottonmc.jsonfactory.gens.AbstractContentGenerator
 import io.github.cottonmc.jsonfactory.gens.ContentGenerator
@@ -16,13 +17,15 @@ class JsonFactoryBuilder : Frontend {
     private val generators = ArrayList<ContentGenerator>()
     private val identifiers = ArrayList<Identifier>()
     private var addCallback: (ContentGenerator) -> ContentGenerator = { it }
+    private val i18n = I18n()
 
-    override fun printMessage(msg: String, type: MessageType) {
+    override fun printMessage(msg: String, type: MessageType, vararg messageParameters: Any?) {
+        val translated = i18n.get(msg, *messageParameters)
         when (type) {
-            MessageType.Error -> System.err.println("ERROR: $msg")
-            MessageType.Important -> println("IMPORTANT: $msg")
-            MessageType.Warn -> println("WARN: $msg")
-            MessageType.Default -> println("DEFAULT: $msg")
+            MessageType.Error -> System.err.println("ERROR: $translated")
+            MessageType.Important -> println("IMPORTANT: $translated")
+            MessageType.Warn -> println("WARN: $translated")
+            MessageType.Default -> println("DEFAULT: $translated")
         }
     }
 
@@ -31,6 +34,7 @@ class JsonFactoryBuilder : Frontend {
     }
 
     override fun onFinishedGenerating() {
+        // TODO: I18n
         printMessage("Generation finished.", MessageType.Default)
     }
 

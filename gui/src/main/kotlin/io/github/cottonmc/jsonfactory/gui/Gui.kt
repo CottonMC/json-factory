@@ -2,13 +2,10 @@ package io.github.cottonmc.jsonfactory.gui
 
 import io.github.cottonmc.jsonfactory.frontend.Frontend
 import io.github.cottonmc.jsonfactory.frontend.ContentWriter
-import io.github.cottonmc.jsonfactory.frontend.I18n
 import io.github.cottonmc.jsonfactory.frontend.MessageType
 import io.github.cottonmc.jsonfactory.gens.ContentGenerator
-import io.github.cottonmc.jsonfactory.gui.components.JFCheckBox
-import io.github.cottonmc.jsonfactory.gui.components.JFLabel
-import io.github.cottonmc.jsonfactory.gui.components.JFScrollPane
-import io.github.cottonmc.jsonfactory.gui.components.JFTitledSeparator
+import io.github.cottonmc.jsonfactory.gui.components.*
+import io.github.cottonmc.jsonfactory.gui.util.I18n
 import io.github.cottonmc.jsonfactory.gui.util.Markdown
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.swing.Swing
@@ -31,12 +28,12 @@ internal class Gui private constructor(gens: List<ContentGenerator>) : Frontend 
     internal val fileChooser = JFileChooser().apply {
         fileSelectionMode = JFileChooser.DIRECTORIES_ONLY
     }
-    private val idField = JXTextField("enter an id or comma-separated list of ids").apply {
+    private val idField = JFTextField("gui.generation_panel.id.prompt").apply {
         columns = 25
     }
     private val contentWriter = ContentWriter(this, gens)
     private val generators = createGeneratorPanel()
-    private val saveButton = JButton("Generate").apply {
+    private val saveButton = JFButton("gui.generation_panel.generate").apply {
         addActionListener {
             contentWriter.writeAll(idField.text)
         }
@@ -60,7 +57,7 @@ internal class Gui private constructor(gens: List<ContentGenerator>) : Frontend 
                 val buttonGroup = ButtonGroup()
 
                 for ((group, themes) in Settings.Theme.values().groupBy(Settings.Theme::group)) {
-                    add(JMenu(group.name).apply {
+                    add(JMenu(/* TODO */ group.name).apply {
                         for (theme in themes.sortedBy { it.name }) {
                             add(JRadioButtonMenuItem(theme.name).apply {
                                 addActionListener {
@@ -96,15 +93,15 @@ internal class Gui private constructor(gens: List<ContentGenerator>) : Frontend 
 
     init {
         val rightPanel = JSplitPane(JSplitPane.VERTICAL_SPLIT, JPanel(MigLayout()).apply {
-            add(JLabel("ID"))
+            add(JFLabel("gui.generation_panel.id"))
             add(idField, "span 2, wrap")
             add(saveButton, "skip, span, wrap")
-            add(JLabel("<html><i>Note: save in src/main/resources or pack root </i>"), "span, wrap")
+            add(JFLabel("gui.generation_panel.note_save_location", "src/main/resources") { "<html><i>$it</i>" }, "span, wrap")
         }, JFScrollPane(JPanel(GridLayout()).apply {
             add(outputTextArea)
         }))
 
-        val panel = JSplitPane(JSplitPane.HORIZONTAL_SPLIT, JXTitledPanel("Generators", generators), rightPanel)
+        val panel = JSplitPane(JSplitPane.HORIZONTAL_SPLIT, JFTitledPanel("Generators", generators), rightPanel)
         panel.dividerLocation = 320
 
         frame.apply {
@@ -117,6 +114,7 @@ internal class Gui private constructor(gens: List<ContentGenerator>) : Frontend 
             } catch (e: Exception) {
                 System.err.println("Exception while loading icon")
                 e.printStackTrace()
+                TODO("log")
             }
         }
     }
@@ -125,7 +123,7 @@ internal class Gui private constructor(gens: List<ContentGenerator>) : Frontend 
         SwingUtilities.invokeLater {
             frame.isVisible = true
             frame.size = Dimension(640, 440)
-            printMessage("Welcome", "to JSON Factory!")
+            printMessage("gui.message.welcome")
         }
     }
 
@@ -136,20 +134,20 @@ internal class Gui private constructor(gens: List<ContentGenerator>) : Frontend 
         for ((i, category) in gens.map { it.info.category }.distinct().withIndex()) {
             pane.addTab("", JFScrollPane(JPanel(MigLayout()).apply {
                 val descKey = getDescriptionKey(category.id)
-                I18N.getOptional(descKey)?.let {
+                I18n.getOptional(descKey)?.let {
                     add(JFLabel(descKey) { Markdown.toHtml("*$it*") }, "wrap")
                 }
 
                 val categoryGens = gens.filter { it.info.category == category }
 
                 val subcategories = categoryGens.map { it.info.subcategory }.distinct().sortedBy {
-                    it?.let { _ -> I18N[it.id] } ?: "A" // Weird hack to sort nulls first
+                    it?.let { _ -> I18n[it.id] } ?: "A" // Weird hack to sort nulls first
                 }
 
                 for (subcategory in subcategories) {
                     if (subcategory != null) {
                         add(JFTitledSeparator(subcategory.id) { "<html><b>$it</b>" }, "wrap")
-                        I18N.getOptional(getDescriptionKey(subcategory.id))?.let {
+                        I18n.getOptional(getDescriptionKey(subcategory.id))?.let {
                             add(JFLabel(getDescriptionKey(subcategory.id)) { "<html><i>$it</i>" }, "wrap")
                         }
                     }
@@ -182,13 +180,13 @@ internal class Gui private constructor(gens: List<ContentGenerator>) : Frontend 
     }
 
     private fun showAboutDialog() = JXDialog(frame, JPanel(BorderLayout()).apply {
-        name = "About JSON Factory"
+        name = I18n["gui.about.title"]
 
         add(JPanel().apply {
             layout = BoxLayout(this, BoxLayout.Y_AXIS)
-            add(JLabel("<html><b>About JSON Factory</b>"))
-            add(JLabel("JSON Factory is developed by the Cotton project."))
-            add(JLabel("It is licensed under the MIT license."))
+            add(JFLabel("gui.about.title") { "<html><b>$it</b>" })
+            add(JFLabel("gui.about.0"))
+            add(JFLabel("gui.about.1"))
             add(
                 JXHyperlink(
                     HyperlinkAction.createHyperlinkAction(
@@ -206,9 +204,9 @@ internal class Gui private constructor(gens: List<ContentGenerator>) : Frontend 
         setLocation(screenSize.width / 2 - width / 2, screenSize.height / 2 - height / 2)
     }
 
-    override fun printMessage(msg: String, type: MessageType) {
+    override fun printMessage(msg: String, type: MessageType, vararg messageParameters: Any?) {
         val prefix = when (type) {
-            MessageType.Warn -> "Note:"
+            MessageType.Warn -> I18n["gui.message.note"]
             else -> ""
         }
 
@@ -217,7 +215,7 @@ internal class Gui private constructor(gens: List<ContentGenerator>) : Frontend 
             else -> defaultAttributes
         }
 
-        printMessage(prefix, msg, prefixAttributes, mainAttributes = when (type) {
+        printMessage(prefix, I18n.get(msg, *messageParameters), prefixAttributes, mainAttributes = when (type) {
             MessageType.Error -> errorAttributes
             MessageType.Important -> boldAttributes
             else -> null
@@ -236,7 +234,7 @@ internal class Gui private constructor(gens: List<ContentGenerator>) : Frontend 
         Sounds.confirm.start()
         val confirm = JOptionPane.showConfirmDialog(
             frame,
-            "Do you want to overwrite the existing file $file?"
+            I18n["gui.message.confirm_overwrite", file]
         )
 
         confirm == JOptionPane.YES_OPTION
@@ -249,8 +247,6 @@ internal class Gui private constructor(gens: List<ContentGenerator>) : Frontend 
     }
 
     companion object {
-        val I18N = I18n()
-
         internal val defaultAttributes = SimpleAttributeSet().apply {
             StyleConstants.setForeground(this, Color(0x2E9DFF))
         }

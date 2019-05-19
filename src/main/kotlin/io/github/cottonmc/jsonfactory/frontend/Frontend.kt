@@ -3,7 +3,7 @@ package io.github.cottonmc.jsonfactory.frontend
 import java.io.File
 
 interface Frontend {
-    fun printMessage(msg: String, type: MessageType = MessageType.Default)
+    fun printMessage(msg: String, type: MessageType = MessageType.Default, vararg messageParameters: Any?)
     fun printSeparator()
     fun onFinishedGenerating()
     suspend fun shouldOverwriteFile(file: File): Boolean

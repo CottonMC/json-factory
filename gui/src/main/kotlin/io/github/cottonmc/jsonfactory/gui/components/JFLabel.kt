@@ -1,14 +1,14 @@
 package io.github.cottonmc.jsonfactory.gui.components
 
 import io.github.cottonmc.jsonfactory.gui.Gui
-import io.github.cottonmc.jsonfactory.gui.util.maybeInvoke
-import org.jdesktop.swingx.JXLabel
+import io.github.cottonmc.jsonfactory.gui.util.I18n
 import javax.swing.JLabel
 
-open class JFLabel(private val l10nKey: String, private val textDecorator: (String) -> String = { it }) : JLabel(textDecorator(Gui.I18N[l10nKey])) {
+open class JFLabel(private val l10nKey: String, vararg l10nParameters: Any?, private val textDecorator: (String) -> String = { it }) :
+    JLabel(textDecorator(I18n[l10nKey, arrayOf(*l10nParameters)])) {
     init {
-        Gui.I18N.addLocaleChangeListener { _, _ -> text = textDecorator(Gui.I18N[l10nKey]) }
+        I18n.addLocaleChangeListener { _, _ -> text = textDecorator(I18n[l10nKey, arrayOf(*l10nParameters)]) }
     }
 
-    override fun getToolTipText() = Gui.I18N.getOptional(Gui.getDescriptionKey(l10nKey))
+    override fun getToolTipText() = I18n.getOptional(Gui.getDescriptionKey(l10nKey))
 }
