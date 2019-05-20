@@ -7,7 +7,7 @@ import io.github.cottonmc.jsonfactory.frontend.i18n.ResourceBundleI18n
 import io.github.cottonmc.jsonfactory.frontend.i18n.invoke
 import java.nio.file.Path
 
-internal class Cli(val outputDirectory: Path) : Frontend {
+internal class Cli(val outputDirectory: Path?) : Frontend {
     val i18n = CombinedI18n(
         ResourceBundleI18n("json-factory.i18n.I18n-cli"),
         ResourceBundleI18n.createBackendI18n()
@@ -22,5 +22,5 @@ internal class Cli(val outputDirectory: Path) : Frontend {
     override fun printSeparator() {}
     override fun onFinishedGenerating() {}
     override suspend fun shouldOverwriteFile(path: Path) = false
-    override suspend fun selectOutputDirectory(): Path = outputDirectory
+    override suspend fun selectOutputDirectory(): Path = outputDirectory!!
 }
