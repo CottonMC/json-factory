@@ -35,6 +35,7 @@ val mainClass = "io.github.cottonmc.jsonfactory.cli.MainKt"
 
 application {
     mainClassName = mainClass
+    applicationName = "json-factory-cli"
 }
 
 tasks.withType<Jar> {
