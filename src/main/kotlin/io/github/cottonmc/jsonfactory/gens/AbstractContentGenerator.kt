@@ -23,7 +23,4 @@ abstract class AbstractContentGenerator(
 
     override fun toString() = id
 
-    enum class ResourceRoot(val path: String) {
-        Assets("assets"), Data("data")
-    }
 }

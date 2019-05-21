@@ -17,8 +17,7 @@ interface ContentGenerator {
     val path: String
     val info: GeneratorInfo
     val extension: String
-    // TODO: Move ResourceRoot
-    val resourceRoot: AbstractContentGenerator.ResourceRoot
+    val resourceRoot: ResourceRoot
 
     /**
      * Generates [Output]s from an [id].

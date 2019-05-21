@@ -82,7 +82,7 @@ private class GenerateCommand : Callable<Unit> {
                 else collectString { out -> it.printStackTrace(out) }
             }
         }.fold(
-            ifLeft = { System.err.println(it) },
+            ifLeft = System.err::println,
             ifRight = { it.join() }
         )
     }

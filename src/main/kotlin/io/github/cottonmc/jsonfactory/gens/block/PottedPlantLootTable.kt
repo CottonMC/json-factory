@@ -3,6 +3,7 @@ package io.github.cottonmc.jsonfactory.gens.block
 import io.github.cottonmc.jsonfactory.data.Identifier
 import io.github.cottonmc.jsonfactory.gens.AbstractContentGenerator
 import io.github.cottonmc.jsonfactory.gens.GeneratorInfo
+import io.github.cottonmc.jsonfactory.gens.ResourceRoot
 import io.github.cottonmc.jsonfactory.output.loot.Condition
 import io.github.cottonmc.jsonfactory.output.loot.Entry
 import io.github.cottonmc.jsonfactory.output.loot.LootTable

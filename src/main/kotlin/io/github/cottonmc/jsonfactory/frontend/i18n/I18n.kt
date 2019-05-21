@@ -7,11 +7,26 @@ import java.util.Locale
  */
 typealias LocaleChangeListener = (old: Locale, new: Locale) -> Unit
 
+/**
+ * An interface for providing localized strings.
+ * @since 0.5.0
+ */
 interface I18n {
+    /**
+     * The current locale.
+     */
+    // TODO: var or not?
     var locale: Locale
 
+    /**
+     * Returns true if this `I18n` can supply a localized string for the [key].
+     */
     fun containsKey(key: String): Boolean
 
+    /**
+     * Adds a [listener] listening to [locale] changes.
+     */
+    // TODO: see todo on locale
     fun addLocaleChangeListener(listener: LocaleChangeListener)
 
     /**

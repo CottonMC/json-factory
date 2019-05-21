@@ -5,6 +5,10 @@ import java.util.Locale
 import java.util.ResourceBundle
 
 /**
+ * An [I18n] instance using resource bundles at the backend.
+ *
+ * @param bundleName the resource bundle base name
+ * @param locale the current locale
  * @since 0.5.0
  */
 class ResourceBundleI18n(private val bundleName: String, locale: Locale = Locale.getDefault()) : I18n {
@@ -36,6 +40,10 @@ class ResourceBundleI18n(private val bundleName: String, locale: Locale = Locale
     companion object {
         private const val DEFAULT_BUNDLE = "json-factory.i18n.I18n"
 
-        fun createBackendI18n(): I18n = ResourceBundleI18n(DEFAULT_BUNDLE)
+        /**
+         * Creates a [ResourceBundleI18n] instance that provides translated JSON Factory backend strings,
+         * such as generator names.
+         */
+        fun createBackendI18n(): ResourceBundleI18n = ResourceBundleI18n(DEFAULT_BUNDLE)
     }
 }

@@ -13,8 +13,19 @@ import java.lang.reflect.Type
 data class Identifier(val namespace: String, val path: String) {
     override fun toString() = "$namespace:$path"
 
+    /**
+     * Returns a new `Identifier` with its path prefixed with the [prefix].
+     */
     fun prefixPath(prefix: String): Identifier = copy(path = prefix + path)
+
+    /**
+     * Returns a new `Identifier` with its path suffixed with the [suffix].
+     */
     fun suffixPath(suffix: String): Identifier = copy(path = path + suffix)
+
+    /**
+     * Returns a new `Identifier` with its path wrapped with the [prefix] and the [suffix].
+     */
     fun wrapPath(prefix: String, suffix: String): Identifier = copy(path = "$prefix$path$suffix")
 
     companion object : JsonSerializer<Identifier> {

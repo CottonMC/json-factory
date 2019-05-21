@@ -6,6 +6,9 @@ import java.awt.Color
 import java.awt.image.BufferedImage
 import java.util.concurrent.ThreadLocalRandom
 
+/**
+ * A [ContentGenerator] that generates placeholder textures.
+ */
 class PlaceholderTexture(info: GeneratorInfo) : AbstractContentGenerator(
     "placeholder_texture.${info.category.id}", "textures/${info.category.placeholderTexturePath}", info, extension = "png"
 ) {
