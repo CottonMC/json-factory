@@ -2,6 +2,7 @@ package io.github.cottonmc.jsonfactory.gui
 
 import io.github.cottonmc.jsonfactory.gens.ContentGenerator
 import io.github.cottonmc.jsonfactory.gens.Gens
+import io.github.cottonmc.jsonfactory.gui.util.I18n
 import io.github.cottonmc.jsonfactory.plugin.*
 import picocli.CommandLine
 import java.io.File
@@ -15,13 +16,17 @@ private object Main : Runnable {
     override fun run() {
         Settings.init()
         // TODO: Show a splash screen or something during plugin loading
-        Gui.createAndShow(loadGens(pluginClasses))
+        Gui.createAndShow(loadPlugins(pluginClasses))
     }
 }
 
 fun main(args: Array<String>) = CommandLine.run(Main, *args)
 
-private fun loadGens(classes: Array<String>): List<ContentGenerator> = sequence {
+/**
+ * Loads the plugins from the classpath ([classes]) and from the file system.
+ * @return a list of plugin content generators
+ */
+private fun loadPlugins(classes: Array<String>): List<ContentGenerator> = sequence {
     yieldAll(Gens.ALL_GENS)
 
     val plugins = sequence {
@@ -43,6 +48,10 @@ private fun loadGens(classes: Array<String>): List<ContentGenerator> = sequence 
             )
         )
     }
+
+    plugins.map(PluginContainer::plugin)
+        .mapNotNull(Plugin::i18n)
+        .forEach(I18n::addLayer)
 
     yieldAll(plugins.flatMap { it.plugin.generators.asSequence() })
 }.toList()

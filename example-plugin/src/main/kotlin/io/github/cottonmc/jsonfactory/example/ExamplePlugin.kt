@@ -8,6 +8,7 @@ import io.github.cottonmc.jsonfactory.output.model.Model
 import io.github.cottonmc.jsonfactory.plugin.Plugin
 
 object ExamplePlugin : Plugin {
+    // TODO: I18n
     override val generators: List<ContentGenerator> = listOf(
         object : AbstractContentGenerator("my gen", "models/block", GeneratorInfo.BLOCK) {
             override fun generate(id: Identifier) = listOf(

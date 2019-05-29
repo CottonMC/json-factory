@@ -36,7 +36,7 @@ interface Json : Output {
             .create()
 
         /**
-         * Converts an [obj] to a JSON string.
+         * Converts an [object][obj] to a JSON string.
          * @since 0.4.0
          */
         fun toJson(obj: Any): String =
