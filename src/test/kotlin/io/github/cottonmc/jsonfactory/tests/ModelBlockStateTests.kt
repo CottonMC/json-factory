@@ -19,7 +19,7 @@ class ModelBlockStateTests {
     )
 
     @Test
-    fun twoPropertiesCreate() {
+    fun `creating a block state with two properties`() {
         val output = ModelBlockState.create(Identifier("test", "test"), properties2)
 
         expectThat(expected2)
