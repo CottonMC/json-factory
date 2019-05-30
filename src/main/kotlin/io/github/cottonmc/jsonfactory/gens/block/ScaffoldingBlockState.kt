@@ -4,7 +4,7 @@ import io.github.cottonmc.jsonfactory.data.BlockStateProperty
 import io.github.cottonmc.jsonfactory.data.Identifier
 import io.github.cottonmc.jsonfactory.gens.AbstractContentGenerator
 import io.github.cottonmc.jsonfactory.gens.GeneratorInfo
-import io.github.cottonmc.jsonfactory.output.model.ModelBlockState
+import io.github.cottonmc.jsonfactory.output.model.VariantBlockState
 import io.github.cottonmc.jsonfactory.output.suffixed
 
 internal object ScaffoldingBlockState :
@@ -15,7 +15,7 @@ internal object ScaffoldingBlockState :
     )
 
     override fun generate(id: Identifier) = listOf(
-        ModelBlockState.create(id, setOf(BlockStateProperty.scaffoldingBottom)) { values, variant ->
+        VariantBlockState.create(id, setOf(BlockStateProperty.scaffoldingBottom)) { values, variant ->
             variant.copy(model = variant.model.wrapPath("${typePrefixes[values["bottom"]]}", "_scaffolding"))
         }.suffixed("scaffolding")
     )

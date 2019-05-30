@@ -3,7 +3,8 @@ package io.github.cottonmc.jsonfactory.gens.block
 import io.github.cottonmc.jsonfactory.data.Identifier
 import io.github.cottonmc.jsonfactory.gens.AbstractContentGenerator
 import io.github.cottonmc.jsonfactory.gens.GeneratorInfo
-import io.github.cottonmc.jsonfactory.output.model.ModelBlockState
+import io.github.cottonmc.jsonfactory.output.model.VariantBlockState
+import io.github.cottonmc.jsonfactory.output.model.ModelVariant
 import io.github.cottonmc.jsonfactory.output.suffixed
 
 /**
@@ -12,9 +13,9 @@ import io.github.cottonmc.jsonfactory.output.suffixed
 class SuffixedBlockState(private val type: String, info: GeneratorInfo) :
     AbstractContentGenerator("$type.block_state", "blockstates", info) {
     override fun generate(id: Identifier) = listOf(
-        ModelBlockState(
+        VariantBlockState(
             mapOf(
-                "" to ModelBlockState.Variant(id.wrapPath("block/", "_$type"))
+                "" to ModelVariant(id.wrapPath("block/", "_$type"))
             )
         ).suffixed(type)
     )

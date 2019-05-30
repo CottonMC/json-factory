@@ -2,12 +2,12 @@ package io.github.cottonmc.jsonfactory.tests
 
 import io.github.cottonmc.jsonfactory.data.Identifier
 import io.github.cottonmc.jsonfactory.data.BlockStateProperty
-import io.github.cottonmc.jsonfactory.output.model.ModelBlockState
+import io.github.cottonmc.jsonfactory.output.model.VariantBlockState
 import org.junit.jupiter.api.Test
 import strikt.api.expectThat
 import strikt.assertions.contains
 
-class ModelBlockStateTests {
+class VariantBlockStateTests {
     private val properties2 = setOf(
         BlockStateProperty("a", setOf("a1", "a2")),
         BlockStateProperty("b", setOf("b1", "b2"))
@@ -20,7 +20,7 @@ class ModelBlockStateTests {
 
     @Test
     fun `creating a block state with two properties`() {
-        val output = ModelBlockState.create(Identifier("test", "test"), properties2)
+        val output = VariantBlockState.create(Identifier("test", "test"), properties2)
 
         expectThat(expected2)
             .contains(output.variants.keys)

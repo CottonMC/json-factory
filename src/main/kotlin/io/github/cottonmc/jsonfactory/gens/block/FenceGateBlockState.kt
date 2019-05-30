@@ -4,13 +4,13 @@ import io.github.cottonmc.jsonfactory.data.BlockStateProperty
 import io.github.cottonmc.jsonfactory.data.Identifier
 import io.github.cottonmc.jsonfactory.gens.AbstractContentGenerator
 import io.github.cottonmc.jsonfactory.gens.GeneratorInfo
-import io.github.cottonmc.jsonfactory.output.model.ModelBlockState
+import io.github.cottonmc.jsonfactory.output.model.VariantBlockState
 import io.github.cottonmc.jsonfactory.output.suffixed
 
 internal object FenceGateBlockState :
     AbstractContentGenerator("fence_gate.block_state", "blockstates", GeneratorInfo.FENCE_GATES) {
     override fun generate(id: Identifier) = listOf(
-        ModelBlockState.create(
+        VariantBlockState.create(
             id,
             setOf(BlockStateProperty.horizontalFacing, BlockStateProperty.gateInWall, BlockStateProperty.open)
         ) { values, variant ->

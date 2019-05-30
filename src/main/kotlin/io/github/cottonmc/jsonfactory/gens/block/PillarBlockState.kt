@@ -4,12 +4,12 @@ import io.github.cottonmc.jsonfactory.data.BlockStateProperty
 import io.github.cottonmc.jsonfactory.data.Identifier
 import io.github.cottonmc.jsonfactory.gens.AbstractContentGenerator
 import io.github.cottonmc.jsonfactory.gens.GeneratorInfo
-import io.github.cottonmc.jsonfactory.output.model.ModelBlockState
+import io.github.cottonmc.jsonfactory.output.model.VariantBlockState
 
 internal object PillarBlockState :
     AbstractContentGenerator("pillar.block_state", "blockstates", GeneratorInfo.PILLARS) {
     override fun generate(id: Identifier) = listOf(
-        ModelBlockState.create(id, setOf(BlockStateProperty.axis)) { values, variant ->
+        VariantBlockState.create(id, setOf(BlockStateProperty.axis)) { values, variant ->
             val axis = values["axis"] ?: ""
 
             variant.copy(

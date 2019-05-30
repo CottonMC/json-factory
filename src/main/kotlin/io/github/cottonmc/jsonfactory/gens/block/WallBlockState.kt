@@ -3,7 +3,7 @@ package io.github.cottonmc.jsonfactory.gens.block
 import io.github.cottonmc.jsonfactory.data.Identifier
 import io.github.cottonmc.jsonfactory.gens.AbstractContentGenerator
 import io.github.cottonmc.jsonfactory.gens.GeneratorInfo
-import io.github.cottonmc.jsonfactory.output.model.ModelBlockState
+import io.github.cottonmc.jsonfactory.output.model.ModelVariant
 import io.github.cottonmc.jsonfactory.output.model.MultipartBlockState
 import io.github.cottonmc.jsonfactory.output.suffixed
 
@@ -12,23 +12,38 @@ internal object WallBlockState : AbstractContentGenerator("wall.block_state", "b
         MultipartBlockState(
             listOf(
                 MultipartBlockState.Multipart(
-                    ModelBlockState.Variant(id.copy(path = "block/${id.path}_wall_post")),
+                    ModelVariant(id.copy(path = "block/${id.path}_wall_post")),
                     MultipartBlockState.When("up", "true")
                 ),
                 MultipartBlockState.Multipart(
-                    ModelBlockState.Variant(id.copy(path = "block/${id.path}_wall_side"), uvlock = true),
+                    ModelVariant(
+                        id.copy(path = "block/${id.path}_wall_side"),
+                        uvlock = true
+                    ),
                     MultipartBlockState.When("north", "true")
                 ),
                 MultipartBlockState.Multipart(
-                    ModelBlockState.Variant(id.copy(path = "block/${id.path}_wall_side"), uvlock = true, y = 90),
+                    ModelVariant(
+                        id.copy(path = "block/${id.path}_wall_side"),
+                        uvlock = true,
+                        y = 90
+                    ),
                     MultipartBlockState.When("east", "true")
                 ),
                 MultipartBlockState.Multipart(
-                    ModelBlockState.Variant(id.copy(path = "block/${id.path}_wall_side"), uvlock = true, y = 180),
+                    ModelVariant(
+                        id.copy(path = "block/${id.path}_wall_side"),
+                        uvlock = true,
+                        y = 180
+                    ),
                     MultipartBlockState.When("south", "true")
                 ),
                 MultipartBlockState.Multipart(
-                    ModelBlockState.Variant(id.copy(path = "block/${id.path}_wall_side"), uvlock = true, y = 270),
+                    ModelVariant(
+                        id.copy(path = "block/${id.path}_wall_side"),
+                        uvlock = true,
+                        y = 270
+                    ),
                     MultipartBlockState.When("west", "true")
                 )
             )

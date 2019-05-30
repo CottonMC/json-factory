@@ -6,7 +6,7 @@ import io.github.cottonmc.jsonfactory.data.BlockStateProperty.Companion.powered
 import io.github.cottonmc.jsonfactory.data.Identifier
 import io.github.cottonmc.jsonfactory.gens.AbstractContentGenerator
 import io.github.cottonmc.jsonfactory.gens.GeneratorInfo
-import io.github.cottonmc.jsonfactory.output.model.ModelBlockState
+import io.github.cottonmc.jsonfactory.output.model.VariantBlockState
 import io.github.cottonmc.jsonfactory.output.suffixed
 
 internal object ButtonBlockState :
@@ -25,7 +25,7 @@ internal object ButtonBlockState :
     }
 
     override fun generate(id: Identifier) =
-        listOf(ModelBlockState.create(id, setOf(horizontalFacing, powered, buttonFace)) { values, variant ->
+        listOf(VariantBlockState.create(id, setOf(horizontalFacing, powered, buttonFace)) { values, variant ->
             val suffix = if (values[powered] == "true") "_pressed" else ""
 
             variant.copy(

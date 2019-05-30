@@ -3,7 +3,8 @@ package io.github.cottonmc.jsonfactory.gens.block
 import io.github.cottonmc.jsonfactory.data.Identifier
 import io.github.cottonmc.jsonfactory.gens.AbstractContentGenerator
 import io.github.cottonmc.jsonfactory.gens.GeneratorInfo
-import io.github.cottonmc.jsonfactory.output.model.ModelBlockState
+import io.github.cottonmc.jsonfactory.output.model.VariantBlockState
+import io.github.cottonmc.jsonfactory.output.model.ModelVariant
 import io.github.cottonmc.jsonfactory.output.prefixed
 
 /**
@@ -12,9 +13,9 @@ import io.github.cottonmc.jsonfactory.output.prefixed
 class PrefixedBlockState(private val type: String, info: GeneratorInfo, l10nPrefix: String = type) :
     AbstractContentGenerator("$l10nPrefix.block_state", "blockstates", info) {
     override fun generate(id: Identifier) = listOf(
-        ModelBlockState(
+        VariantBlockState(
             mapOf(
-                "" to ModelBlockState.Variant(id.prefixPath("block/${type}_"))
+                "" to ModelVariant(id.prefixPath("block/${type}_"))
             )
         ).prefixed(type)
     )

@@ -4,7 +4,7 @@ import io.github.cottonmc.jsonfactory.data.BlockStateProperty
 import io.github.cottonmc.jsonfactory.data.Identifier
 import io.github.cottonmc.jsonfactory.gens.AbstractContentGenerator
 import io.github.cottonmc.jsonfactory.gens.GeneratorInfo
-import io.github.cottonmc.jsonfactory.output.model.ModelBlockState
+import io.github.cottonmc.jsonfactory.output.model.VariantBlockState
 import io.github.cottonmc.jsonfactory.output.suffixed
 
 internal object SlabBlockState : AbstractContentGenerator("slab.block_state", "blockstates", GeneratorInfo.SLABS) {
@@ -15,7 +15,7 @@ internal object SlabBlockState : AbstractContentGenerator("slab.block_state", "b
     )
 
     override fun generate(id: Identifier) = listOf(
-        ModelBlockState.create(
+        VariantBlockState.create(
             id, setOf(BlockStateProperty.slabType)
         ) { values, variant ->
             variant.copy(
