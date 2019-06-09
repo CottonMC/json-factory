@@ -4,7 +4,7 @@ import io.github.cottonmc.jsonfactory.gens.Gens
 import io.github.cottonmc.jsonfactory.gui.util.I18n
 import io.github.cottonmc.jsonfactory.frontend.plugin.*
 import picocli.CommandLine
-import java.io.File
+import java.nio.file.Paths
 import kotlin.reflect.KClass
 
 @CommandLine.Command(name = "json-factory-gui", mixinStandardHelpOptions = true, versionProvider = VersionProvider::class)
@@ -39,7 +39,7 @@ fun main(args: Array<String>) = CommandLine.run(Main, *args)
 private fun loadPlugins(classes: Array<String>): List<Plugin> = sequence {
     yieldAll(
         PluginManager.loadPlugins(
-            JarPluginLoader(), PluginLoadingContext(File("."))
+            JarPluginLoader(Paths.get("plugins"))
         )
     )
 
@@ -50,8 +50,7 @@ private fun loadPlugins(classes: Array<String>): List<Plugin> = sequence {
                 classes.map {
                     Class.forName(it).kotlin as KClass<out Plugin>
                 }
-            ),
-            PluginLoadingContext(File("."))
+            )
         )
     )
 }.map(PluginContainer::plugin).toList()

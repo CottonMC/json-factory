@@ -1,19 +1,19 @@
 package io.github.cottonmc.jsonfactory.frontend.plugin
 
 /**
- * A utility object, used for loading plugins.
+ * Utilities for loading plugins.
  */
 object PluginManager {
     /**
-     * Loads plugins in the [context] using the [loader].
+     * Loads plugins using the [loader].
      */
-    fun loadPlugins(loader: PluginLoader, context: PluginLoadingContext): List<PluginContainer> {
-        return loader.loadPlugins(context).flatMap {
+    fun loadPlugins(loader: PluginLoader): List<PluginContainer> {
+        return loader.loadPlugins().flatMap {
             sequence {
                 yield(it)
 
                 it.plugin.loader?.let { loader ->
-                    loadPlugins(loader, context)
+                    loadPlugins(loader)
                 }
             }.asIterable()
         }

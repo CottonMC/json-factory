@@ -3,26 +3,27 @@ package io.github.cottonmc.jsonfactory.frontend.plugin
 import com.google.gson.Gson
 import java.io.File
 import java.net.URLClassLoader
+import java.nio.file.Files
+import java.nio.file.Path
 import kotlin.reflect.full.createInstance
 import kotlin.reflect.full.isSubclassOf
 
-class JarPluginLoader(private val directory: String = "plugins") : PluginLoader {
+class JarPluginLoader(private val pluginDir: Path) : PluginLoader {
     private val gson = Gson()
 
-    override fun loadPlugins(context: PluginLoadingContext): List<PluginContainer> {
-        val pluginDir = context.runDirectory.resolve(directory)
-        if (!pluginDir.exists()) {
+    override fun loadPlugins(): List<PluginContainer> {
+        if (Files.notExists(pluginDir)) {
             return emptyList()
         }
 
-        require(pluginDir.isDirectory) {
+        require(Files.isDirectory(pluginDir)) {
             "Plugin directory must be a directory"
         }
 
-        return pluginDir.listFiles {
-            file: File -> file.extension.equals("jar", ignoreCase = true)
-        }.flatMap { file: File ->
-            val classLoader = URLClassLoader(arrayOf(file.toURI().toURL()), JarPluginLoader::class.java.classLoader)
+        return Files.newDirectoryStream(pluginDir).filter {
+            path -> path.fileName.toString().endsWith(".jar", ignoreCase = true)
+        }.flatMap { path: Path ->
+            val classLoader = URLClassLoader(arrayOf(path.toUri().toURL()), JarPluginLoader::class.java.classLoader)
             val optionalFmj = runCatching {
                 gson.fromJson(classLoader.getResourceAsStream("fabric.mod.json").reader(), FabricModJson::class.java)
             }
