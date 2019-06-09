@@ -1,9 +1,8 @@
 package io.github.cottonmc.jsonfactory.gui
 
-import io.github.cottonmc.jsonfactory.gens.ContentGenerator
 import io.github.cottonmc.jsonfactory.gens.Gens
 import io.github.cottonmc.jsonfactory.gui.util.I18n
-import io.github.cottonmc.jsonfactory.plugin.*
+import io.github.cottonmc.jsonfactory.frontend.plugin.*
 import picocli.CommandLine
 import java.io.File
 import kotlin.reflect.KClass
@@ -16,7 +15,18 @@ private object Main : Runnable {
     override fun run() {
         Settings.init()
         // TODO: Show a splash screen or something during plugin loading
-        Gui.createAndShow(loadPlugins(pluginClasses))
+        val plugins = loadPlugins(pluginClasses)
+
+        val gens = sequence {
+            yieldAll(Gens.ALL_GENS)
+
+            plugins.mapNotNull(Plugin::i18n)
+                .forEach(I18n::addLayer)
+
+            yieldAll(plugins.flatMap(Plugin::generators))
+        }.toList()
+
+        Gui.createAndShow(gens, plugins.flatMap(Plugin::autoFills))
     }
 }
 
@@ -24,34 +34,24 @@ fun main(args: Array<String>) = CommandLine.run(Main, *args)
 
 /**
  * Loads the plugins from the classpath ([classes]) and from the file system.
- * @return a list of plugin content generators
+ * @return a list of plugins
  */
-private fun loadPlugins(classes: Array<String>): List<ContentGenerator> = sequence {
-    yieldAll(Gens.ALL_GENS)
-
-    val plugins = sequence {
-        yieldAll(
-            PluginManager.loadPlugins(
-                JarPluginLoader(), PluginLoadingContext(File("."))
-            )
+private fun loadPlugins(classes: Array<String>): List<Plugin> = sequence {
+    yieldAll(
+        PluginManager.loadPlugins(
+            JarPluginLoader(), PluginLoadingContext(File("."))
         )
+    )
 
-        @Suppress("UNCHECKED_CAST")
-        yieldAll(
-            PluginManager.loadPlugins(
-                ClasspathPluginLoader(
-                    classes.map {
-                        Class.forName(it).kotlin as KClass<out Plugin>
-                    }
-                ),
-                PluginLoadingContext(File("."))
-            )
+    @Suppress("UNCHECKED_CAST")
+    yieldAll(
+        PluginManager.loadPlugins(
+            ClasspathPluginLoader(
+                classes.map {
+                    Class.forName(it).kotlin as KClass<out Plugin>
+                }
+            ),
+            PluginLoadingContext(File("."))
         )
-    }
-
-    plugins.map(PluginContainer::plugin)
-        .mapNotNull(Plugin::i18n)
-        .forEach(I18n::addLayer)
-
-    yieldAll(plugins.flatMap { it.plugin.generators.asSequence() })
-}.toList()
+    )
+}.map(PluginContainer::plugin).toList()

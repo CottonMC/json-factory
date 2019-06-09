@@ -1,4 +1,4 @@
-package io.github.cottonmc.jsonfactory.plugin
+package io.github.cottonmc.jsonfactory.frontend.plugin
 
 /**
  * A utility object, used for loading plugins.

@@ -1,5 +1,6 @@
-package io.github.cottonmc.jsonfactory.plugin
+package io.github.cottonmc.jsonfactory.frontend.plugin
 
+import io.github.cottonmc.jsonfactory.frontend.AutoFill
 import io.github.cottonmc.jsonfactory.frontend.i18n.I18n
 import io.github.cottonmc.jsonfactory.gens.ContentGenerator
 
@@ -24,4 +25,9 @@ interface Plugin {
      * An [I18n] for this plugin's strings.
      */
     val i18n: I18n? get() = null
+
+    /**
+     * A list of [AutoFill] values.
+     */
+    val autoFills: Collection<AutoFill> get() = emptySet()
 }

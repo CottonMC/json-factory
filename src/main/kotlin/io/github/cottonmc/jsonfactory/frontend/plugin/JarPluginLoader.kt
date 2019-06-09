@@ -1,4 +1,4 @@
-package io.github.cottonmc.jsonfactory.plugin
+package io.github.cottonmc.jsonfactory.frontend.plugin
 
 import com.google.gson.Gson
 import java.io.File

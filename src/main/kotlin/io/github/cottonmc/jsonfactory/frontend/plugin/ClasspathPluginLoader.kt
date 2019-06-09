@@ -1,4 +1,4 @@
-package io.github.cottonmc.jsonfactory.plugin
+package io.github.cottonmc.jsonfactory.frontend.plugin
 
 import kotlin.reflect.KClass
 import kotlin.reflect.full.createInstance

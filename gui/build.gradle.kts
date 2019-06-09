@@ -30,6 +30,7 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-swing:1.2.0")
     implementation("com.vladsch.flexmark:flexmark:0.42.4")
     implementation("info.picocli:picocli:3.9.6")
+    runtimeOnly(project(":example-plugin"))
 }
 
 application {

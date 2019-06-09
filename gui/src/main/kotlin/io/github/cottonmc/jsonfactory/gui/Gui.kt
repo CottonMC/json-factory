@@ -1,6 +1,7 @@
 package io.github.cottonmc.jsonfactory.gui
 
 import io.github.cottonmc.jsonfactory.data.Identifiers
+import io.github.cottonmc.jsonfactory.frontend.AutoFill
 import io.github.cottonmc.jsonfactory.frontend.Frontend
 import io.github.cottonmc.jsonfactory.frontend.ContentWriter
 import io.github.cottonmc.jsonfactory.frontend.MessageType
@@ -25,7 +26,7 @@ import javax.swing.text.DefaultCaret
 import javax.swing.text.SimpleAttributeSet
 import javax.swing.text.StyleConstants
 
-internal class Gui private constructor(gens: List<ContentGenerator>) : Frontend {
+internal class Gui private constructor(gens: List<ContentGenerator>, autoFills: List<AutoFill>) : Frontend {
     internal val frame = JFrame()
     internal val fileChooser = JFileChooser().apply {
         fileSelectionMode = JFileChooser.DIRECTORIES_ONLY
@@ -98,6 +99,18 @@ internal class Gui private constructor(gens: List<ContentGenerator>) : Frontend 
                 }
             })
         })
+
+        if (autoFills.isNotEmpty()) {
+            add(JMenu("Auto-Fills").apply {
+                for (autoFill in autoFills) {
+                    add(JMenuItem(I18n[autoFill.i18nKey]).apply {
+                        addActionListener {
+                            idField.text = autoFill.value
+                        }
+                    })
+                }
+            })
+        }
     }
 
     init {
@@ -285,8 +298,8 @@ internal class Gui private constructor(gens: List<ContentGenerator>) : Frontend 
         private fun readImage(name: String) =
             ImageIO.read(Gui::class.java.getResourceAsStream("/json-factory/$name.png"))
 
-        fun createAndShow(gens: List<ContentGenerator>) = SwingUtilities.invokeAndWait {
-            Gui(gens).apply {
+        fun createAndShow(gens: List<ContentGenerator>, autoFills: List<AutoFill>) = SwingUtilities.invokeAndWait {
+            Gui(gens, autoFills).apply {
                 show()
                 if (Settings.showTipsOnStartup) {
                     Tips.show(frame, isStartup = true)

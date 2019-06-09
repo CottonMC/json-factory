@@ -1,11 +1,12 @@
 package io.github.cottonmc.jsonfactory.example
 
 import io.github.cottonmc.jsonfactory.data.Identifier
+import io.github.cottonmc.jsonfactory.frontend.AutoFill
 import io.github.cottonmc.jsonfactory.gens.AbstractContentGenerator
 import io.github.cottonmc.jsonfactory.gens.ContentGenerator
 import io.github.cottonmc.jsonfactory.gens.GeneratorInfo
 import io.github.cottonmc.jsonfactory.output.model.Model
-import io.github.cottonmc.jsonfactory.plugin.Plugin
+import io.github.cottonmc.jsonfactory.frontend.plugin.Plugin
 
 object ExamplePlugin : Plugin {
     // TODO: I18n
@@ -18,5 +19,10 @@ object ExamplePlugin : Plugin {
                 )
             )
         }
+    )
+
+    override val autoFills = setOf(
+        AutoFill("auto_fill.test1", "minecraft:cobblestone,minecraft:dirt"),
+        AutoFill("auto_fill.test2", "minecraft:sand")
     )
 }
