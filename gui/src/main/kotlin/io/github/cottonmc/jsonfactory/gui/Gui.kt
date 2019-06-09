@@ -17,10 +17,12 @@ import kotlinx.coroutines.swing.Swing
 import kotlinx.coroutines.withContext
 import net.miginfocom.swing.MigLayout
 import org.jdesktop.swingx.*
+import org.jdesktop.swingx.error.ErrorInfo
 import org.jdesktop.swingx.hyperlink.HyperlinkAction
 import java.awt.*
 import java.net.URI
 import java.nio.file.Path
+import java.util.logging.Level
 import javax.imageio.ImageIO
 import javax.swing.*
 import javax.swing.text.AttributeSet
@@ -145,7 +147,11 @@ internal class Gui private constructor(gens: List<ContentGenerator>, autoFills: 
             } catch (e: Exception) {
                 System.err.println("Exception while loading icon")
                 e.printStackTrace()
-                TODO("log")
+                // TODO: i18n
+                JXErrorPane.showDialog(
+                    this,
+                    ErrorInfo("Error when loading icons", "Couldn't load icons.", null, null, e, Level.WARNING, null)
+                )
             }
         }
     }
@@ -307,12 +313,13 @@ internal class Gui private constructor(gens: List<ContentGenerator>, autoFills: 
             StyleConstants.setBold(this, true)
         }
 
-        private val icon = readImage("icon")
-        private val icon32 = readImage("icon32")
-        private val icon128 = readImage("icon128")
+        private val icon by readImage("icon")
+        private val icon32 by readImage("icon32")
+        private val icon128 by readImage("icon128")
 
-        private fun readImage(name: String) =
+        private fun readImage(name: String) = lazy {
             ImageIO.read(Gui::class.java.getResourceAsStream("/json-factory/$name.png"))
+        }
 
         fun createAndShow(gens: List<ContentGenerator>, autoFills: List<AutoFill>) = SwingUtilities.invokeAndWait {
             Gui(gens, autoFills).apply {
