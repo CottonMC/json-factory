@@ -8,6 +8,10 @@ import java.nio.file.Path
 import kotlin.reflect.full.createInstance
 import kotlin.reflect.full.isSubclassOf
 
+/**
+ * Loads plugins from JAR files in a [directory][pluginDir].
+ */
+// TODO: ServiceLoader?
 class JarPluginLoader(private val pluginDir: Path) : PluginLoader {
     private val gson = Gson()
 

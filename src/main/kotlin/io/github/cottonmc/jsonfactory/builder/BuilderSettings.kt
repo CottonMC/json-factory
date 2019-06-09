@@ -24,7 +24,7 @@ enum class BuilderSettings(val generators: Set<ContentGenerator>) {
     STAIRS(Gens.Variants.ALL_STAIRS),
     TRAPDOOR(Gens.Variants.ALL_TRAPDOORS),
     WALL(Gens.Variants.ALL_WALLS),
-    PILLAR(setOf(Gens.pillarBlockModel, Gens.pillarBlockState, Gens.basicLootTable, Gens.basicBlockItemModel)),
+    PILLAR(setOf(Gens.PILLAR_BLOCK_MODEL, Gens.PILLAR_BLOCK_STATE, Gens.BASIC_LOOT_TABLE, Gens.BASIC_BLOCK_ITEM_MODEL)),
 
     /**
      * All fence and fence gate generators.

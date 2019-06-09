@@ -16,7 +16,7 @@ class ContentWriter(private val frontend: Frontend, private val generators: Iter
     /**
      * Generates and writes files with all selected generators.
      */
-    fun writeAll(ids: List<Identifier>) = GlobalScope.launch {
+    suspend fun writeAll(ids: List<Identifier>) {
         // TODO: L10n for the messages
         frontend.selectOutputDirectory()?.let { outputDir ->
             check(Files.isDirectory(outputDir)) {

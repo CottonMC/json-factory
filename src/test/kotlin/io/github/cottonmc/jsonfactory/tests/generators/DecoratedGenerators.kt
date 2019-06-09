@@ -17,7 +17,7 @@ object DecoratedGenerators : Spek({
             lateinit var outputs: List<Output>
 
             When("generating") {
-                outputs = DecoratedContentGenerator(Gens.basicBlockModel) { _, outputs ->
+                outputs = DecoratedContentGenerator(Gens.BASIC_BLOCK_MODEL) { _, outputs ->
                     outputs.map { it.prefixed("super") }
                 }.generate(id)
             }

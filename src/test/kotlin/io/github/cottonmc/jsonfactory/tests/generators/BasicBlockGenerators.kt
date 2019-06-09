@@ -10,9 +10,9 @@ object BasicBlockGenerators : Spek({
     Feature("Basic Block") {
         val id = Identifier("minecraft", "dirt")
 
-        JsonScenario("generating the block model", id, "expected/basic_block_model.json", Gens.basicBlockModel)
-        JsonScenario("generating the block state", id, "expected/basic_block_state.json", Gens.basicBlockState)
-        JsonScenario("generating the block item model", id, "expected/basic_block_item_model.json", Gens.basicBlockItemModel)
-        JsonScenario("generating the loot table", id, "expected/basic_loot_table.json", Gens.basicLootTable)
+        JsonScenario("generating the block model", id, "expected/basic_block_model.json", Gens.BASIC_BLOCK_MODEL)
+        JsonScenario("generating the block state", id, "expected/basic_block_state.json", Gens.BASIC_BLOCK_STATE)
+        JsonScenario("generating the block item model", id, "expected/basic_block_item_model.json", Gens.BASIC_BLOCK_ITEM_MODEL)
+        JsonScenario("generating the loot table", id, "expected/basic_loot_table.json", Gens.BASIC_LOOT_TABLE)
     }
 })

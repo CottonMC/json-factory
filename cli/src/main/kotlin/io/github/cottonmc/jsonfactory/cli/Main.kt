@@ -3,6 +3,7 @@ package io.github.cottonmc.jsonfactory.cli
 import arrow.core.Left
 import arrow.core.Try
 import arrow.core.flatMap
+import arrow.core.identity
 import io.github.cottonmc.jsonfactory.data.Identifiers
 import io.github.cottonmc.jsonfactory.frontend.ContentWriter
 import io.github.cottonmc.jsonfactory.frontend.plugin.Plugin
@@ -101,7 +102,7 @@ private class GenerateCommand : SharedOptions(), Callable<Unit> {
             }
         }.fold(
             ifLeft = System.err::println,
-            ifRight = { it.join() }
+            ifRight = ::identity
         )
     }
 }

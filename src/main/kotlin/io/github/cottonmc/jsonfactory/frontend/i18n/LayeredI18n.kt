@@ -2,16 +2,11 @@ package io.github.cottonmc.jsonfactory.frontend.i18n
 
 import java.util.Locale
 
-/* TODO: Cleanup
- *   Most of the openness here is for gui.util.I18n;
- *   this class should be made final again and the properties should be private.
- */
-
 /**
  * An [I18n] instance that combines a [primary] `I18n` and a secondary `I18n` [layers].
  * @see get
  */
-open class LayeredI18n(protected val primary: I18n, protected val layers: Iterable<I18n>) : I18n {
+class LayeredI18n(private val primary: I18n, private val layers: Iterable<I18n>) : I18n {
     /**
      * The primary backing instance's [I18n.locale].
      * Setting this property sets *both* backing instances' property.

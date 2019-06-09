@@ -11,6 +11,8 @@ import io.github.cottonmc.jsonfactory.gui.components.*
 import io.github.cottonmc.jsonfactory.gui.util.I18n
 import io.github.cottonmc.jsonfactory.gui.util.Markdown
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.swing.Swing
 import kotlinx.coroutines.withContext
 import net.miginfocom.swing.MigLayout
@@ -44,7 +46,11 @@ internal class Gui private constructor(gens: List<ContentGenerator>, autoFills: 
         addActionListener {
             Identifiers.convertToIds(idField.text).fold(
                 { printMessage(it, MessageType.Warn) },
-                ContentWriter(this@Gui, gens2Selections.filterValues { it }.keys)::writeAll
+                { ids ->
+                    GlobalScope.launch {
+                        ContentWriter(this@Gui, gens2Selections.filterValues { it }.keys).writeAll(ids)
+                    }
+                }
             )
         }
     }
@@ -118,7 +124,10 @@ internal class Gui private constructor(gens: List<ContentGenerator>, autoFills: 
             add(JFLabel("gui.generation_panel.id"))
             add(idField, "span 2, wrap")
             add(saveButton, "skip, span, wrap")
-            add(JFLabel("gui.generation_panel.note_save_location", "src/main/resources") { "<html><i>$it</i>" }, "span, wrap")
+            add(
+                JFLabel("gui.generation_panel.note_save_location", "src/main/resources") { "<html><i>$it</i>" },
+                "span, wrap"
+            )
         }, JFScrollPane(JPanel(GridLayout()).apply {
             add(outputTextArea)
         }))
@@ -190,7 +199,12 @@ internal class Gui private constructor(gens: List<ContentGenerator>, autoFills: 
         return pane
     }
 
-    internal fun printMessage(prefix: String, msg: String, prefixAttributes: AttributeSet = defaultAttributes, mainAttributes: AttributeSet? = null) {
+    internal fun printMessage(
+        prefix: String,
+        msg: String,
+        prefixAttributes: AttributeSet = defaultAttributes,
+        mainAttributes: AttributeSet? = null
+    ) {
         val doc = outputTextArea.styledDocument
 
         if (prefix.isNotEmpty()) {
@@ -239,11 +253,13 @@ internal class Gui private constructor(gens: List<ContentGenerator>, autoFills: 
             else -> defaultAttributes
         }
 
-        printMessage(prefix, I18n(msg, messageParameters), prefixAttributes, mainAttributes = when (type) {
-            MessageType.Error -> errorAttributes
-            MessageType.Important -> boldAttributes
-            else -> null
-        })
+        printMessage(
+            prefix, I18n(msg, messageParameters), prefixAttributes, mainAttributes = when (type) {
+                MessageType.Error -> errorAttributes
+                MessageType.Important -> boldAttributes
+                else -> null
+            }
+        )
     }
 
     override fun printSeparator() = printMessage("-".repeat(25))

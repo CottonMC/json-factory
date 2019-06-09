@@ -8,6 +8,7 @@ import io.github.cottonmc.jsonfactory.frontend.i18n.invoke
 import io.github.cottonmc.jsonfactory.frontend.i18n.ResourceBundleI18n
 import io.github.cottonmc.jsonfactory.gens.AbstractContentGenerator
 import io.github.cottonmc.jsonfactory.gens.ContentGenerator
+import kotlinx.coroutines.runBlocking
 import java.io.File
 import java.nio.file.Path
 
@@ -96,7 +97,7 @@ class JsonFactoryBuilder : Frontend {
     /**
      * Writes all of the required resources.
      */
-    fun generate() {
-        ContentWriter(this, generators).writeAll(identifiers)
+    fun generate() = runBlocking {
+        ContentWriter(this@JsonFactoryBuilder, generators).writeAll(identifiers)
     }
 }
