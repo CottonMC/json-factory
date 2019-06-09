@@ -29,6 +29,8 @@ dependencies {
     implementation(arrow("core-data"))
 //    implementation(arrow("core-extensions"))
 //    implementation(arrow("typeclasses"))
+
+    runtimeOnly(project(":example-plugin"))
 }
 
 val mainClass = "io.github.cottonmc.jsonfactory.cli.MainKt"

@@ -7,9 +7,16 @@ import picocli.CommandLine
 import java.nio.file.Paths
 import kotlin.reflect.KClass
 
-@CommandLine.Command(name = "json-factory-gui", mixinStandardHelpOptions = true, versionProvider = VersionProvider::class)
+@CommandLine.Command(
+    name = "json-factory-gui",
+    mixinStandardHelpOptions = true,
+    versionProvider = VersionProvider::class
+)
 private object Main : Runnable {
-    @CommandLine.Option(names = ["-p", "--plugin-classes"], description = ["list of plugin classes that will be loaded from the classpath"])
+    @CommandLine.Option(
+        names = ["-p", "--plugin-classes"],
+        description = ["list of plugin classes that will be loaded from the classpath"]
+    )
     var pluginClasses: Array<String> = emptyArray()
 
     override fun run() {
@@ -37,20 +44,14 @@ fun main(args: Array<String>) = CommandLine.run(Main, *args)
  * @return a list of plugins
  */
 private fun loadPlugins(classes: Array<String>): List<Plugin> = sequence {
-    yieldAll(
-        PluginManager.loadPlugins(
-            JarPluginLoader(Paths.get("plugins"))
-        )
-    )
+    yieldAll(JarPluginLoader(Paths.get("plugins")).loadRecursively())
 
     @Suppress("UNCHECKED_CAST")
     yieldAll(
-        PluginManager.loadPlugins(
-            ClasspathPluginLoader(
-                classes.map {
-                    Class.forName(it).kotlin as KClass<out Plugin>
-                }
-            )
-        )
+        ClasspathPluginLoader(
+            classes.map {
+                Class.forName(it).kotlin as KClass<out Plugin>
+            }
+        ).loadRecursively()
     )
 }.map(PluginContainer::plugin).toList()
