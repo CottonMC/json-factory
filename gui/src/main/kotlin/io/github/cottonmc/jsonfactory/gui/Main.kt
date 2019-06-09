@@ -54,4 +54,4 @@ private fun loadPlugins(classes: Array<String>): List<Plugin> = sequence {
             }
         ).loadRecursively()
     )
-}.map(PluginContainer::plugin).toList()
+}.toList()

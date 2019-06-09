@@ -8,13 +8,13 @@ interface PluginLoader {
     /**
      * Loads a collection of plugins.
      */
-    fun loadPlugins(): Collection<PluginContainer>
+    fun loadPlugins(): Collection<Plugin>
 }
 
 /**
  * Loads the plugins of `this` [PluginLoader] recursively,
  * loading plugins with the plugins' [loaders][Plugin.loader] as well.
  */
-fun PluginLoader.loadRecursively(): List<PluginContainer> = loadPlugins().flatMap {
-    it.plugin.loader?.loadRecursively().orEmpty() + it
+fun PluginLoader.loadRecursively(): List<Plugin> = loadPlugins().flatMap {
+    it.loader?.loadRecursively().orEmpty() + it
 }

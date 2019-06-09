@@ -15,7 +15,7 @@ internal class Cli(val outputDirectory: Path?, val pluginClasses: Set<String>) :
     val plugins: List<Plugin> = sequence {
         yieldAll(ClasspathPluginLoader(pluginClasses.map { Class.forName(it).kotlin as KClass<out Plugin> }).loadRecursively())
         yieldAll(JarPluginLoader(Paths.get("plugins")).loadRecursively())
-    }.map(PluginContainer::plugin).toList()
+    }.toList()
 
     val i18n = LayeredI18n(
         ResourceBundleI18n.createBackendI18n(),
