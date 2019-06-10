@@ -4,20 +4,28 @@ import io.github.cottonmc.jsonfactory.gens.Gens
 import io.github.cottonmc.jsonfactory.gui.util.I18n
 import io.github.cottonmc.jsonfactory.frontend.plugin.*
 import picocli.CommandLine
+import java.io.File
 import java.nio.file.Paths
 import kotlin.reflect.KClass
 
 @CommandLine.Command(
     name = "json-factory-gui",
     mixinStandardHelpOptions = true,
-    versionProvider = VersionProvider::class
+    versionProvider = VersionProvider::class,
+    resourceBundle = "json-factory.i18n.I18n-gui"
 )
 private object Main : Runnable {
     @CommandLine.Option(
         names = ["-p", "--plugin-classes"],
-        description = ["list of plugin classes that will be loaded from the classpath"]
+        descriptionKey = "gui.cli.plugin_classes"
     )
     var pluginClasses: Array<String> = emptyArray()
+
+    @CommandLine.Option(
+        names = ["-o", "--default-output"],
+        descriptionKey = "gui.cli.default_output"
+    )
+    var defaultOutputFile: File = File(".")
 
     override fun run() {
         Settings.init()
@@ -33,7 +41,7 @@ private object Main : Runnable {
             yieldAll(plugins.flatMap(Plugin::generators))
         }.toList()
 
-        Gui.createAndShow(gens, plugins.flatMap(Plugin::autoFills))
+        Gui.createAndShow(gens, plugins.flatMap(Plugin::autoFills), defaultOutputFile)
     }
 }
 

@@ -20,6 +20,7 @@ import org.jdesktop.swingx.*
 import org.jdesktop.swingx.error.ErrorInfo
 import org.jdesktop.swingx.hyperlink.HyperlinkAction
 import java.awt.*
+import java.io.File
 import java.net.URI
 import java.nio.file.Path
 import java.util.logging.Level
@@ -30,10 +31,11 @@ import javax.swing.text.DefaultCaret
 import javax.swing.text.SimpleAttributeSet
 import javax.swing.text.StyleConstants
 
-internal class Gui private constructor(gens: List<ContentGenerator>, autoFills: List<AutoFill>) : Frontend {
+internal class Gui private constructor(gens: List<ContentGenerator>, autoFills: List<AutoFill>, defaultOutputFile: File) : Frontend {
     internal val frame = JFrame()
     internal val fileChooser = JFileChooser().apply {
         fileSelectionMode = JFileChooser.DIRECTORIES_ONLY
+        currentDirectory = defaultOutputFile
     }
     private val idField = JFTextField("gui.generation_panel.id.prompt").apply {
         columns = 25
@@ -321,8 +323,12 @@ internal class Gui private constructor(gens: List<ContentGenerator>, autoFills: 
             ImageIO.read(Gui::class.java.getResourceAsStream("/json-factory/$name.png"))
         }
 
-        fun createAndShow(gens: List<ContentGenerator>, autoFills: List<AutoFill>) = SwingUtilities.invokeAndWait {
-            Gui(gens, autoFills).apply {
+        fun createAndShow(
+            gens: List<ContentGenerator>,
+            autoFills: List<AutoFill>,
+            defaultOutputFile: File
+        ) = SwingUtilities.invokeAndWait {
+            Gui(gens, autoFills, defaultOutputFile).apply {
                 show()
                 if (Settings.showTipsOnStartup) {
                     Tips.show(frame, isStartup = true)
