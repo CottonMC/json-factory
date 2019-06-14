@@ -11,7 +11,7 @@ internal object LeafBlockModel : AbstractContentGenerator("leaves.block_model", 
         Model(
             parent = Identifier.mc("block/leaves"),
             textures = mapOf(
-                "all" to id.prefixPath("block/")
+                "all" to id.wrapPath("block/", "_leaves")
             )
         ).suffixed("leaves")
     )
