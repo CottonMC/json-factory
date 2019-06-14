@@ -16,7 +16,9 @@ interface Output {
     /**
      * Writes this object to the [file].
      */
-    fun writeToFile(file: File)
+    @Deprecated("Use writeToStream instead", ReplaceWith("writeToStream(file.outputStream())"))
+    fun writeToFile(file: File): Unit =
+        writeToStream(file.outputStream())
 
     /**
      * Writes this object to the [stream].
