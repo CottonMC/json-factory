@@ -6,7 +6,7 @@ import javax.swing.JScrollPane
 /**
  * Custom `JScrollPane` that has faster vertical scrolling.
  */
-class JFScrollPane(view: Component) : JScrollPane(view) {
+internal class JFScrollPane(view: Component) : JScrollPane(view) {
     init {
         verticalScrollBar.unitIncrement = 16
     }

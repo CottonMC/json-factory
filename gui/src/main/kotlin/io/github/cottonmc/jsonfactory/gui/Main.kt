@@ -3,6 +3,7 @@ package io.github.cottonmc.jsonfactory.gui
 import io.github.cottonmc.jsonfactory.gens.Gens
 import io.github.cottonmc.jsonfactory.gui.util.I18n
 import io.github.cottonmc.jsonfactory.frontend.plugin.*
+import io.github.cottonmc.jsonfactory.gui.api.GuiPlugin
 import picocli.CommandLine
 import java.io.File
 import java.nio.file.Paths
@@ -28,7 +29,6 @@ private object Main : Runnable {
     var defaultOutputFile: File = File(".")
 
     override fun run() {
-        Settings.init()
         // TODO: Show a splash screen or something during plugin loading
         val plugins = loadPlugins(pluginClasses)
 
@@ -41,6 +41,9 @@ private object Main : Runnable {
             yieldAll(plugins.flatMap(Plugin::generators))
         }.toList()
 
+        val themes = plugins.filterIsInstance<GuiPlugin>().flatMap(GuiPlugin::themes)
+
+        Settings.init(themes)
         Gui.createAndShow(gens, plugins.flatMap(Plugin::autoFills), defaultOutputFile)
     }
 }

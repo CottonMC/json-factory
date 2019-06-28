@@ -25,6 +25,7 @@ dependencies {
     implementation("io.github.cottonmc.insubstantial:substance-swingx:7.3.1-SNAPSHOT") {
         exclude(group = "org.swinglabs.swingx")
     }
+    implementation("io.github.cottonmc.insubstantial:substance-flamingo:7.3.1-SNAPSHOT")
     implementation("org.swinglabs.swingx:swingx-all:1.6.5-1")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.2.0")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-swing:1.2.0")

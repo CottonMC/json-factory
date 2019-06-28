@@ -7,6 +7,7 @@ import io.github.cottonmc.jsonfactory.frontend.ContentWriter
 import io.github.cottonmc.jsonfactory.frontend.MessageType
 import io.github.cottonmc.jsonfactory.frontend.i18n.invoke
 import io.github.cottonmc.jsonfactory.gens.ContentGenerator
+import io.github.cottonmc.jsonfactory.gui.api.theme.Theme
 import io.github.cottonmc.jsonfactory.gui.components.*
 import io.github.cottonmc.jsonfactory.gui.util.I18n
 import io.github.cottonmc.jsonfactory.gui.util.Markdown
@@ -76,7 +77,7 @@ internal class Gui private constructor(gens: List<ContentGenerator>, autoFills: 
                 horizontalAlignment = SwingConstants.CENTER
                 val buttonGroup = ButtonGroup()
 
-                for ((group, themes) in Settings.Theme.values().groupBy(Settings.Theme::group)) {
+                for ((group, themes) in Settings.themes.values.groupBy(Theme::group)) {
                     add(JMenu(/* TODO */ group.name).apply {
                         for (theme in themes.sortedBy { it.name }) {
                             add(JRadioButtonMenuItem(theme.name).apply {

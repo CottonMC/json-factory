@@ -4,6 +4,7 @@ import org.jdesktop.swingx.JXTipOfTheDay
 import org.jdesktop.swingx.tips.TipLoader
 import java.util.*
 import javax.swing.JFrame
+import kotlin.random.Random
 
 internal object Tips {
     private val tipOfTheDay: JXTipOfTheDay
@@ -18,7 +19,7 @@ internal object Tips {
      * Shows the tip of the day dialog.
      */
     fun show(frame: JFrame, isStartup: Boolean) {
-        tipOfTheDay.currentTip = (0 until tipOfTheDay.model.tipCount).random()
+        tipOfTheDay.currentTip = Random.nextInt(tipOfTheDay.model.tipCount)
         tipOfTheDay.showDialog(frame, Settings.createTipOfTheDayChoice(if (isStartup) null else true))
     }
 }

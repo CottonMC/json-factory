@@ -4,7 +4,7 @@ import io.github.cottonmc.jsonfactory.gui.Gui
 import io.github.cottonmc.jsonfactory.gui.util.I18n
 import org.jdesktop.swingx.JXTitledSeparator
 
-class JFTitledSeparator(private val l10nKey: String, textDecorator: (String) -> String = { it }) :
+internal class JFTitledSeparator(private val l10nKey: String, textDecorator: (String) -> String = { it }) :
     JXTitledSeparator(textDecorator(I18n[l10nKey])) {
     init {
         I18n.addLocaleChangeListener { _, _ ->

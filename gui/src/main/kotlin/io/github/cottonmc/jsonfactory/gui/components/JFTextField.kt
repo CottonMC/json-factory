@@ -4,7 +4,7 @@ import io.github.cottonmc.jsonfactory.gui.Gui
 import io.github.cottonmc.jsonfactory.gui.util.I18n
 import org.jdesktop.swingx.JXTextField
 
-class JFTextField(private val l10nKey: String, private val textDecorator: (String) -> String = { it }) :
+internal class JFTextField(private val l10nKey: String, private val textDecorator: (String) -> String = { it }) :
     JXTextField(textDecorator(I18n[l10nKey])) {
     init {
         I18n.addLocaleChangeListener { _, _ ->

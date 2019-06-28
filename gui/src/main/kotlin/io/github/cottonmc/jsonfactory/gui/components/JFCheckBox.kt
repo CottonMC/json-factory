@@ -4,7 +4,7 @@ import io.github.cottonmc.jsonfactory.gui.Gui
 import io.github.cottonmc.jsonfactory.gui.util.I18n
 import javax.swing.JCheckBox
 
-class JFCheckBox(
+internal class JFCheckBox(
     private val l10nKey: String,
     selected: Boolean = false,
     textDecorator: (String) -> String = { it }

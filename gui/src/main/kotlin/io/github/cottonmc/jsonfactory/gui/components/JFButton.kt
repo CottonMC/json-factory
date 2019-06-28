@@ -4,7 +4,7 @@ import io.github.cottonmc.jsonfactory.gui.Gui
 import io.github.cottonmc.jsonfactory.gui.util.I18n
 import org.jdesktop.swingx.JXButton
 
-open class JFButton(private val l10nKey: String, textDecorator: (String) -> String = { it }) :
+internal open class JFButton(private val l10nKey: String, textDecorator: (String) -> String = { it }) :
     JXButton(textDecorator(I18n[l10nKey])) {
     init {
         I18n.addLocaleChangeListener { _, _ -> text = textDecorator(I18n[l10nKey]) }
