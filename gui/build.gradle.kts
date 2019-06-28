@@ -21,8 +21,8 @@ repositories {
 dependencies {
     implementation(project(":"))
     implementation("com.miglayout:miglayout-swing:5.2")
-    implementation("com.github.insubstantial:substance:7.3")
-    implementation("com.github.insubstantial:substance-swingx:7.3") {
+    implementation("io.github.cottonmc.insubstantial:substance:7.3.1-SNAPSHOT")
+    implementation("io.github.cottonmc.insubstantial:substance-swingx:7.3.1-SNAPSHOT") {
         exclude(group = "org.swinglabs.swingx")
     }
     implementation("org.swinglabs.swingx:swingx-all:1.6.5-1")
