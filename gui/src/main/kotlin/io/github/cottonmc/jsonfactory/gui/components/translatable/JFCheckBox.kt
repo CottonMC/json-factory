@@ -1,11 +1,14 @@
-package io.github.cottonmc.jsonfactory.gui.components
+package io.github.cottonmc.jsonfactory.gui.components.translatable
 
 import io.github.cottonmc.jsonfactory.gui.Gui
 import io.github.cottonmc.jsonfactory.gui.util.I18n
-import org.jdesktop.swingx.JXButton
+import javax.swing.JCheckBox
 
-internal open class JFButton(private val l10nKey: String, textDecorator: (String) -> String = { it }) :
-    JXButton(textDecorator(I18n[l10nKey])) {
+internal class JFCheckBox(
+    private val l10nKey: String,
+    selected: Boolean = false,
+    textDecorator: (String) -> String = { it }
+) : JCheckBox(textDecorator(I18n[l10nKey]), selected) {
     init {
         I18n.addLocaleChangeListener { _, _ -> text = textDecorator(I18n[l10nKey]) }
     }

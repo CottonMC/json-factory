@@ -98,7 +98,7 @@ internal object Settings {
             put("theme", theme.name)
         }
 
-    private fun refreshTheme(theme: Theme) {
+    private fun refreshTheme(theme: Theme) = SwingUtilities.invokeLater {
         theme.lookAndFeel.apply()
 
         for (window in Window.getWindows()) {

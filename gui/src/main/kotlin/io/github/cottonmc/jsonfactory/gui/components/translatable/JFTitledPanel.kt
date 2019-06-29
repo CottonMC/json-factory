@@ -1,11 +1,12 @@
-package io.github.cottonmc.jsonfactory.gui.components
+package io.github.cottonmc.jsonfactory.gui.components.translatable
 
 import io.github.cottonmc.jsonfactory.gui.Gui
 import io.github.cottonmc.jsonfactory.gui.util.I18n
-import org.jdesktop.swingx.JXTitledSeparator
+import org.jdesktop.swingx.JXTitledPanel
+import java.awt.Container
 
-internal class JFTitledSeparator(private val l10nKey: String, textDecorator: (String) -> String = { it }) :
-    JXTitledSeparator(textDecorator(I18n[l10nKey])) {
+internal class JFTitledPanel(private val l10nKey: String, content: Container, textDecorator: (String) -> String = { it }) :
+    JXTitledPanel(textDecorator(I18n[l10nKey]), content) {
     init {
         I18n.addLocaleChangeListener { _, _ ->
             title = textDecorator(I18n[l10nKey])

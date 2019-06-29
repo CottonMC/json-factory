@@ -2,13 +2,15 @@ package io.github.cottonmc.jsonfactory.gui
 
 import io.github.cottonmc.jsonfactory.data.Identifiers
 import io.github.cottonmc.jsonfactory.frontend.AutoFill
-import io.github.cottonmc.jsonfactory.frontend.Frontend
 import io.github.cottonmc.jsonfactory.frontend.ContentWriter
+import io.github.cottonmc.jsonfactory.frontend.Frontend
 import io.github.cottonmc.jsonfactory.frontend.MessageType
 import io.github.cottonmc.jsonfactory.frontend.i18n.invoke
 import io.github.cottonmc.jsonfactory.gens.ContentGenerator
 import io.github.cottonmc.jsonfactory.gui.api.theme.Theme
-import io.github.cottonmc.jsonfactory.gui.components.*
+import io.github.cottonmc.jsonfactory.gui.components.JFScrollPane
+import io.github.cottonmc.jsonfactory.gui.components.TabbedPaneResizer
+import io.github.cottonmc.jsonfactory.gui.components.translatable.*
 import io.github.cottonmc.jsonfactory.gui.util.I18n
 import io.github.cottonmc.jsonfactory.gui.util.Markdown
 import kotlinx.coroutines.Dispatchers
@@ -17,9 +19,12 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.swing.Swing
 import kotlinx.coroutines.withContext
 import net.miginfocom.swing.MigLayout
-import org.jdesktop.swingx.*
+import org.jdesktop.swingx.JXDialog
+import org.jdesktop.swingx.JXErrorPane
+import org.jdesktop.swingx.JXHyperlink
 import org.jdesktop.swingx.error.ErrorInfo
 import org.jdesktop.swingx.hyperlink.HyperlinkAction
+import org.pushingpixels.meteor.addDelayedComponentListener
 import java.awt.*
 import java.io.File
 import java.net.URI
@@ -32,7 +37,11 @@ import javax.swing.text.DefaultCaret
 import javax.swing.text.SimpleAttributeSet
 import javax.swing.text.StyleConstants
 
-internal class Gui private constructor(gens: List<ContentGenerator>, autoFills: List<AutoFill>, defaultOutputFile: File) : Frontend {
+internal class Gui private constructor(
+    gens: List<ContentGenerator>,
+    autoFills: List<AutoFill>,
+    defaultOutputFile: File
+) : Frontend {
     internal val frame = JFrame()
     internal val fileChooser = JFileChooser().apply {
         fileSelectionMode = JFileChooser.DIRECTORIES_ONLY
@@ -125,25 +134,32 @@ internal class Gui private constructor(gens: List<ContentGenerator>, autoFills: 
     }
 
     init {
-        val rightPanel = JSplitPane(JSplitPane.VERTICAL_SPLIT, JPanel(MigLayout()).apply {
-            add(JFLabel("gui.generation_panel.id"))
-            add(idField, "span 2, wrap")
-            add(saveButton, "skip, span, wrap")
+        // This attaches the resizer to the tabbed pane.
+        TabbedPaneResizer(generators)
+
+        val panel = JPanel(MigLayout()).apply {
+            add(JFTitledSeparator("gui.generation_panel.generate") { "<html><h1>$it</h1>" }, "skip, span, wrap")
+            add(idField, "span 2")
+            add(saveButton, "skip 2, wrap")
             add(
                 JFLabel("gui.generation_panel.note_save_location", "src/main/resources") { "<html><i>$it</i>" },
                 "span, wrap"
             )
-        }, JFScrollPane(JPanel(GridLayout()).apply {
-            add(outputTextArea)
-        }))
+            add(JFTitledSeparator("Generators") { "<html><h1>$it</h1>" }, "skip, span, wrap")
+            add(generators, "sx, sy")
 
-        val panel = JSplitPane(JSplitPane.HORIZONTAL_SPLIT, JFTitledPanel("Generators", generators), rightPanel)
-        panel.dividerLocation = 320
+            addDelayedComponentListener(
+                onComponentResized = {
+                    generators.preferredSize = Dimension(width - 20, generators.preferredSize.height)
+                }
+            )
+            insets.set(10, 10, 10, 10)
+        }
 
         frame.apply {
             title = "JSON Factory"
             defaultCloseOperation = WindowConstants.EXIT_ON_CLOSE
-            contentPane = panel
+            contentPane = JFScrollPane(panel)
             jMenuBar = this@Gui.menuBar
             try {
                 iconImages = listOf(icon, icon32, icon128)
@@ -172,7 +188,7 @@ internal class Gui private constructor(gens: List<ContentGenerator>, autoFills: 
         val gens = gens2Selections.keys
 
         for ((i, category) in gens.map { it.info.category }.distinct().withIndex()) {
-            pane.addTab("", JFScrollPane(JPanel(MigLayout()).apply {
+            pane.addTab("", JPanel(MigLayout()).apply {
                 val descKey = getDescriptionKey(category.id)
                 I18n.getOptional(descKey)?.let {
                     add(JFLabel(descKey) { Markdown.toHtml("*$it*") }, "wrap")
@@ -188,7 +204,13 @@ internal class Gui private constructor(gens: List<ContentGenerator>, autoFills: 
                     if (subcategory != null) {
                         add(JFTitledSeparator(subcategory.id) { "<html><b>$it</b>" }, "wrap")
                         I18n.getOptional(getDescriptionKey(subcategory.id))?.let {
-                            add(JFLabel(getDescriptionKey(subcategory.id)) { "<html><i>$it</i>" }, "wrap")
+                            add(
+                                JFLabel(
+                                    getDescriptionKey(
+                                        subcategory.id
+                                    )
+                                ) { "<html><i>$it</i>" }, "wrap"
+                            )
                         }
                     }
 
@@ -200,7 +222,7 @@ internal class Gui private constructor(gens: List<ContentGenerator>, autoFills: 
                         }, "wrap")
                     }
                 }
-            }))
+            })
 
             pane.setTabComponentAt(i, JFLabel(category.id))
         }

@@ -1,4 +1,4 @@
-package io.github.cottonmc.jsonfactory.gui.components
+package io.github.cottonmc.jsonfactory.gui.components.translatable
 
 import io.github.cottonmc.jsonfactory.gui.Gui
 import io.github.cottonmc.jsonfactory.gui.util.I18n
