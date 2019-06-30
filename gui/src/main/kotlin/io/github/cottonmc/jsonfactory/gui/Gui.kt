@@ -10,6 +10,11 @@ import io.github.cottonmc.jsonfactory.gens.ContentGenerator
 import io.github.cottonmc.jsonfactory.gui.api.theme.Theme
 import io.github.cottonmc.jsonfactory.gui.components.JFScrollPane
 import io.github.cottonmc.jsonfactory.gui.components.TabbedPaneResizer
+import io.github.cottonmc.jsonfactory.gui.components.dsl.*
+import io.github.cottonmc.jsonfactory.gui.components.dsl.checkBoxItem
+import io.github.cottonmc.jsonfactory.gui.components.dsl.menu
+import io.github.cottonmc.jsonfactory.gui.components.dsl.menuBar
+import io.github.cottonmc.jsonfactory.gui.components.dsl.radioButtonItem
 import io.github.cottonmc.jsonfactory.gui.components.translatable.*
 import io.github.cottonmc.jsonfactory.gui.util.I18n
 import io.github.cottonmc.jsonfactory.gui.util.Markdown
@@ -42,8 +47,8 @@ internal class Gui private constructor(
     autoFills: List<AutoFill>,
     defaultOutputFile: File
 ) : Frontend {
-    internal val frame = JFrame()
-    internal val fileChooser = JFileChooser().apply {
+    private val frame = JFrame()
+    private val fileChooser = JFileChooser().apply {
         fileSelectionMode = JFileChooser.DIRECTORIES_ONLY
         currentDirectory = defaultOutputFile
     }
@@ -73,23 +78,23 @@ internal class Gui private constructor(
         (caret as? DefaultCaret)?.updatePolicy = DefaultCaret.ALWAYS_UPDATE
         isEditable = false
     }
-    private val menuBar = JMenuBar().apply {
-        add(JMenu("Settings").apply {
-            add(JCheckBoxMenuItem("Play Finished Sound").apply {
+    private val menuBar = menuBar {
+        menu("gui.menu.settings") {
+            checkBoxItem("gui.menu.settings.play_finished_sound") {
                 isSelected = Settings.playFinishedSound
                 addActionListener {
                     Settings.playFinishedSound = isSelected
                 }
-            })
+            }
 
-            add(JMenu("Theme").apply {
+            menu("gui.menu.settings.theme") {
                 horizontalAlignment = SwingConstants.CENTER
                 val buttonGroup = ButtonGroup()
 
                 for ((group, themes) in Settings.themes.values.groupBy(Theme::group)) {
-                    add(JMenu(/* TODO */ group.name).apply {
+                    menu(/* TODO */ group.name) {
                         for (theme in themes.sortedBy { it.name }) {
-                            add(JRadioButtonMenuItem(theme.name).apply {
+                            radioButtonItem(theme.name) {
                                 addActionListener {
                                     Settings.theme = theme
                                 }
@@ -99,37 +104,37 @@ internal class Gui private constructor(
                                 }
 
                                 buttonGroup.add(this)
-                            })
+                            }
                         }
-                    })
+                    }
                 }
-            })
-        })
+            }
+        }
 
-        add(JMenu("Help").apply {
-            add(JMenuItem("About").apply {
+        menu("gui.menu.help") {
+            item("gui.menu.help.about") {
                 addActionListener {
                     showAboutDialog()
                 }
-            })
+            }
 
-            add(JMenuItem("Tip of the Day").apply {
+            item("gui.menu.help.tip_of_the_day") {
                 addActionListener {
                     Tips.show(frame, isStartup = false)
                 }
-            })
-        })
+            }
+        }
 
         if (autoFills.isNotEmpty()) {
-            add(JMenu("Auto-Fills").apply {
+            menu("gui.menu.auto_fills") {
                 for (autoFill in autoFills) {
-                    add(JMenuItem(I18n[autoFill.i18nKey]).apply {
+                    item(I18n[autoFill.i18nKey]) {
                         addActionListener {
                             idField.text = autoFill.value
                         }
-                    })
+                    }
                 }
-            })
+            }
         }
     }
 
@@ -145,7 +150,7 @@ internal class Gui private constructor(
                 JFLabel("gui.generation_panel.note_save_location", "src/main/resources") { "<html><i>$it</i>" },
                 "span, wrap"
             )
-            add(JFTitledSeparator("Generators") { "<html><h1>$it</h1>" }, "skip, span, wrap")
+            add(JFTitledSeparator("gui.generators") { "<html><h1>$it</h1>" }, "skip, span, wrap")
             add(generators, "sx, sy")
 
             addDelayedComponentListener(
@@ -359,6 +364,6 @@ internal class Gui private constructor(
             }
         }
 
-        fun getDescriptionKey(l10nKey: String) = "$l10nKey.description"
+        fun getDescriptionKey(translationKey: String) = "$translationKey.description"
     }
 }
