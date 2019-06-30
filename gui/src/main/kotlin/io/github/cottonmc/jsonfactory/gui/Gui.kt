@@ -8,13 +8,9 @@ import io.github.cottonmc.jsonfactory.frontend.MessageType
 import io.github.cottonmc.jsonfactory.frontend.i18n.invoke
 import io.github.cottonmc.jsonfactory.gens.ContentGenerator
 import io.github.cottonmc.jsonfactory.gui.api.theme.Theme
-import io.github.cottonmc.jsonfactory.gui.components.JFScrollPane
+import io.github.cottonmc.jsonfactory.gui.components.FasterScrollPane
 import io.github.cottonmc.jsonfactory.gui.components.TabbedPaneResizer
 import io.github.cottonmc.jsonfactory.gui.components.dsl.*
-import io.github.cottonmc.jsonfactory.gui.components.dsl.checkBoxItem
-import io.github.cottonmc.jsonfactory.gui.components.dsl.menu
-import io.github.cottonmc.jsonfactory.gui.components.dsl.menuBar
-import io.github.cottonmc.jsonfactory.gui.components.dsl.radioButtonItem
 import io.github.cottonmc.jsonfactory.gui.components.translatable.*
 import io.github.cottonmc.jsonfactory.gui.util.I18n
 import io.github.cottonmc.jsonfactory.gui.util.Markdown
@@ -92,7 +88,7 @@ internal class Gui private constructor(
                 val buttonGroup = ButtonGroup()
 
                 for ((group, themes) in Settings.themes.values.groupBy(Theme::group)) {
-                    menu(/* TODO */ group.name) {
+                    menu(group.translationKey) {
                         for (theme in themes.sortedBy { it.name }) {
                             radioButtonItem(theme.name) {
                                 addActionListener {
@@ -128,7 +124,7 @@ internal class Gui private constructor(
         if (autoFills.isNotEmpty()) {
             menu("gui.menu.auto_fills") {
                 for (autoFill in autoFills) {
-                    item(I18n[autoFill.i18nKey]) {
+                    item(I18n[autoFill.translationKey]) {
                         addActionListener {
                             idField.text = autoFill.value
                         }
@@ -164,7 +160,7 @@ internal class Gui private constructor(
         frame.apply {
             title = "JSON Factory"
             defaultCloseOperation = WindowConstants.EXIT_ON_CLOSE
-            contentPane = JFScrollPane(panel)
+            contentPane = FasterScrollPane(panel)
             jMenuBar = this@Gui.menuBar
             try {
                 iconImages = listOf(icon, icon32, icon128)

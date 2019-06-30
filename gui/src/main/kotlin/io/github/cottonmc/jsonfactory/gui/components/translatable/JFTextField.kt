@@ -4,14 +4,14 @@ import io.github.cottonmc.jsonfactory.gui.Gui
 import io.github.cottonmc.jsonfactory.gui.util.I18n
 import org.jdesktop.swingx.JXTextField
 
-internal class JFTextField(private val l10nKey: String, private val textDecorator: (String) -> String = { it }) :
-    JXTextField(textDecorator(I18n[l10nKey])) {
+internal class JFTextField(private val translationKey: String, private val textDecorator: (String) -> String = { it }) :
+    JXTextField(textDecorator(I18n[translationKey])) {
     init {
         I18n.addLocaleChangeListener { _, _ ->
-            prompt = textDecorator(I18n[l10nKey])
+            prompt = textDecorator(I18n[translationKey])
             revalidate()
         }
     }
 
-    override fun getToolTipText() = runCatching { I18n.getOptional(Gui.getDescriptionKey(l10nKey)) }.getOrNull()
+    override fun getToolTipText() = runCatching { I18n.getOptional(Gui.getDescriptionKey(translationKey)) }.getOrNull()
 }

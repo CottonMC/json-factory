@@ -5,13 +5,13 @@ import io.github.cottonmc.jsonfactory.gui.util.I18n
 import javax.swing.JCheckBox
 
 internal class JFCheckBox(
-    private val l10nKey: String,
+    private val translationKey: String,
     selected: Boolean = false,
     textDecorator: (String) -> String = { it }
-) : JCheckBox(textDecorator(I18n[l10nKey]), selected) {
+) : JCheckBox(textDecorator(I18n[translationKey]), selected) {
     init {
-        I18n.addLocaleChangeListener { _, _ -> text = textDecorator(I18n[l10nKey]) }
+        I18n.addLocaleChangeListener { _, _ -> text = textDecorator(I18n[translationKey]) }
     }
 
-    override fun getToolTipText() = I18n.getOptional(Gui.getDescriptionKey(l10nKey))
+    override fun getToolTipText() = I18n.getOptional(Gui.getDescriptionKey(translationKey))
 }

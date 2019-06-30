@@ -4,16 +4,24 @@ import javax.swing.LookAndFeel
 import javax.swing.UIManager
 
 interface Theme {
+    /**
+     * The unique ID of this theme.
+     */
+    val id: String
+
+    /**
+     * The display name of this theme.
+     */
     val name: String
     val lookAndFeel: LookAndFeelInitializer
     val group: Group
 
     interface Group {
-        val name: String
+        val translationKey: String
     }
 
-    enum class DefaultGroup : Group {
-        Light, Dark
+    enum class DefaultGroup(override val translationKey: String) : Group {
+        Light("gui.theme_group.light"), Dark("gui.theme_group.dark")
     }
 
     sealed class LookAndFeelInitializer {
@@ -29,10 +37,10 @@ interface Theme {
     }
 
     companion object {
-        fun laf(laf: () -> LookAndFeel): LookAndFeelInitializer =
+        fun lookAndFeel(laf: () -> LookAndFeel): LookAndFeelInitializer =
             LookAndFeelInitializer.Lazy(laf)
 
-        fun laf(className: String): LookAndFeelInitializer =
+        fun lookAndFeel(className: String): LookAndFeelInitializer =
             LookAndFeelInitializer.FromClass(className)
     }
 }
