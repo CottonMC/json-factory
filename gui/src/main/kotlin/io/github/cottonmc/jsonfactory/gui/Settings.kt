@@ -1,5 +1,6 @@
 package io.github.cottonmc.jsonfactory.gui
 
+import com.google.common.flogger.FluentLogger
 import io.github.cottonmc.jsonfactory.gui.api.theme.Theme
 import org.jdesktop.swingx.JXErrorPane
 import org.jdesktop.swingx.JXTipOfTheDay
@@ -10,8 +11,7 @@ import java.nio.file.Paths
 import java.util.*
 import javax.swing.SwingUtilities
 
-internal object Settings {
-    private val LOCATION = Paths.get("json-factory.properties")
+internal class Settings(pluginThemes: List<Theme>) {
     private val _themes: MutableMap<String, Theme> =
         Themes.values().associateBy(Theme::id).toMutableMap()
 
@@ -36,17 +36,17 @@ internal object Settings {
             save()
         }
 
-    // TODO: Move the theme stuff to the constructor
-    fun init(pluginThemes: List<Theme>) {
+    init {
         pluginThemes.forEach {
-            // TODO: Proper logging
             val key = it.id
             if (themes.containsKey(key))
-                println("Warn: theme with $key already in map")
+                logger.atWarning().log("Theme with $key already in map")
             else
                 _themes[key] = it
         }
+    }
 
+    fun init() {
         if (Files.exists(LOCATION)) {
             load()
         }
@@ -100,7 +100,7 @@ internal object Settings {
         }
     }
 
-    private class ShowOnStartupChoiceImpl(val initialValue: Boolean?) : JXTipOfTheDay.ShowOnStartupChoice {
+    private inner class ShowOnStartupChoiceImpl(val initialValue: Boolean?) : JXTipOfTheDay.ShowOnStartupChoice {
         private var called = false
 
         override fun isShowingOnStartup(): Boolean {
@@ -115,5 +115,10 @@ internal object Settings {
         override fun setShowingOnStartup(showOnStartup: Boolean) {
             showTipsOnStartup = showOnStartup
         }
+    }
+
+    companion object {
+        private val LOCATION = Paths.get("json-factory.properties")
+        private val logger = FluentLogger.forEnclosingClass()
     }
 }

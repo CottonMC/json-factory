@@ -19,7 +19,7 @@ repositories {
 }
 
 dependencies {
-    implementation(project(":"))
+    api(project(":"))
     implementation("com.miglayout:miglayout-swing:5.2")
     implementation("io.github.cottonmc.insubstantial:substance:7.3.1-SNAPSHOT")
     implementation("io.github.cottonmc.insubstantial:substance-swingx:7.3.1-SNAPSHOT") {
@@ -31,6 +31,8 @@ dependencies {
     implementation("com.vladsch.flexmark:flexmark:0.42.4")
     implementation("info.picocli:picocli:3.9.6")
     implementation("org.pushing-pixels:radiance-meteor:2.0.1")
+    implementation("com.google.flogger:flogger:0.4")
+    runtimeOnly("com.google.flogger:flogger-system-backend:0.4")
     runtimeOnly(project(":example-plugin"))
 }
 
@@ -55,13 +57,14 @@ publishing {
     }
 }
 
-fun getCommitHash(): String = (ext["grgit"] as Grgit?)?.let { grgit ->
-    grgit.log(mapOf("paths" to listOf("gui"), "maxCommits" to 1))[0].id.substring(0, 8)
-} ?: "unavailable"
+val commitHash: String by lazy {
+    (ext["grgit"] as Grgit?)?.let { grgit ->
+        grgit.log(mapOf("paths" to listOf("gui"), "maxCommits" to 1))[0].id.substring(0, 8)
+    } ?: "unknown"
+}
 
 tasks.getByName<ProcessResources>("processResources") {
     inputs.property("version", version)
-    val commitHash = getCommitHash()
     inputs.property("commitHash", commitHash)
     filesMatching("json-factory/version-info.properties") {
         expand("version" to version, "commitHash" to commitHash)

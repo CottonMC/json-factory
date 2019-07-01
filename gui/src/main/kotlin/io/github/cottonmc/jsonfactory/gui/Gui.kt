@@ -1,10 +1,10 @@
 package io.github.cottonmc.jsonfactory.gui
 
+import com.google.common.flogger.FluentLogger
 import io.github.cottonmc.jsonfactory.data.Identifiers
 import io.github.cottonmc.jsonfactory.frontend.AutoFill
 import io.github.cottonmc.jsonfactory.frontend.ContentWriter
 import io.github.cottonmc.jsonfactory.frontend.Frontend
-import io.github.cottonmc.jsonfactory.frontend.MessageType
 import io.github.cottonmc.jsonfactory.frontend.i18n.invoke
 import io.github.cottonmc.jsonfactory.gens.ContentGenerator
 import io.github.cottonmc.jsonfactory.gui.api.theme.Theme
@@ -39,6 +39,7 @@ import javax.swing.text.SimpleAttributeSet
 import javax.swing.text.StyleConstants
 
 internal class Gui private constructor(
+    private val settings: Settings,
     gens: List<ContentGenerator>,
     autoFills: List<AutoFill>,
     defaultOutputFile: File
@@ -59,8 +60,9 @@ internal class Gui private constructor(
     private val generators = createGeneratorPanel()
     private val saveButton = JFButton("gui.generation_panel.generate").apply {
         addActionListener {
+            // TODO: Check IDs live as you're typing?
             Identifiers.convertToIds(idField.text).fold(
-                { printMessage(it, MessageType.Warn) },
+                { log(it, Level.WARNING) },
                 { ids ->
                     GlobalScope.launch {
                         ContentWriter(this@Gui, gens2Selections.filterValues { it }.keys).writeAll(ids)
@@ -69,6 +71,7 @@ internal class Gui private constructor(
             )
         }
     }
+    // TODO: Move this to an optional dialog?
     private val outputTextArea = JTextPane().apply {
         font = Font.getFont(Font.MONOSPACED)
         (caret as? DefaultCaret)?.updatePolicy = DefaultCaret.ALWAYS_UPDATE
@@ -77,9 +80,9 @@ internal class Gui private constructor(
     private val menuBar = menuBar {
         menu("gui.menu.settings") {
             checkBoxItem("gui.menu.settings.play_finished_sound") {
-                isSelected = Settings.playFinishedSound
+                isSelected = settings.playFinishedSound
                 addActionListener {
-                    Settings.playFinishedSound = isSelected
+                    settings.playFinishedSound = isSelected
                 }
             }
 
@@ -87,15 +90,15 @@ internal class Gui private constructor(
                 horizontalAlignment = SwingConstants.CENTER
                 val buttonGroup = ButtonGroup()
 
-                for ((group, themes) in Settings.themes.values.groupBy(Theme::group)) {
+                for ((group, themes) in settings.themes.values.groupBy(Theme::group)) {
                     menu(group.translationKey) {
                         for (theme in themes.sortedBy { it.name }) {
                             radioButtonItem(theme.name) {
                                 addActionListener {
-                                    Settings.theme = theme
+                                    settings.theme = theme
                                 }
 
-                                if (theme == Settings.theme) {
+                                if (theme == settings.theme) {
                                     isSelected = true
                                 }
 
@@ -116,7 +119,7 @@ internal class Gui private constructor(
 
             item("gui.menu.help.tip_of_the_day") {
                 addActionListener {
-                    Tips.show(frame, isStartup = false)
+                    Tips.show(frame, settings, isStartup = false)
                 }
             }
         }
@@ -165,8 +168,7 @@ internal class Gui private constructor(
             try {
                 iconImages = listOf(icon, icon32, icon128)
             } catch (e: Exception) {
-                System.err.println("Exception while loading icon")
-                e.printStackTrace()
+                logger.atWarning().withCause(e).log("Exception while loading icons")
                 // TODO: i18n
                 JXErrorPane.showDialog(
                     this,
@@ -180,7 +182,8 @@ internal class Gui private constructor(
         SwingUtilities.invokeLater {
             frame.isVisible = true
             frame.size = Dimension(640, 440)
-            printMessage("gui.message.welcome")
+            // TODO: Is that welcome message *really* needed?
+            log("gui.message.welcome")
         }
     }
 
@@ -231,22 +234,6 @@ internal class Gui private constructor(
         return pane
     }
 
-    internal fun printMessage(
-        prefix: String,
-        msg: String,
-        prefixAttributes: AttributeSet = defaultAttributes,
-        mainAttributes: AttributeSet? = null
-    ) {
-        val doc = outputTextArea.styledDocument
-
-        if (prefix.isNotEmpty()) {
-            doc.insertString(doc.length, prefix, prefixAttributes)
-            doc.insertString(doc.length, " ", null)
-        }
-        doc.insertString(doc.length, "$msg\n", mainAttributes)
-        outputTextArea.repaint()
-    }
-
     private fun showAboutDialog() = JXDialog(frame, JPanel(BorderLayout()).apply {
         name = I18n["gui.about.title"]
 
@@ -274,30 +261,71 @@ internal class Gui private constructor(
         setLocation(screenSize.width / 2 - width / 2, screenSize.height / 2 - height / 2)
     }
 
-    override fun printMessage(msg: String, type: MessageType, vararg messageParameters: Any?) {
-        val prefix = when (type) {
-            MessageType.Warn -> I18n["gui.message.note"]
+    private fun printMessage(
+        prefix: String,
+        msg: String,
+        prefixAttributes: AttributeSet = defaultAttributes,
+        mainAttributes: AttributeSet? = null
+    ) {
+        val doc = outputTextArea.styledDocument
+
+        if (prefix.isNotEmpty()) {
+            doc.insertString(doc.length, prefix, prefixAttributes)
+            doc.insertString(doc.length, " ", null)
+        }
+        doc.insertString(doc.length, "$msg\n", mainAttributes)
+        outputTextArea.repaint()
+    }
+
+    /**
+     * An implementation of [Frontend.log] for GUIs.
+     *
+     * All messages are printed to the output text area ([outputTextArea]) and
+     * also logged with the [logger].
+     */
+    override fun log(msg: String, level: Level, vararg messageParameters: Any?) {
+        val prefix = when (level) {
+            Level.WARNING -> I18n["gui.message.note"]
             else -> ""
         }
 
-        val prefixAttributes = when (type) {
-            MessageType.Warn -> noteAttributes
+        val prefixAttributes = when (level) {
+            Level.WARNING -> noteAttributes
             else -> defaultAttributes
         }
 
+        val translated = I18n(msg, messageParameters)
         printMessage(
-            prefix, I18n(msg, messageParameters), prefixAttributes, mainAttributes = when (type) {
-                MessageType.Error -> errorAttributes
-                MessageType.Important -> boldAttributes
+            prefix, translated, prefixAttributes, mainAttributes = when (level) {
+                Level.SEVERE -> errorAttributes
                 else -> null
             }
         )
+
+        // Also log the message with the logger
+        logger.at(level).log(translated)
+
+        // Display errors and warnings as popups
+        when (level) {
+            Level.WARNING -> JOptionPane.showMessageDialog(
+                frame,
+                translated,
+                I18n["gui.message.title.warning"],
+                JOptionPane.WARNING_MESSAGE
+            )
+            Level.SEVERE -> JOptionPane.showMessageDialog(
+                frame,
+                translated,
+                I18n["gui.message.title.error"],
+                JOptionPane.ERROR_MESSAGE
+            )
+        }
     }
 
-    override fun printSeparator() = printMessage("-".repeat(25))
+    override fun printSeparator() = log("-".repeat(25))
 
     override fun onFinishedGenerating() {
-        if (Settings.playFinishedSound) {
+        if (settings.playFinishedSound) {
             Sounds.finished.start()
         }
     }
@@ -319,13 +347,10 @@ internal class Gui private constructor(
     }
 
     companion object {
+        private val logger = FluentLogger.forEnclosingClass()
+
         internal val defaultAttributes = SimpleAttributeSet().apply {
             StyleConstants.setForeground(this, Color(0x2E9DFF))
-        }
-
-        internal val boldAttributes = SimpleAttributeSet().apply {
-            StyleConstants.setForeground(this, Color(0x2E9DFF))
-            StyleConstants.setBold(this, true)
         }
 
         internal val errorAttributes = SimpleAttributeSet().apply {
@@ -348,14 +373,15 @@ internal class Gui private constructor(
         }
 
         fun createAndShow(
+            settings: Settings,
             gens: List<ContentGenerator>,
             autoFills: List<AutoFill>,
             defaultOutputFile: File
         ) = SwingUtilities.invokeAndWait {
-            Gui(gens, autoFills, defaultOutputFile).apply {
+            Gui(settings, gens, autoFills, defaultOutputFile).apply {
                 show()
-                if (Settings.showTipsOnStartup) {
-                    Tips.show(frame, isStartup = true)
+                if (settings.showTipsOnStartup) {
+                    Tips.show(frame, settings, isStartup = true)
                 }
             }
         }

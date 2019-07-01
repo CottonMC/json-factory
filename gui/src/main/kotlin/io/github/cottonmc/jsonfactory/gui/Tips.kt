@@ -18,8 +18,8 @@ internal object Tips {
     /**
      * Shows the tip of the day dialog.
      */
-    fun show(frame: JFrame, isStartup: Boolean) {
+    fun show(frame: JFrame, settings: Settings, isStartup: Boolean) {
         tipOfTheDay.currentTip = Random.nextInt(tipOfTheDay.model.tipCount)
-        tipOfTheDay.showDialog(frame, Settings.createTipOfTheDayChoice(if (isStartup) null else true))
+        tipOfTheDay.showDialog(frame, settings.createTipOfTheDayChoice(if (isStartup) null else true))
     }
 }

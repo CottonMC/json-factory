@@ -1,13 +1,13 @@
 package io.github.cottonmc.jsonfactory.cli
 
 import io.github.cottonmc.jsonfactory.frontend.Frontend
-import io.github.cottonmc.jsonfactory.frontend.MessageType
 import io.github.cottonmc.jsonfactory.frontend.i18n.LayeredI18n
 import io.github.cottonmc.jsonfactory.frontend.i18n.ResourceBundleI18n
 import io.github.cottonmc.jsonfactory.frontend.i18n.invoke
 import io.github.cottonmc.jsonfactory.frontend.plugin.*
 import java.nio.file.Path
 import java.nio.file.Paths
+import java.util.logging.Level
 import kotlin.reflect.KClass
 
 internal class Cli(val outputDirectory: Path?, val pluginClasses: Set<String>) : Frontend {
@@ -22,10 +22,9 @@ internal class Cli(val outputDirectory: Path?, val pluginClasses: Set<String>) :
         setOf(ResourceBundleI18n("json-factory.i18n.I18n-cli"), *plugins.mapNotNull(Plugin::i18n).toTypedArray())
     )
 
-    override fun printMessage(msg: String, type: MessageType, vararg messageParameters: Any?) = when (type) {
-        // TODO: I18n
-        MessageType.Warn, MessageType.Error -> System.err.println(i18n(msg, messageParameters))
-        else -> println(i18n(msg, messageParameters))
+    override fun log(msg: String, level: Level, vararg messageParameters: Any?) = when (level) {
+        Level.WARNING, Level.SEVERE -> System.err.println("${level.name}: " + i18n(msg, messageParameters))
+        else -> println("${level.name}: " + i18n(msg, messageParameters))
     }
 
     override fun printSeparator() {}

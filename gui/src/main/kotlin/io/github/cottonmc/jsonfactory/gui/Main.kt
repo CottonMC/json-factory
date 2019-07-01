@@ -43,8 +43,9 @@ private object Main : Runnable {
 
         val themes = plugins.filterIsInstance<GuiPlugin>().flatMap(GuiPlugin::themes)
 
-        Settings.init(themes)
-        Gui.createAndShow(gens, plugins.flatMap(Plugin::autoFills), defaultOutputFile)
+        val settings = Settings(themes)
+        settings.init()
+        Gui.createAndShow(settings, gens, plugins.flatMap(Plugin::autoFills), defaultOutputFile)
     }
 }
 

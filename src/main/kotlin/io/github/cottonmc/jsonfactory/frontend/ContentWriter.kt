@@ -5,6 +5,7 @@ import io.github.cottonmc.jsonfactory.gens.ContentGenerator
 import kotlinx.coroutines.*
 import java.nio.file.Files
 import java.nio.file.Path
+import java.util.logging.Level
 
 /**
  * A coroutine-based generation and writing backend used for [Frontend]s.
@@ -17,21 +18,19 @@ class ContentWriter(private val frontend: Frontend, private val generators: Iter
      * Generates and writes files with all selected generators.
      */
     suspend fun writeAll(ids: List<Identifier>) {
-        // TODO: L10n for the messages
         frontend.selectOutputDirectory()?.let { outputDir ->
             check(Files.isDirectory(outputDir)) {
                 "Output path must be a directory!"
             }
 
             frontend.printSeparator()
-            frontend.printMessage("Started generating.", MessageType.Important)
-            frontend.printMessage("In $outputDir")
+            frontend.log("message.writer.started_generating", Level.INFO, outputDir)
 
             ids.flatMap { id ->
                 write(id, outputDir)
             }.joinAll()
 
-            frontend.printMessage("Finished generating.", MessageType.Important)
+            frontend.log("message.writer.finished_generating")
             frontend.onFinishedGenerating()
         }
     }
@@ -61,7 +60,7 @@ class ContentWriter(private val frontend: Frontend, private val generators: Iter
                     Files.createDirectories(path.parent)
                     value.writeToStream(Files.newOutputStream(path))
 
-                    frontend.printMessage("Generated " + resourceDir.relativize(path))
+                    frontend.log("message.writer.generated", Level.INFO, resourceDir.relativize(path))
                 }
             }
         }

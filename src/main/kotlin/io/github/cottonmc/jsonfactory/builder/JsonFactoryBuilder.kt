@@ -1,9 +1,9 @@
 package io.github.cottonmc.jsonfactory.builder
 
+import com.google.common.flogger.FluentLogger
 import io.github.cottonmc.jsonfactory.data.Identifier
 import io.github.cottonmc.jsonfactory.frontend.Frontend
 import io.github.cottonmc.jsonfactory.frontend.ContentWriter
-import io.github.cottonmc.jsonfactory.frontend.MessageType
 import io.github.cottonmc.jsonfactory.frontend.i18n.invoke
 import io.github.cottonmc.jsonfactory.frontend.i18n.ResourceBundleI18n
 import io.github.cottonmc.jsonfactory.gens.AbstractContentGenerator
@@ -11,9 +11,12 @@ import io.github.cottonmc.jsonfactory.gens.ContentGenerator
 import kotlinx.coroutines.runBlocking
 import java.io.File
 import java.nio.file.Path
+import java.util.logging.Level
 
 /**
  * Builder class, as an API frontend.
+ *
+ * Note: using this class requires a Flogger (https://github.com/google/flogger) backend.
  */
 class JsonFactoryBuilder : Frontend {
     private var folder: File = File(".")
@@ -22,24 +25,14 @@ class JsonFactoryBuilder : Frontend {
     private var addCallback: (ContentGenerator) -> ContentGenerator = { it }
     private val i18n = ResourceBundleI18n.createBackendI18n()
 
-    override fun printMessage(msg: String, type: MessageType, vararg messageParameters: Any?) {
-        val translated = i18n(msg, messageParameters)
-        when (type) {
-            MessageType.Error -> System.err.println("ERROR: $translated")
-            MessageType.Important -> println("IMPORTANT: $translated")
-            MessageType.Warn -> println("WARN: $translated")
-            MessageType.Default -> println("DEFAULT: $translated")
-        }
-    }
+    override fun log(msg: String, level: Level, vararg messageParameters: Any?) =
+        logger.at(level).log(i18n(msg, messageParameters))
 
     override fun printSeparator() {
         println()
     }
 
-    override fun onFinishedGenerating() {
-        // TODO: I18n
-        printMessage("Generation finished.", MessageType.Default)
-    }
+    override fun onFinishedGenerating() {}
 
     override suspend fun shouldOverwriteFile(path: Path): Boolean {
         return false
@@ -99,5 +92,9 @@ class JsonFactoryBuilder : Frontend {
      */
     fun generate() = runBlocking {
         ContentWriter(this@JsonFactoryBuilder, generators).writeAll(identifiers)
+    }
+
+    companion object {
+        private val logger by lazy { FluentLogger.forEnclosingClass() }
     }
 }

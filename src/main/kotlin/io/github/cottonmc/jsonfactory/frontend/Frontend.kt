@@ -1,21 +1,24 @@
 package io.github.cottonmc.jsonfactory.frontend
 
 import java.nio.file.Path
+import java.util.logging.Level
 
 /**
  * A json-factory frontend. Used by [ContentWriter] for generating content and printing messages.
  */
 interface Frontend {
     /**
-     * Prints a [message][msg] of the [type] in the frontend's log, formatted with the [messageParameters].
+     * Prints a [message][msg] at the [level] in the frontend's log, formatted with the [messageParameters].
+     * Errors and warnings should always be displayed to the user.
      *
      * The message can be an [i18n][io.github.cottonmc.jsonfactory.frontend.i18n.I18n] key.
      */
-    fun printMessage(msg: String, type: MessageType = MessageType.Default, vararg messageParameters: Any?)
+    fun log(msg: String, level: Level = Level.INFO, vararg messageParameters: Any?)
 
     /**
      * Prints a separator in the frontend's log.
      */
+    // TODO: Is this needed
     fun printSeparator()
 
     /**

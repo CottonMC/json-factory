@@ -57,13 +57,14 @@ publishing {
     }
 }
 
-fun getCommitHash(): String = (ext["grgit"] as Grgit?)?.let { grgit ->
-    grgit.log(mapOf("paths" to listOf("gui"), "maxCommits" to 1))[0].id.substring(0, 8)
-} ?: "unavailable"
+val commitHash: String by lazy {
+    (ext["grgit"] as Grgit?)?.let { grgit ->
+        grgit.log(mapOf("paths" to listOf("gui"), "maxCommits" to 1))[0].id.substring(0, 8)
+    } ?: "unknown"
+}
 
 tasks.getByName<ProcessResources>("processResources") {
     inputs.property("version", version)
-    val commitHash = getCommitHash()
     inputs.property("commitHash", commitHash)
     filesMatching("json-factory/version-info.properties") {
         expand("version" to version, "commitHash" to commitHash)

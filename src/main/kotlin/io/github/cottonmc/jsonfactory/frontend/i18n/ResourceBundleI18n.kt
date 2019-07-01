@@ -3,6 +3,7 @@ package io.github.cottonmc.jsonfactory.frontend.i18n
 import java.text.MessageFormat
 import java.util.Locale
 import java.util.ResourceBundle
+import kotlin.properties.Delegates
 
 /**
  * An [I18n] instance using resource bundles at the backend.
@@ -14,12 +15,10 @@ import java.util.ResourceBundle
 class ResourceBundleI18n(private val bundleName: String, locale: Locale = Locale.getDefault()) : I18n {
     private val localeChangeListeners: MutableList<LocaleChangeListener> = ArrayList()
 
-    override var locale: Locale = locale
-        set(value) {
-            localeChangeListeners.forEach { it(field, value) }
-            bundle = ResourceBundle.getBundle(bundleName, value)
-            field = value
-        }
+    override var locale: Locale by Delegates.observable(locale) { _, old, new ->
+        localeChangeListeners.forEach { it(old, new) }
+        bundle = ResourceBundle.getBundle(bundleName, new)
+    }
 
     private var bundle: ResourceBundle = ResourceBundle.getBundle(bundleName, locale)
 

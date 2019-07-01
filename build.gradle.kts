@@ -50,6 +50,7 @@ dependencies {
     api("com.google.code.gson:gson:2.8.5")
     api(kotlin("reflect"))
     api("io.arrow-kt:arrow-core-data:0.9.0")
+    api("com.google.flogger:flogger:0.4")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.2.0")
 
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.2.0")
