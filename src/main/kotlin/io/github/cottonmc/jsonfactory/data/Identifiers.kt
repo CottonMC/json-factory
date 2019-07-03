@@ -1,14 +1,13 @@
 package io.github.cottonmc.jsonfactory.data
 
-import arrow.core.Either
-import arrow.core.Left
-import arrow.core.Right
-import io.github.cottonmc.jsonfactory.data.Identifier
+import arrow.core.*
+import arrow.core.extensions.either.monad.binding
 
 /**
  * [Identifier] utilities.
  * @since 0.5.0
  */
+// TODO: Some sort of i18n for these
 object Identifiers {
     /**
      * Converts a [list of ID strings][list] into a list of identifiers (right) or an error message (left).
@@ -18,13 +17,11 @@ object Identifiers {
             return Left("The ID input is empty.")
         }
 
-        return Right(list.mapNotNull { idText ->
-            Identifier.orNull(idText).also { id ->
-                if (id == null) {
-                    return Left("Invalid ID: $idText")
-                }
+        return binding {
+            list.map { idText ->
+                Identifier.parse(idText).bind()
             }
-        })
+        }
     }
 
     /**
@@ -35,4 +32,23 @@ object Identifiers {
      */
     fun convertToIds(idString: String): Either<String, List<Identifier>> =
         convertToIds(idString.split(",").map(String::trim))
+
+    /**
+     * Converts a [list of ID strings][list] into a list of validated identifiers (right) or an error message (left).
+     *
+     * The resulting identifiers will be valid for using in Minecraft.
+     * @see convertToIds
+     * @see Identifier.hasValidNamespace
+     * @see Identifier.hasValidPath
+     */
+    fun convertToValidatedIds(list: List<String>): Either<String, List<Identifier>> =
+        convertToIds(list).flatMap {
+            it.map { id ->
+                when {
+                    !id.hasValidNamespace() -> return@flatMap Left("Invalid namespace: ${id.namespace} in $id")
+                    !id.hasValidPath() -> return@flatMap Left("Invalid path: ${id.path} in $id")
+                    else -> id
+                }
+            }.right()
+        }
 }
