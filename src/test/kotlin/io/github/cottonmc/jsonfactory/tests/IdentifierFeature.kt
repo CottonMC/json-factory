@@ -1,5 +1,6 @@
 package io.github.cottonmc.jsonfactory.tests
 
+import arrow.core.Either
 import arrow.core.Option
 import arrow.core.Try
 import io.github.cottonmc.jsonfactory.data.Identifier
@@ -8,6 +9,8 @@ import io.github.cottonmc.jsonfactory.tests.util.isNone
 import org.spekframework.spek2.Spek
 import org.spekframework.spek2.style.gherkin.Feature
 import strikt.api.expectThat
+import strikt.assertions.containsExactly
+import strikt.assertions.isA
 import strikt.assertions.isEqualTo
 
 object IdentifierFeature : Spek({
@@ -123,6 +126,140 @@ object IdentifierFeature : Spek({
 
             Then("the result should be null") {
                 expectThat(parsed).isNone()
+            }
+        }
+
+        Scenario("namespace validation") {
+            lateinit var input: Identifier
+
+            Given("an id with an invalid namespace") {
+                input = Identifier("Invalid Namespace", "some_path")
+            }
+
+            Then("its namespace should not be valid") {
+                expectThat(input).assertThat("has invalid namespace") {
+                    !it.hasValidNamespace()
+                }
+            }
+        }
+
+        Scenario("path validation") {
+            lateinit var input: Identifier
+
+            Given("an id with an path namespace") {
+                input = Identifier("some_namespace", "Invalid Path")
+            }
+
+            Then("its path should not be valid") {
+                expectThat(input).assertThat("has invalid path") {
+                    !it.hasValidPath()
+                }
+            }
+        }
+
+        Scenario("validating a valid id") {
+            lateinit var input: Identifier
+
+            Given("a valid id") {
+                input = Identifier("a_valid", "identifier")
+            }
+
+            Then("it should be valid") {
+                expectThat(input)
+                    .assertThat("its namespace should be valid", Identifier::hasValidNamespace)
+                    .assertThat("its path should be valid", Identifier::hasValidPath)
+            }
+        }
+
+        Scenario("validating a list of valid ids") {
+            lateinit var input: List<Identifier>
+
+            Given("valid ids") {
+                input = listOf(Identifier.mc("stone"), Identifier.mc("sand"), Identifier.mc("cactus"))
+            }
+
+            lateinit var validated: Either<String, List<Identifier>>
+            When("they are validated") {
+                validated = Identifier.validateAll(input)
+            }
+
+            Then("they should be valid") {
+                expectThat(validated)
+                    .isA<Either.Right<List<Identifier>>>()
+                    .get { b }
+                    .containsExactly(input)
+            }
+        }
+
+        Scenario("validating a list with an invalid id") {
+            lateinit var input: List<Identifier>
+
+            Given("valid ids") {
+                input = listOf(Identifier.mc("oh no"), Identifier.mc("sand"), Identifier.mc("cactus"))
+            }
+
+            lateinit var validated: Either<String, List<Identifier>>
+            When("they are validated") {
+                validated = Identifier.validateAll(input)
+            }
+
+            Then("they should be invalid") {
+                expectThat(validated).isA<Either.Left<*>>()
+            }
+        }
+
+        Scenario("splitting and parsing a valid id string with a single id") {
+            lateinit var input: String
+
+            Given("a valid input") {
+                input = "minecraft:stone"
+            }
+
+            lateinit var parsed: Either<String, List<Identifier>>
+            When("it is split and parsed") {
+                parsed = Identifier.splitAndParse(input)
+            }
+
+            Then("it should have a single correct id") {
+                expectThat(parsed).isA<Either.Right<List<Identifier>>>()
+                    .get { b }
+                    .containsExactly(Identifier("minecraft", "stone"))
+            }
+        }
+
+        Scenario("splitting and parsing a valid id string with multiple ids") {
+            lateinit var input: String
+
+            Given("a valid input") {
+                input = "minecraft:stone,adorn:oak_chair"
+            }
+
+            lateinit var parsed: Either<String, List<Identifier>>
+            When("it is split and parsed") {
+                parsed = Identifier.splitAndParse(input)
+            }
+
+            Then("it should have correct ids") {
+                expectThat(parsed).isA<Either.Right<List<Identifier>>>()
+                    .get { b }
+                    .containsExactly(Identifier("minecraft", "stone"), Identifier("adorn", "oak_chair"))
+            }
+        }
+
+        Scenario("splitting and parsing an invalid id string") {
+            lateinit var input: String
+
+            Given("an invalid input") {
+                input = "minecraft:stone,oak_chair" // No namespace!
+            }
+
+            lateinit var parsed: Either<String, List<Identifier>>
+            When("it is split and parsed") {
+                parsed = Identifier.splitAndParse(input)
+            }
+
+            Then("it should not have succeeded") {
+                expectThat(parsed).isA<Either.Left<*>>()
             }
         }
     }

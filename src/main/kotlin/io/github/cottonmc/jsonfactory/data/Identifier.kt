@@ -1,9 +1,7 @@
 package io.github.cottonmc.jsonfactory.data
 
-import arrow.core.Either
-import arrow.core.Left
-import arrow.core.identity
-import arrow.core.right
+import arrow.core.*
+import arrow.core.extensions.either.monad.binding
 import com.google.gson.JsonPrimitive
 import com.google.gson.JsonSerializationContext
 import com.google.gson.JsonSerializer
@@ -69,12 +67,56 @@ data class Identifier(val namespace: String, val path: String) {
             val split = combined.split(':')
 
             if (split.size != 2) {
-                // size != 2 means that the string either doesn't have a namespace or
-                // has too many parts
+                // size != 2 means that the string either doesn't have a namespace or has too many parts
                 return Left("Identifiers must have exactly one colon")
             }
 
             return Identifier(split[0], split[1]).right()
+        }
+
+        /**
+         * Parses a [collection of ID strings][idStrings] into a list of identifiers (right) or an error message (left).
+         * @see parse
+         */
+        fun parseAll(idStrings: Collection<String>): Either<String, List<Identifier>> {
+            if (idStrings.isEmpty()) {
+                return Left("The ID input is empty.")
+            }
+
+            return binding {
+                idStrings.map { idText ->
+                    parse(idText).bind()
+                }
+            }
+        }
+
+        /**
+         * Parses a comma-separated [id string][idString] into a into a list of identifiers (right)
+         * or an error message (left). Whitespaces before and after the comma-separated parts are trimmed.
+         *
+         * Equivalent to `parseAll(idString.split(",").map(String::trim))`.
+         * @see parse
+         * @see parseAll
+         */
+        fun splitAndParse(idString: String): Either<String, List<Identifier>> =
+            parseAll(idString.split(",").map(String::trim))
+
+        /**
+         * Validates a [list of identifiers][ids] into a list of validated identifiers (right) or an error message (left).
+         *
+         * The resulting identifiers will be valid for using in Minecraft.
+         * @see Identifier.hasValidNamespace
+         * @see Identifier.hasValidPath
+         */
+        fun validateAll(ids: List<Identifier>): Either<String, List<Identifier>> {
+            for (id in ids) {
+                if (!id.hasValidNamespace())
+                    return Left("ID '$id' has an invalid namespace")
+                else if (!id.hasValidPath())
+                    return Left("ID '$id' has an invalid path")
+            }
+
+            return ids.right()
         }
 
         override fun serialize(src: Identifier, typeOfSrc: Type?, context: JsonSerializationContext?) =

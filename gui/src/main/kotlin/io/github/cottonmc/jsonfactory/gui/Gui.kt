@@ -1,7 +1,7 @@
 package io.github.cottonmc.jsonfactory.gui
 
 import com.google.common.flogger.FluentLogger
-import io.github.cottonmc.jsonfactory.data.Identifiers
+import io.github.cottonmc.jsonfactory.data.Identifier
 import io.github.cottonmc.jsonfactory.frontend.AutoFill
 import io.github.cottonmc.jsonfactory.frontend.ContentWriter
 import io.github.cottonmc.jsonfactory.frontend.Frontend
@@ -61,7 +61,7 @@ internal class Gui private constructor(
     private val saveButton = JFButton("gui.generation_panel.generate").apply {
         addActionListener {
             // TODO: Check IDs live as you're typing?
-            Identifiers.convertToIds(idField.text).fold(
+            Identifier.splitAndParse(idField.text).fold(
                 { log(it, Level.WARNING) },
                 { ids ->
                     GlobalScope.launch {

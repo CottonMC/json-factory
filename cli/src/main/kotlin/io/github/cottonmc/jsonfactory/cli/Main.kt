@@ -4,7 +4,7 @@ import arrow.core.Left
 import arrow.core.Try
 import arrow.core.flatMap
 import arrow.core.identity
-import io.github.cottonmc.jsonfactory.data.Identifiers
+import io.github.cottonmc.jsonfactory.data.Identifier
 import io.github.cottonmc.jsonfactory.frontend.ContentWriter
 import io.github.cottonmc.jsonfactory.frontend.plugin.Plugin
 import io.github.cottonmc.jsonfactory.gens.Gens
@@ -89,7 +89,7 @@ private class GenerateCommand : SharedOptions(), Callable<Unit> {
             exitProcess(1)
         }
 
-        Identifiers.convertToIds(identifiers).flatMap {
+        Identifier.parseAll(identifiers).flatMap {
             Try {
                 ContentWriter(cli, generators.map { genId ->
                     allGens.find { gen ->
