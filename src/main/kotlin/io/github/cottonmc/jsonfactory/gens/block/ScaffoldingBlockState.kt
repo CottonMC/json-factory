@@ -16,7 +16,7 @@ internal object ScaffoldingBlockState :
 
     override fun generate(id: Identifier) = listOf(
         VariantBlockState.create(id, setOf(BlockStateProperty.scaffoldingBottom)) { values, variant ->
-            variant.copy(model = variant.model.wrapPath("", "${typePrefixes[values["bottom"]]}" + "_scaffolding"))
+            variant.copy(model = variant.model.suffixPath("${typePrefixes[values["bottom"]]}" + "_scaffolding"))
         }.suffixed("scaffolding")
     )
 }
