@@ -498,7 +498,7 @@ object Gens {
          * The scaffolding item model generator.
          */
         val SCAFFOLDING_ITEM_MODEL: ContentGenerator =
-            SuffixedBlockItemModel("scaffolding", GeneratorInfo.SCAFFOLDING)
+            SuffixedBlockItemModel("scaffolding", GeneratorInfo.SCAFFOLDING, "stable_scaffolding")
 
         /**
          * The scaffolding loot table generator.

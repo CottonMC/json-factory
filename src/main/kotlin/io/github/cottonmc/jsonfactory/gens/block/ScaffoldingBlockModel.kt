@@ -12,13 +12,19 @@ internal object ScaffoldingBlockModel :
         Model(
             parent = Identifier.mc("block/scaffolding_stable"),
             textures = mapOf(
-                "all" to id.prefixPath("block/")
+                "particle" to id.wrapPath("block/", "_top"),
+                "top" to id.wrapPath("block/", "_top"),
+                "side" to id.wrapPath("block/", "_side"),
+                "bottom" to id.wrapPath("block/", "_bottom")
             )
         ).suffixed("stable_scaffolding"),
         Model(
             parent = Identifier.mc("block/scaffolding_unstable"),
             textures = mapOf(
-                "all" to id.prefixPath("block/")
+                "particle" to id.wrapPath("block/", "_top"),
+                "top" to id.wrapPath("block/", "_top"),
+                "side" to id.wrapPath("block/", "_side"),
+                "bottom" to id.wrapPath("block/", "_bottom")
             )
         ).suffixed("unstable_scaffolding")
     )

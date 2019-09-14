@@ -10,13 +10,13 @@ import io.github.cottonmc.jsonfactory.output.suffixed
 internal object ScaffoldingBlockState :
     AbstractContentGenerator("scaffolding.block_state", "blockstates", GeneratorInfo.SCAFFOLDING) {
     private val typePrefixes = mapOf(
-        "true" to "unstable_",
-        "false" to "stable_"
+        "true" to "_unstable",
+        "false" to "_stable"
     )
 
     override fun generate(id: Identifier) = listOf(
         VariantBlockState.create(id, setOf(BlockStateProperty.scaffoldingBottom)) { values, variant ->
-            variant.copy(model = variant.model.wrapPath("${typePrefixes[values["bottom"]]}", "_scaffolding"))
+            variant.copy(model = variant.model.suffixPath("${typePrefixes[values["bottom"]]}" + "_scaffolding"))
         }.suffixed("scaffolding")
     )
 }
