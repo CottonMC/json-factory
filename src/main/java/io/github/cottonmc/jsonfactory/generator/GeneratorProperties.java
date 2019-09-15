@@ -1,7 +1,7 @@
-package io.github.cottonmc.jsonfactory;
+package io.github.cottonmc.jsonfactory.generator;
 
 /**
- * These generator properties should always be available to the generator.
+ * These generator properties should always be available to the template.
  */
 public final class GeneratorProperties {
     public static final String ID = "id";

@@ -1,0 +1,5 @@
+{
+  "variants": {
+    "": { "model": "{{id.namespace}}:block/{{id.path}}" }
+  }
+}

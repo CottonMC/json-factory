@@ -8,13 +8,13 @@ import spock.lang.Specification
 class MustacheGeneratorSpec extends Specification {
     def "using 'id' in templates"() {
         given:
-        def generator = new MustacheContentGenerator(template)
+        def generator = new MustacheContentGenerator("test", template)
 
         when:
         def result = generator.generate(id: new Identifier('minecraft:test'))
 
         then:
-        result == expected
+        result.collect { it.content } == [expected]
 
         where:
         template                                        | expected
@@ -25,13 +25,16 @@ class MustacheGeneratorSpec extends Specification {
 
     def "loading templates from the classpath"() {
         given:
-        def generator = new MustacheContentGenerator(new InputOf(this.class.getResource("/json-factory/test_1_input.json")))
-        def expected = this.class.getResource("/json-factory/test_1_output.json").readLines().join("\n")
+        def generator = new MustacheContentGenerator("test", new InputOf(this.class.getResource("/json-factory/${id}_input.json")))
+        def expected = this.class.getResource("/json-factory/${id}_output.json").readLines().join("\n")
 
         when:
         def result = generator.generate(id: new Identifier('adorn:test'))
 
         then:
-        result.trim() == expected
+        result.collect { it.content.trim() } == [expected]
+
+        where:
+        id << ['test_1', 'test_2']
     }
 }
