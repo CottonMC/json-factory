@@ -71,20 +71,9 @@ public final class GenerationContext implements Mustache.CustomContext {
      *
      * @param name the name of the variable
      * @return the variable value
-     * @throws MissingKeyException if there is no variable with the name
      */
     @Override
-    public Object get(String name) throws MissingKeyException {
-        if (data.containsKey(name)) {
-            return data.get(name);
-        } else {
-            throw new MissingKeyException(name);
-        }
-    }
-
-    public static class MissingKeyException extends NoSuchElementException {
-        public MissingKeyException(String message) {
-            super(message);
-        }
+    public Object get(String name) {
+        return data.get(name);
     }
 }

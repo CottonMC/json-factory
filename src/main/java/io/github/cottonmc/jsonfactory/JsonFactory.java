@@ -27,7 +27,7 @@ public final class JsonFactory {
         return generator.generate(context);
     }
 
-    public void generateTo(Path directory, GenerationContext context) throws IOException {
+    public Set<GenerationResult> generateTo(Path directory, GenerationContext context) throws IOException {
         Objects.requireNonNull(directory, "directory");
         Objects.requireNonNull(context, "context");
 
@@ -35,12 +35,16 @@ public final class JsonFactory {
             throw new IOException("Output path '" + directory + "' is not a directory");
         }
 
-        for (GenerationResult result : generate(context)) {
+        Set<GenerationResult> results = generate(context);
+
+        for (GenerationResult result : results) {
             Path target = directory.resolve(result.getPath().replace("/", directory.getFileSystem().getSeparator()));
 
             // Create missing containing directories
             Files.createDirectories(target.getParent());
             Files.write(target, result.getData().getBytes(StandardCharsets.UTF_8));
         }
+
+        return results;
     }
 }
