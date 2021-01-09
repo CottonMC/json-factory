@@ -1,6 +1,7 @@
 package io.github.cottonmc.jsonfactory.test;
 
-import io.github.cottonmc.jsonfactory.GenerationContext;
+import io.github.cottonmc.jsonfactory.context.ContextKeys;
+import io.github.cottonmc.jsonfactory.context.GenerationContext;
 import io.github.cottonmc.jsonfactory.GenerationResult;
 import io.github.cottonmc.jsonfactory.Identifier;
 import io.github.cottonmc.jsonfactory.generator.BlockGenerators;
@@ -19,7 +20,7 @@ final class SimpleBlockTests {
 
     @BeforeEach
     void given() {
-        context = new GenerationContext().add("id", ID);
+        context = new GenerationContext().add(ContextKeys.ID, ID);
     }
 
     @Test

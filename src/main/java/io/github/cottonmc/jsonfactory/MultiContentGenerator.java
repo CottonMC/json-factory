@@ -1,5 +1,6 @@
 package io.github.cottonmc.jsonfactory;
 
+import io.github.cottonmc.jsonfactory.context.GenerationContext;
 import io.github.cottonmc.jsonfactory.generator.ContentGenerator;
 
 import java.util.Arrays;

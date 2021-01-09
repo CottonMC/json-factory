@@ -1,6 +1,7 @@
 package io.github.cottonmc.jsonfactory;
 
 import com.samskivert.mustache.Template;
+import io.github.cottonmc.jsonfactory.context.GenerationContext;
 import io.github.cottonmc.jsonfactory.generator.ContentGenerator;
 
 import java.util.Collections;

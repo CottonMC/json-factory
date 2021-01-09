@@ -1,6 +1,7 @@
 package io.github.cottonmc.jsonfactory.test;
 
-import io.github.cottonmc.jsonfactory.GenerationContext;
+import io.github.cottonmc.jsonfactory.context.ContextKeys;
+import io.github.cottonmc.jsonfactory.context.GenerationContext;
 import io.github.cottonmc.jsonfactory.GenerationResult;
 import io.github.cottonmc.jsonfactory.Identifier;
 import io.github.cottonmc.jsonfactory.JsonFactory;
@@ -22,7 +23,7 @@ final class JsonFactoryTests {
     void generateToDirectory() throws Exception {
         Path root = Files.createTempDirectory("json-factory-test");
         JsonFactory factory = new JsonFactory(BlockGenerators.SIMPLE_BLOCK);
-        Set<GenerationResult> results = factory.generateTo(root, new GenerationContext().add("id", ID));
+        Set<GenerationResult> results = factory.generateTo(root, new GenerationContext().add(ContextKeys.ID, ID));
 
         then(results)
             .extracting(GenerationResult::getPath)

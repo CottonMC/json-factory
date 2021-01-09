@@ -1,10 +1,9 @@
-package io.github.cottonmc.jsonfactory;
+package io.github.cottonmc.jsonfactory.context;
 
 import com.samskivert.mustache.Mustache;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.NoSuchElementException;
 import java.util.Objects;
 
 /**

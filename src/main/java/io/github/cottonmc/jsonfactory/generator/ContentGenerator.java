@@ -1,6 +1,6 @@
 package io.github.cottonmc.jsonfactory.generator;
 
-import io.github.cottonmc.jsonfactory.GenerationContext;
+import io.github.cottonmc.jsonfactory.context.GenerationContext;
 import io.github.cottonmc.jsonfactory.GenerationResult;
 
 import java.util.Set;
