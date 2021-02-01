@@ -29,7 +29,7 @@ public interface ContentGenerator {
     /**
      * Gets the required context keys for generating data using this generator.
      *
-     * @implSpec The default implementation returns a set containing {@link ContextKeys#ID}.
+     * <p>The default implementation returns a set containing {@link ContextKeys#ID}.
      *
      * @return the required context keys
      */
