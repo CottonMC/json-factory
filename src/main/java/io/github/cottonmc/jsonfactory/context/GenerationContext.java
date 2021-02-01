@@ -61,6 +61,7 @@ public final class GenerationContext implements Mustache.CustomContext {
      * @throws NullPointerException if the defaults are null
      */
     public GenerationContext withDefaults(GenerationContext defaults) {
+        Objects.requireNonNull(defaults, "defaults");
         GenerationContext copy = copy();
         defaults.data.forEach(copy.data::putIfAbsent);
         return copy;
