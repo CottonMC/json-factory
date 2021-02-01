@@ -27,7 +27,7 @@ final class JsonFactoryTests {
 
         then(results)
             .extracting(GenerationResult::getPath)
-            .extracting(root::resolve)
+            .extracting(path -> path.resolveAgainst(root))
             .allMatch(Files::exists, "file exists");
     }
 }

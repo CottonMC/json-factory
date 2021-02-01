@@ -2,8 +2,6 @@ package io.github.cottonmc.jsonfactory.generator;
 
 import com.samskivert.mustache.Mustache;
 import com.samskivert.mustache.Template;
-import io.github.cottonmc.jsonfactory.MultiContentGenerator;
-import io.github.cottonmc.jsonfactory.MustacheContentGenerator;
 
 import java.io.IOException;
 import java.io.InputStream;

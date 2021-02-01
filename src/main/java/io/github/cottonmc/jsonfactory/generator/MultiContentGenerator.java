@@ -1,7 +1,7 @@
-package io.github.cottonmc.jsonfactory;
+package io.github.cottonmc.jsonfactory.generator;
 
+import io.github.cottonmc.jsonfactory.GenerationResult;
 import io.github.cottonmc.jsonfactory.context.GenerationContext;
-import io.github.cottonmc.jsonfactory.generator.ContentGenerator;
 
 import java.util.Arrays;
 import java.util.HashSet;

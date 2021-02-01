@@ -1,12 +1,15 @@
-package io.github.cottonmc.jsonfactory;
+package io.github.cottonmc.jsonfactory.generator;
 
 import com.samskivert.mustache.Template;
+import io.github.cottonmc.jsonfactory.GenerationPath;
+import io.github.cottonmc.jsonfactory.GenerationResult;
 import io.github.cottonmc.jsonfactory.context.GenerationContext;
-import io.github.cottonmc.jsonfactory.generator.ContentGenerator;
 
 import java.util.Collections;
 import java.util.Objects;
 import java.util.Set;
+
+import static org.organicdesign.fp.StaticImports.vec;
 
 public final class MustacheContentGenerator implements ContentGenerator {
     private final Template pathTemplate;
@@ -20,7 +23,10 @@ public final class MustacheContentGenerator implements ContentGenerator {
     @Override
     public Set<GenerationResult> generate(GenerationContext context) {
         return Collections.singleton(
-            new GenerationResult(pathTemplate.execute(context), contentTemplate.execute(context))
+            new GenerationResult(
+                new GenerationPath(vec(pathTemplate.execute(context).split("/"))),
+                contentTemplate.execute(context)
+            )
         );
     }
 }

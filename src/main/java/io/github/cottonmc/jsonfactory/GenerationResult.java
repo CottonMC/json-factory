@@ -2,16 +2,19 @@ package io.github.cottonmc.jsonfactory;
 
 import java.util.Objects;
 
+/**
+ * The result from a content generator, containing a path and the generated data.
+ */
 public final class GenerationResult {
-    private final String path;
+    private final GenerationPath path;
     private final String data;
 
-    public GenerationResult(String path, String data) {
+    public GenerationResult(GenerationPath path, String data) {
         this.path = Objects.requireNonNull(path, "path");
         this.data = Objects.requireNonNull(data, "data");
     }
 
-    public String getPath() {
+    public GenerationPath getPath() {
         return path;
     }
 
@@ -30,5 +33,10 @@ public final class GenerationResult {
     @Override
     public int hashCode() {
         return Objects.hash(path, data);
+    }
+
+    @Override
+    public String toString() {
+        return "GenerationResult[path=" + path + ", data=" + data + "]";
     }
 }

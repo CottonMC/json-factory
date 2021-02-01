@@ -2,6 +2,7 @@ package io.github.cottonmc.jsonfactory;
 
 import io.github.cottonmc.jsonfactory.context.GenerationContext;
 import io.github.cottonmc.jsonfactory.generator.ContentGenerator;
+import io.github.cottonmc.jsonfactory.generator.MultiContentGenerator;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -39,7 +40,7 @@ public final class JsonFactory {
         Set<GenerationResult> results = generate(context);
 
         for (GenerationResult result : results) {
-            Path target = directory.resolve(result.getPath().replace("/", directory.getFileSystem().getSeparator()));
+            Path target = result.getPath().resolveAgainst(directory);
 
             // Create missing containing directories
             Files.createDirectories(target.getParent());

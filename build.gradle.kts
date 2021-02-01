@@ -4,11 +4,17 @@ plugins {
 }
 
 java {
-    sourceCompatibility = JavaVersion.VERSION_1_8
-    targetCompatibility = JavaVersion.VERSION_1_8
+    sourceCompatibility = JavaVersion.VERSION_11
+    targetCompatibility = JavaVersion.VERSION_11
 
     withSourcesJar()
     withJavadocJar()
+
+    toolchain {
+        if (!JavaVersion.current().isJava11Compatible) {
+            languageVersion.set(JavaLanguageVersion.of(11))
+        }
+    }
 }
 
 repositories {
@@ -17,6 +23,8 @@ repositories {
 
 dependencies {
     api("com.samskivert", "jmustache", "1.15")
+    implementation("org.organicdesign", "Paguro", "3.5.9")
+    compileOnly("org.jetbrains", "annotations", "20.1.0")
 
     testImplementation("blue.endless", "jankson", "1.2.0")
 
@@ -36,9 +44,7 @@ tasks {
     }
 
     withType<JavaCompile> {
-        if (JavaVersion.current().isJava9Compatible) {
-            options.release.set(8)
-        }
+        options.release.set(11)
     }
 }
 
