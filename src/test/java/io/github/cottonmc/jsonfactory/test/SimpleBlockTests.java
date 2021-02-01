@@ -1,5 +1,6 @@
 package io.github.cottonmc.jsonfactory.test;
 
+import io.github.cottonmc.jsonfactory.GenerationPath;
 import io.github.cottonmc.jsonfactory.context.ContextKeys;
 import io.github.cottonmc.jsonfactory.context.GenerationContext;
 import io.github.cottonmc.jsonfactory.GenerationResult;
@@ -32,6 +33,11 @@ final class SimpleBlockTests {
             .singleElement()
             .extracting(TestUtil::toJson)
             .isEqualTo(TestUtil.expected("block-models/simple.json"));
+
+        then(results)
+            .singleElement()
+            .extracting(GenerationResult::getPath)
+            .isEqualTo(new GenerationPath("assets", "tiny", "models", "block", "potato.json"));
     }
 
     @Test
@@ -43,6 +49,11 @@ final class SimpleBlockTests {
             .singleElement()
             .extracting(TestUtil::toJson)
             .isEqualTo(TestUtil.expected("block-item-models/simple.json"));
+
+        then(results)
+            .singleElement()
+            .extracting(GenerationResult::getPath)
+            .isEqualTo(new GenerationPath("assets", "tiny", "models", "item", "potato.json"));
     }
 
     @Test
@@ -54,6 +65,11 @@ final class SimpleBlockTests {
             .singleElement()
             .extracting(TestUtil::toJson)
             .isEqualTo(TestUtil.expected("block-states/simple.json"));
+
+        then(results)
+            .singleElement()
+            .extracting(GenerationResult::getPath)
+            .isEqualTo(new GenerationPath("assets", "tiny", "blockstates", "potato.json"));
     }
 
     @Test
@@ -65,5 +81,10 @@ final class SimpleBlockTests {
             .singleElement()
             .extracting(TestUtil::toJson)
             .isEqualTo(TestUtil.expected("block-loot-tables/simple.json"));
+
+        then(results)
+            .singleElement()
+            .extracting(GenerationResult::getPath)
+            .isEqualTo(new GenerationPath("data", "tiny", "loot_tables", "blocks", "potato.json"));
     }
 }
