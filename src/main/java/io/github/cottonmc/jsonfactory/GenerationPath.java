@@ -6,6 +6,8 @@ import java.nio.file.Path;
 import java.util.List;
 import java.util.Objects;
 
+import static org.organicdesign.fp.StaticImports.vec;
+
 /**
  * A path to a generated file.
  */
@@ -26,6 +28,16 @@ public final class GenerationPath {
         }
 
         this.parts = PersistentVector.ofIter(parts); // Convert the list to an immutable one
+    }
+
+    /**
+     * Creates a generation path from an array of path components.
+     * Any changes in the part array will <i>not</i> be reflected in this path object.
+     *
+     * @param parts the path components
+     */
+    public GenerationPath(String... parts) {
+        this(vec(Objects.requireNonNull(parts, "parts")));
     }
 
     /**

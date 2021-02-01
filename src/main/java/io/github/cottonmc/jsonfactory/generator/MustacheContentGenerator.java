@@ -9,8 +9,6 @@ import java.util.Collections;
 import java.util.Objects;
 import java.util.Set;
 
-import static org.organicdesign.fp.StaticImports.vec;
-
 /**
  * A content generator that uses {@linkplain Template Mustache templates} for generation.
  *
@@ -39,7 +37,7 @@ public final class MustacheContentGenerator implements ContentGenerator {
     public Set<GenerationResult> generate(GenerationContext context) {
         return Collections.singleton(
             new GenerationResult(
-                new GenerationPath(vec(pathTemplate.execute(context).split("/"))),
+                new GenerationPath(pathTemplate.execute(context).split("/")),
                 contentTemplate.execute(context)
             )
         );
