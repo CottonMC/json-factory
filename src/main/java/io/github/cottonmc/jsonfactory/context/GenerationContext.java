@@ -1,6 +1,7 @@
 package io.github.cottonmc.jsonfactory.context;
 
 import com.samskivert.mustache.Mustache;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -13,7 +14,7 @@ import java.util.Objects;
  * Java objects that use those conventions as well.
  */
 public final class GenerationContext implements Mustache.CustomContext {
-    private final Map<String, Object> data = new HashMap<>();
+    private final Map<String, @Nullable Object> data = new HashMap<>();
 
     /**
      * Adds a value to this context.
@@ -24,7 +25,7 @@ public final class GenerationContext implements Mustache.CustomContext {
      * @throws NullPointerException     if the key is null
      * @throws IllegalArgumentException if the key is already bound to a value
      */
-    public GenerationContext add(String key, Object value) {
+    public GenerationContext add(String key, @Nullable Object value) {
         Objects.requireNonNull(key, "key");
 
         if (!data.containsKey(key)) {
@@ -72,7 +73,7 @@ public final class GenerationContext implements Mustache.CustomContext {
      * @return the variable value
      */
     @Override
-    public Object get(String name) {
+    public @Nullable Object get(String name) {
         return data.get(name);
     }
 }
