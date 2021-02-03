@@ -12,32 +12,41 @@ import static org.organicdesign.fp.StaticImports.vec;
  * A path to a generated file.
  */
 public final class GenerationPath {
-    private final List<String> parts;
+    private final List<String> components;
 
     /**
      * Creates a generation path from a list of path components.
-     * Any changes in the part list will <i>not</i> be reflected in this path object.
+     * Any changes in the component list will <i>not</i> be reflected in this path object.
      *
-     * @param parts the path components
+     * @param components the path components
      */
-    public GenerationPath(List<String> parts) {
-        Objects.requireNonNull(parts, "parts");
+    public GenerationPath(List<String> components) {
+        Objects.requireNonNull(components, "components");
 
-        if (parts.isEmpty()) {
+        if (components.isEmpty()) {
             throw new IllegalArgumentException("Empty path");
         }
 
-        this.parts = PersistentVector.ofIter(parts); // Convert the list to an immutable one
+        this.components = PersistentVector.ofIter(components); // Convert the list to an immutable one
     }
 
     /**
      * Creates a generation path from an array of path components.
      * Any changes in the part array will <i>not</i> be reflected in this path object.
      *
-     * @param parts the path components
+     * @param components the path components
      */
-    public GenerationPath(String... parts) {
-        this(vec(Objects.requireNonNull(parts, "parts")));
+    public GenerationPath(String... components) {
+        this(vec(Objects.requireNonNull(components, "components")));
+    }
+
+    /**
+     * Gets an immutable list of this path's components.
+     *
+     * @return the path components
+     */
+    public List<String> getComponents() {
+        return components;
     }
 
     /**
@@ -48,7 +57,7 @@ public final class GenerationPath {
      */
     public String join(String separator) {
         Objects.requireNonNull(separator, "separator");
-        return String.join(separator, parts);
+        return String.join(separator, components);
     }
 
     /**
@@ -68,14 +77,14 @@ public final class GenerationPath {
      * @return a {@link Path} corresponding to this generation path
      */
     public Path toPath() {
-        String first = parts.get(0); // safe because non-empty
+        String first = components.get(0); // safe because non-empty
         String[] more = new String[0];
 
-        if (parts.size() > 1) {
-            more = new String[parts.size() - 1];
+        if (components.size() > 1) {
+            more = new String[components.size() - 1];
 
-            for (int i = 1; i < parts.size(); i++) {
-                more[i - 1] = parts.get(i);
+            for (int i = 1; i < components.size(); i++) {
+                more[i - 1] = components.get(i);
             }
         }
 
@@ -87,12 +96,12 @@ public final class GenerationPath {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         GenerationPath that = (GenerationPath) o;
-        return parts.equals(that.parts);
+        return components.equals(that.components);
     }
 
     @Override
     public int hashCode() {
-        return parts.hashCode();
+        return components.hashCode();
     }
 
     @Override
