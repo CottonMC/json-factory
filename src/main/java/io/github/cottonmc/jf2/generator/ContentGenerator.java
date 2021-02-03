@@ -24,6 +24,7 @@ public interface ContentGenerator {
      * @param context the generation context, cannot be null
      * @return the generated data
      */
+    // TODO: A map here? There should be no duplicated paths...
     Set<GenerationResult> generate(GenerationContext context);
 
     /**
