@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "type=bottom": { "model": "{{id.namespace}}:block/{{id.path}}_slab" },
+    "type=top": { "model": "{{id.namespace}}:block/{{id.path}}_slab_top" },
+    "type=double": { "model": "{{id.namespace}}:block/{{id.path}}" }
+  }
+}

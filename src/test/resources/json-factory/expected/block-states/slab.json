@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "type=bottom": { "model": "tiny:block/potato_slab" },
+    "type=top": { "model": "tiny:block/potato_slab_top" },
+    "type=double": { "model": "tiny:block/potato" }
+  }
+}

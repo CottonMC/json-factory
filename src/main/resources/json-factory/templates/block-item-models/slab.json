@@ -1,0 +1,3 @@
+{
+  "parent": "{{id.namespace}}:block/{{id.path}}_slab"
+}

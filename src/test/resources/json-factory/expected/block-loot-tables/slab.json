@@ -1,0 +1,28 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "tiny:potato_slab",
+          "functions": [
+            { "function": "minecraft:explosion_decay" },
+            {
+              "function": "minecraft:set_count",
+              "conditions": [
+                {
+                  "block": "tiny:potato_slab",
+                  "properties": { "type": "double" },
+                  "condition": "minecraft:block_state_property"
+                }
+              ],
+              "count": 2
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
