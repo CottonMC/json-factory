@@ -1,4 +1,4 @@
-package io.github.cottonmc.jsonfactory;
+package io.github.cottonmc.jf2;
 
 import java.util.Objects;
 import java.util.regex.Pattern;

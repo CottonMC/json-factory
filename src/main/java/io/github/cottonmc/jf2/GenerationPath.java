@@ -1,4 +1,4 @@
-package io.github.cottonmc.jsonfactory;
+package io.github.cottonmc.jf2;
 
 import org.organicdesign.fp.collections.PersistentVector;
 

@@ -1,7 +1,7 @@
-package io.github.cottonmc.jsonfactory.generator;
+package io.github.cottonmc.jf2.generator;
 
-import io.github.cottonmc.jsonfactory.GenerationResult;
-import io.github.cottonmc.jsonfactory.context.GenerationContext;
+import io.github.cottonmc.jf2.GenerationResult;
+import io.github.cottonmc.jf2.context.GenerationContext;
 import org.organicdesign.fp.collections.ImList;
 import org.organicdesign.fp.collections.PersistentVector;
 

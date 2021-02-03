@@ -1,4 +1,4 @@
-package io.github.cottonmc.jsonfactory.context;
+package io.github.cottonmc.jf2.context;
 
 import com.samskivert.mustache.Mustache;
 import org.jetbrains.annotations.Nullable;

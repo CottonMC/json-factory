@@ -1,4 +1,4 @@
-package io.github.cottonmc.jsonfactory.generator;
+package io.github.cottonmc.jf2.generator;
 
 import com.samskivert.mustache.Mustache;
 import com.samskivert.mustache.Template;

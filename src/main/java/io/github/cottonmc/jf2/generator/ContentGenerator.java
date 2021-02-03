@@ -1,8 +1,8 @@
-package io.github.cottonmc.jsonfactory.generator;
+package io.github.cottonmc.jf2.generator;
 
-import io.github.cottonmc.jsonfactory.context.ContextKeys;
-import io.github.cottonmc.jsonfactory.context.GenerationContext;
-import io.github.cottonmc.jsonfactory.GenerationResult;
+import io.github.cottonmc.jf2.context.ContextKeys;
+import io.github.cottonmc.jf2.context.GenerationContext;
+import io.github.cottonmc.jf2.GenerationResult;
 
 import java.util.Collections;
 import java.util.Set;

@@ -1,6 +1,6 @@
-package io.github.cottonmc.jsonfactory.generator;
+package io.github.cottonmc.jf2.generator;
 
-import static io.github.cottonmc.jsonfactory.generator.DefaultGenerators.*;
+import static io.github.cottonmc.jf2.generator.DefaultGenerators.*;
 
 public final class BlockGenerators {
     public static final ContentGenerator SIMPLE_BLOCK_STATE = load("block-states/simple.json", "assets/{{id.namespace}}/blockstates/{{id.path}}.json");

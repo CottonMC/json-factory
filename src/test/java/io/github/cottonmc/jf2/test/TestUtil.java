@@ -1,9 +1,9 @@
-package io.github.cottonmc.jsonfactory.test;
+package io.github.cottonmc.jf2.test;
 
 import blue.endless.jankson.Jankson;
 import blue.endless.jankson.JsonObject;
 import blue.endless.jankson.api.SyntaxError;
-import io.github.cottonmc.jsonfactory.GenerationResult;
+import io.github.cottonmc.jf2.GenerationResult;
 
 import java.io.IOException;
 import java.io.InputStream;

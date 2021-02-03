@@ -1,8 +1,8 @@
-package io.github.cottonmc.jsonfactory;
+package io.github.cottonmc.jf2;
 
-import io.github.cottonmc.jsonfactory.context.GenerationContext;
-import io.github.cottonmc.jsonfactory.generator.ContentGenerator;
-import io.github.cottonmc.jsonfactory.generator.MultiContentGenerator;
+import io.github.cottonmc.jf2.context.GenerationContext;
+import io.github.cottonmc.jf2.generator.ContentGenerator;
+import io.github.cottonmc.jf2.generator.MultiContentGenerator;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;

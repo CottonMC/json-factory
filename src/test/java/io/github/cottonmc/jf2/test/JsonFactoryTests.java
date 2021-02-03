@@ -1,11 +1,11 @@
-package io.github.cottonmc.jsonfactory.test;
+package io.github.cottonmc.jf2.test;
 
-import io.github.cottonmc.jsonfactory.context.ContextKeys;
-import io.github.cottonmc.jsonfactory.context.GenerationContext;
-import io.github.cottonmc.jsonfactory.GenerationResult;
-import io.github.cottonmc.jsonfactory.Identifier;
-import io.github.cottonmc.jsonfactory.JsonFactory;
-import io.github.cottonmc.jsonfactory.generator.BlockGenerators;
+import io.github.cottonmc.jf2.context.ContextKeys;
+import io.github.cottonmc.jf2.context.GenerationContext;
+import io.github.cottonmc.jf2.GenerationResult;
+import io.github.cottonmc.jf2.Identifier;
+import io.github.cottonmc.jf2.JsonFactory;
+import io.github.cottonmc.jf2.generator.BlockGenerators;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

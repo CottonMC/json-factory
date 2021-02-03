@@ -3,6 +3,13 @@ plugins {
     `maven-publish`
 }
 
+group = "io.github.cottonmc.jf2"
+version = "0.6.0"
+
+base {
+    archivesBaseName = "jf2"
+}
+
 java {
     sourceCompatibility = JavaVersion.VERSION_11
     targetCompatibility = JavaVersion.VERSION_11

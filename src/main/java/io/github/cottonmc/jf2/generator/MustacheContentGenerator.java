@@ -1,9 +1,9 @@
-package io.github.cottonmc.jsonfactory.generator;
+package io.github.cottonmc.jf2.generator;
 
 import com.samskivert.mustache.Template;
-import io.github.cottonmc.jsonfactory.GenerationPath;
-import io.github.cottonmc.jsonfactory.GenerationResult;
-import io.github.cottonmc.jsonfactory.context.GenerationContext;
+import io.github.cottonmc.jf2.GenerationPath;
+import io.github.cottonmc.jf2.GenerationResult;
+import io.github.cottonmc.jf2.context.GenerationContext;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Collections;
