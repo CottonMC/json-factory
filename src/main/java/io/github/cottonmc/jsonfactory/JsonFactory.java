@@ -13,6 +13,7 @@ import java.util.Set;
 
 public final class JsonFactory {
     private final ContentGenerator generator;
+    private boolean skipExisting = false;
 
     public JsonFactory(Iterable<? extends ContentGenerator> generators) {
         Objects.requireNonNull(generators, "generators");
@@ -22,6 +23,13 @@ public final class JsonFactory {
     public JsonFactory(ContentGenerator generator) {
         Objects.requireNonNull(generator, "generator");
         this.generator = generator;
+    }
+
+    /**
+     * Makes this factory skip existing output files when generating.
+     */
+    public void skipExisting() {
+        skipExisting = true;
     }
 
     public Set<GenerationResult> generate(GenerationContext context) {
@@ -41,6 +49,8 @@ public final class JsonFactory {
 
         for (GenerationResult result : results) {
             Path target = result.getPath().resolveAgainst(directory);
+
+            if (skipExisting && Files.exists(target)) continue;
 
             // Create missing containing directories
             Files.createDirectories(target.getParent());
